@@ -534,6 +534,27 @@ main {
   padding: 7px 12px;
 }
 
+.fullscreen-toggle-btn {
+  background: var(--mint-soft);
+  border-color: var(--mint-border);
+  color: var(--mint);
+  font-weight: 650;
+  padding: 7px 12px;
+}
+
+.fullscreen-toggle-btn:hover,
+.fullscreen-toggle-btn[aria-pressed="true"] {
+  background: var(--mint);
+  border-color: var(--mint);
+  color: #ffffff;
+}
+
+:fullscreen body,
+body.is-fullscreen {
+  width: 100vw;
+  height: 100vh;
+}
+
 .sync {
   font-size: 12px;
   font-weight: 600;

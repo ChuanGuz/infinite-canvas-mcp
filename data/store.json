@@ -238,7 +238,7 @@
             "x": 3000,
             "y": 0,
             "width": 1400,
-            "height": 1268
+            "height": 1510
           },
           "clusters": {
             "feature_impl": {
@@ -247,7 +247,7 @@
               "title": "功能实现",
               "bounds": {
                 "x": 3032,
-                "y": 594,
+                "y": 836,
                 "width": 1336,
                 "height": 330
               },
@@ -265,9 +265,12 @@
                 "x": 3032,
                 "y": 96,
                 "width": 1336,
-                "height": 120
+                "height": 362
               },
-              "nodeIds": [],
+              "nodeIds": [
+                "node_a9c7c6f4-9902-49f8-8bb5-13e73a297cdb",
+                "node_b23998bc-d146-451e-aca4-d753450742c4"
+              ],
               "summaryNodeId": null
             },
             "architecture_design": {
@@ -276,7 +279,7 @@
               "title": "架构与模型设计",
               "bounds": {
                 "x": 3032,
-                "y": 240,
+                "y": 482,
                 "width": 1336,
                 "height": 330
               },
@@ -291,7 +294,7 @@
               "title": "踩坑与问题修复",
               "bounds": {
                 "x": 3032,
-                "y": 948,
+                "y": 1190,
                 "width": 1336,
                 "height": 120
               },
@@ -304,7 +307,7 @@
               "title": "最终确定的好用法",
               "bounds": {
                 "x": 3032,
-                "y": 1092,
+                "y": 1334,
                 "width": 1336,
                 "height": 120
               },
@@ -1069,7 +1072,7 @@
           "sourceExperienceId": null,
           "bounds": {
             "x": 3064,
-            "y": 662,
+            "y": 904,
             "width": 416,
             "height": 230
           },
@@ -1102,7 +1105,7 @@
           "sourceExperienceId": null,
           "bounds": {
             "x": 3504,
-            "y": 662,
+            "y": 904,
             "width": 416,
             "height": 230
           },
@@ -1136,12 +1139,83 @@
           "sourceExperienceId": null,
           "bounds": {
             "x": 3064,
-            "y": 308,
+            "y": 550,
             "width": 416,
             "height": 230
           },
           "createdAt": "2026-11-19T12:37:21.257Z",
           "updatedAt": "2026-11-19T12:37:21.257Z"
+        },
+        {
+          "id": "node_a9c7c6f4-9902-49f8-8bb5-13e73a297cdb",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 3,
+          "zone": "stage",
+          "kind": "learning",
+          "category": "convention_practice",
+          "title": "交互与设计准则：简约直观优先，拒绝多余解释",
+          "content": "设计时无论是设计程序、游戏、人物还是交互，简约直观都是非常大的优势。虽然不同领域具体有所细分，但对于设计程序的交互界面而言，简约直观的优势尤为明显：直接使用原本直觉化的符号（如 −、□、×）和简练短词，不添加多余的汉字解释或说明文案；全屏时直接无边框铺满全屏，隐藏顶栏多余文字与窗口按钮。",
+          "summaryBullets": [
+            "设计时无论是设计程序、游戏、人物还是交互，简约直观都是非常大的优势。",
+            "虽然不同领域具体有所细分，但对于设计程序的交互界面而言，简约直观的优势尤为明显：直接使用原本直觉化的符号（如 −、□、×）和简练短词，不添加多余的汉字解释或说明文案；全屏时直接无边框铺满全屏，隐藏顶栏多余文字与窗口按钮。"
+          ],
+          "reusablePatterns": [
+            "虽然不同领域具体有所细分，但对于设计程序的交互界面而言，简约直观的优势尤为明显：直接使用原本直觉化的符号（如 −、□、×）和简练短词，不添加多余的汉字解释或说明文案；全屏时直接无边框铺满全屏，隐藏顶栏多余文字与窗口按钮。"
+          ],
+          "tags": [
+            "交互设计",
+            "简约直观",
+            "核心约定"
+          ],
+          "relatedFiles": [],
+          "importance": 5,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 3064,
+            "y": 164,
+            "width": 416,
+            "height": 262
+          },
+          "createdAt": "2026-11-19T13:25:44.085Z",
+          "updatedAt": "2026-11-19T13:25:44.085Z"
+        },
+        {
+          "id": "node_b23998bc-d146-451e-aca4-d753450742c4",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 3,
+          "zone": "stage",
+          "kind": "learning",
+          "category": "convention_practice",
+          "title": "平等交流与视觉架构分工约定",
+          "content": "交流时直接用“你”平等沟通，不用“您”；界面先铺垫好简约直观的视觉架构，再交由 Codex 实现具体功能并分阶段上传 GitHub 云端。",
+          "summaryBullets": [
+            "交流时直接用“你”平等沟通，不用“您”；界面先铺垫好简约直观的视觉架构，再交由 Codex 实现具体功能并分阶段上传 GitHub 云端。"
+          ],
+          "reusablePatterns": [
+            "交流时直接用“你”平等沟通，不用“您”；界面先铺垫好简约直观的视觉架构，再交由 Codex 实现具体功能并分阶段上传 GitHub 云端。"
+          ],
+          "tags": [
+            "平等交流",
+            "视觉架构",
+            "协作约定"
+          ],
+          "relatedFiles": [],
+          "importance": 5,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 3504,
+            "y": 164,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T13:25:44.109Z",
+          "updatedAt": "2026-11-19T13:25:44.109Z"
         }
       ],
       "edges": [
@@ -1327,7 +1401,7 @@
         }
       ],
       "createdAt": "2026-11-19T12:37:21.242Z",
-      "updatedAt": "2026-11-19T12:37:21.257Z"
+      "updatedAt": "2026-11-19T13:25:44.109Z"
     },
     {
       "id": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
@@ -2455,6 +2529,53 @@
       "appliedCanvasIds": [],
       "createdAt": "2026-11-19T12:37:21.259Z",
       "updatedAt": "2026-11-19T12:37:21.259Z"
+    },
+    {
+      "id": "experience_d9d727c3-9407-4f07-b0a6-a27254c8dd19",
+      "title": "交互与设计准则：简约直观优先，拒绝多余解释",
+      "content": "设计时无论是设计程序、游戏、人物还是交互，简约直观都是非常大的优势。虽然不同领域具体有所细分，但对于设计程序的交互界面而言，简约直观的优势尤为明显：直接使用原本直觉化的符号（如 −、□、×）和简练短词，不添加多余的汉字解释或说明文案；全屏时直接无边框铺满全屏，隐藏顶栏多余文字与窗口按钮。",
+      "category": "best_practice",
+      "summaryBullets": [
+        "设计时无论是设计程序、游戏、人物还是交互，简约直观都是非常大的优势。",
+        "虽然不同领域具体有所细分，但对于设计程序的交互界面而言，简约直观的优势尤为明显：直接使用原本直觉化的符号（如 −、□、×）和简练短词，不添加多余的汉字解释或说明文案；全屏时直接无边框铺满全屏，隐藏顶栏多余文字与窗口按钮。"
+      ],
+      "tags": [
+        "交互设计",
+        "简约直观",
+        "核心约定"
+      ],
+      "relatedFiles": [],
+      "sourceCanvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+      "sourceNodeIds": [
+        "node_a9c7c6f4-9902-49f8-8bb5-13e73a297cdb"
+      ],
+      "validated": true,
+      "appliedCanvasIds": [],
+      "createdAt": "2026-11-19T13:25:44.123Z",
+      "updatedAt": "2026-11-19T13:25:44.123Z"
+    },
+    {
+      "id": "experience_ba80154f-ddda-461e-9351-154f8310bc3e",
+      "title": "平等交流与视觉架构分工约定",
+      "content": "交流时直接用“你”平等沟通，不用“您”；界面先铺垫好简约直观的视觉架构，再交由 Codex 实现具体功能并分阶段上传 GitHub 云端。",
+      "category": "best_practice",
+      "summaryBullets": [
+        "交流时直接用“你”平等沟通，不用“您”；界面先铺垫好简约直观的视觉架构，再交由 Codex 实现具体功能并分阶段上传 GitHub 云端。"
+      ],
+      "tags": [
+        "平等交流",
+        "视觉架构",
+        "协作约定"
+      ],
+      "relatedFiles": [],
+      "sourceCanvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+      "sourceNodeIds": [
+        "node_b23998bc-d146-451e-aca4-d753450742c4"
+      ],
+      "validated": true,
+      "appliedCanvasIds": [],
+      "createdAt": "2026-11-19T13:25:44.123Z",
+      "updatedAt": "2026-11-19T13:25:44.123Z"
     }
   ]
 }

@@ -17,7 +17,8 @@ test('all demo prose, derived labels, experiences and handoff documents are natu
   const engine = new CanvasEngine({ dataDir: dir });
   const store = engine.storage.read();
   const chinese = (value: string) => {
-    assert.doesNotMatch(value, /[a-zA-Z]|\?{2,}/, value);
+    // Preserve the user's exact collaboration wording, including these product names.
+    assert.doesNotMatch(value.replace(/\b(?:Codex|GitHub)\b/g, ''), /[a-zA-Z]|\?{2,}/, value);
     if (value) assert.match(value, /\p{Script=Han}/u, value);
   };
   for (const group of store.groups) [group.name, group.description].forEach(chinese);

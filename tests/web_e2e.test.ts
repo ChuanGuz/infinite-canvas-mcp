@@ -10,6 +10,7 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport, getDefaultEnvironment } from '@modelcontextprotocol/sdk/client/stdio.js';
 import { startHttpServer } from '../src/server/app.js';
 import { CATEGORY_ORDER } from '../src/types/schema.js';
+import { CORE_CONVENTIONS } from '../src/core/storage.js';
 import type { connectionBundle, Provider } from '../src/server/mcp-connect.js';
 
 async function fixture(t: TestContext, seedDemo = false) {
@@ -25,7 +26,7 @@ async function fixture(t: TestContext, seedDemo = false) {
   assert.ok(address && typeof address === 'object');
   const base = `http://127.0.0.1:${address.port}`;
   const browser = await chromium.launch();
-  const context = await browser.newContext({ viewport: { width: 1600, height: 1000 }, permissions: ['clipboard-read', 'clipboard-write'] });
+  const context = await browser.newContext({ viewport: { width: 1600, height: 1000 }, screen: { width: 1920, height: 1080 }, permissions: ['clipboard-read', 'clipboard-write'] });
   const page = await context.newPage();
   const errors: string[] = [];
   page.on('pageerror', error => errors.push(error.message));
@@ -46,6 +47,30 @@ async function createCanvas(page: Page, title: string, projectKey: string) {
   await submit(page);
   await expect(page.locator('#project-title')).toHaveText(title);
 }
+
+test('minimal workbench keeps its blank title without fullscreen controls or shortcut interception', async t => {
+  const { page } = await fixture(t, true);
+  await expect(page).toHaveTitle('\uFEFF');
+  await expect(page.locator('#project-title')).toHaveText('无限画布知识工作台');
+  await expect(page.locator('[data-action="fullscreen"], #fullscreen-toggle')).toHaveCount(0);
+  await expect(page.locator('body')).not.toContainText('真全屏');
+  await expect(page.locator('body')).not.toContainText('退出全屏');
+  await page.evaluate("document.title = 'Redundant title'");
+  await expect(page).toHaveTitle('\uFEFF');
+  // Dispatch DOM events only: headed browser F11 and native keyboard hooks are
+  // separately exercised by the launcher smoke test, with one transition owner.
+  for (const key of ['F11', 'Escape']) {
+    assert.equal(await page.evaluate(`document.dispatchEvent(
+      new KeyboardEvent('keydown', { key: '${key}', cancelable: true }))`), true);
+  }
+  await expect(page.locator('#world .node').first()).toBeVisible();
+  for (const convention of CORE_CONVENTIONS) {
+    await expect(page.locator('.node h3').filter({ hasText: convention.title })).toHaveCount(1);
+    const experience = page.locator('.experience-card').filter({ hasText: convention.title });
+    await expect(experience).toContainText(convention.content);
+    await expect(experience).toContainText('最终确定的好用法');
+  }
+});
 
 test('production static assets and complete browser workflow connect REST, stdio MCP, SSE, reuse and handoff', { timeout: 90_000 }, async t => {
   const { page, base, engine, dataDir } = await fixture(t);
@@ -131,7 +156,7 @@ test('production static assets and complete browser workflow connect REST, stdio
   await expect(page.locator('.provider-card')).toHaveCount(4);
   await page.locator('[data-action="copy-provider"][data-provider="codex"]').click();
   assert.match(String(await page.evaluate('navigator.clipboard.readText()')), /我们规定的做法/);
-  await page.getByRole('button', { name: '关闭详情' }).click();
+  await page.locator('[data-action="close-drawer"]').click();
   await createCanvas(page, '经验继承项目', 'browser-successor');
   const successorId = engine.getCanvas().id;
   await page.getByLabel('搜索经验', { exact: true }).fill('Layered architecture');
@@ -150,7 +175,7 @@ test('production static assets and complete browser workflow connect REST, stdio
   const resource = await client.readResource({ uri: 'canvas://active/handoff.md' });
   assert.ok(resource.contents[0] && 'text' in resource.contents[0]);
   assert.equal(resource.contents[0].text, engine.getHandoffContext().markdown);
-  await page.getByRole('button', { name: '关闭详情' }).click();
+  await page.locator('[data-action="close-drawer"]').click();
   // The explicit Next Stage action also consolidates and opens a fresh zone.
   await page.locator('[data-action="advance"]').click();
   await page.getByLabel('下一阶段名称（可选）').fill('再次验证');
@@ -221,7 +246,7 @@ test('viewport pan, cursor anchored zoom, fit, stage jumps, inspection, filterin
   assert.equal(await page.evaluate('document.documentElement.scrollWidth > window.innerWidth'), false);
   await expect(page.locator('[data-action="handoff"]')).toBeVisible();
   await expect(page.locator('#sidebar')).not.toBeVisible();
-  await page.getByRole('button', { name: '☰ 画布导航' }).click();
+  await page.locator('.topbar [data-action="navigation"]').click();
   await expect(page.locator('#sidebar')).toBeVisible();
   await page.getByRole('button', { name: '关闭项目导航' }).click();
   await expect(page.locator('#sidebar')).not.toBeVisible();
@@ -247,7 +272,7 @@ test('four quick buttons and drawer cards configure and copy the pinned canvas, 
     await expect(page.locator('#notice')).toContainText(provider === 'codex' ? '注册本机 Codex' : '已生成本机连接配置');
   }
   assert.equal(await page.locator('#handoff-markdown').innerText(), engine.getHandoffContext().markdown);
-  await page.getByRole('button', { name: '关闭详情' }).click();
+  await page.locator('[data-action="close-drawer"]').click();
   const bullets = await page.locator('.node').evaluateAll(nodes => nodes.map(n => n.querySelectorAll('li').length));
   assert.ok(bullets.every(n => n <= 2));
   await expect(page.locator('.node .tags')).toHaveCount(0);
@@ -293,7 +318,7 @@ test('SSE reconnect, live drawer, safe text, server errors and in-flight form ta
   await expect(page.locator('#handoff-markdown')).toContainText('Pinned canvas record');
   await post('mcp/call', { name: 'record_project_learning', arguments: { canvasId: original.id, title: 'Live drawer update', content: 'Implemented REST to MCP synchronization.' } });
   await expect(page.locator('#handoff-markdown')).toContainText('Live drawer update');
-  await page.getByRole('button', { name: '关闭详情' }).click();
+  await page.locator('[data-action="close-drawer"]').click();
   // Losing the stream must show an honest connection state and recover the latest snapshot.
   await context.setOffline(true);
   await expect(page.locator('#sync-status')).toContainText('同步中断');

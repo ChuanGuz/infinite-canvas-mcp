@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#F4F1EA" />
-    <title>无限画布 · AI 阶段知识整理与无缝交接工作台</title>
+    <title>&#65279;</title>
     <link
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232F6B55'/%3E%3Ctext x='16' y='23' text-anchor='middle' fill='%23FAF8F3' font-size='22'%3E∞%3C/text%3E%3C/svg%3E"
@@ -19,21 +19,18 @@
         data-action="navigation"
         aria-label="关闭项目导航"
       >
-        关闭导航 ×
+        ×
       </button>
 
       <a class="brand" href="/">
         <span class="brand-mark">∞</span>
-        <span>
-          无限画布
-          <small>AI 阶段整理与无缝交接</small>
-        </span>
+        <span>无限画布</span>
       </a>
 
       <section class="sidebar-block">
         <div class="section-heading">
           <h2>画布分组</h2>
-          <button data-action="group" aria-label="新建分组" title="新建画布分组">＋ 新建</button>
+          <button data-action="group" aria-label="新建分组" title="新建分组">＋</button>
         </div>
         <nav id="groups" aria-label="画布分组"></nav>
       </section>
@@ -41,22 +38,21 @@
       <section class="sidebar-block">
         <div class="section-heading">
           <h2>项目画布</h2>
-          <button data-action="canvas" aria-label="新建画布" title="在当前分组新建画布">＋ 新建</button>
+          <button data-action="canvas" aria-label="新建画布" title="新建画布">＋</button>
         </div>
         <nav id="canvases" aria-label="画布列表"></nav>
       </section>
 
       <section class="sidebar-block experience-section">
         <div class="section-heading">
-          <h2>跨项目好用法库</h2>
+          <h2>跨项目经验库</h2>
           <span id="experience-count" class="badge">0</span>
         </div>
-        <p class="muted">把以前项目验证过的好做法，一键用到新项目里。</p>
         <label class="sr-only" for="experience-search">搜索经验</label>
         <input
           id="experience-search"
           type="search"
-          placeholder="搜索规定做法、好用法、功能经验…"
+          placeholder="搜索经验…"
         />
         <label class="sr-only" for="experience-category">经验分类</label>
         <select id="experience-category">
@@ -65,9 +61,7 @@
         <div id="experiences" aria-live="polite"></div>
       </section>
 
-      <footer class="sidebar-footer">
-        本地安全存储 <span>·</span> 跨 AI 会话无缝接力
-      </footer>
+      <footer class="sidebar-footer"></footer>
     </aside>
 
     <main>
@@ -78,121 +72,98 @@
           aria-controls="sidebar"
           aria-expanded="false"
         >
-          ☰ 画布导航
+          ☰
         </button>
 
         <div class="title-area">
-          <div class="eyebrow" id="project-group">当前画布分组</div>
+          <div class="eyebrow" id="project-group">画布分组</div>
           <div class="title-row">
-            <h1 id="project-title">无限画布工作台</h1>
+            <h1 id="project-title">无限画布</h1>
             <span id="project-status" class="badge">进行中</span>
           </div>
-          <p id="canvas-description" class="subtitle">
-            按阶段自动分类整理功能与规定做法，换任何 AI 都能直接无缝继续。
-          </p>
+          <p id="canvas-description" class="subtitle" hidden></p>
         </div>
 
-        <div class="mcp-connect-panel" id="mcp-quick-bar" aria-label="四种 AI 一键连接与复制">
-          <div class="mcp-panel-header">
-            <span class="mcp-panel-title">🔗 点一下即可复制连接指令（发给对应 AI 直接接手项目）</span>
-            <span id="sync-status" class="sync" role="status">正在连接同步…</span>
-          </div>
+        <div class="mcp-connect-panel" id="mcp-quick-bar" aria-label="AI 连接">
           <div class="mcp-provider-buttons">
             <button
               type="button"
               class="provider-pill provider-codex"
               data-action="quick-ai"
               data-provider="codex"
-              title="点击一键复制 Codex 专属连接与当前项目交接指令，并自动配置本机 Codex"
             >
               <span class="provider-dot"></span>
               <strong>Codex</strong>
-              <small>一键连接/复制</small>
             </button>
             <button
               type="button"
               class="provider-pill provider-claude"
               data-action="quick-ai"
               data-provider="claude"
-              title="点击一键复制 Claude 专属 MCP 连接与当前项目交接指令"
             >
               <span class="provider-dot"></span>
               <strong>Claude</strong>
-              <small>一键连接/复制</small>
             </button>
             <button
               type="button"
               class="provider-pill provider-gemini"
               data-action="quick-ai"
               data-provider="gemini"
-              title="点击一键复制 Gemini 专属 MCP 连接与当前项目交接指令"
             >
               <span class="provider-dot"></span>
               <strong>Gemini</strong>
-              <small>一键连接/复制</small>
             </button>
             <button
               type="button"
               class="provider-pill provider-deepseek"
               data-action="quick-ai"
               data-provider="deepseek"
-              title="点击一键复制 DeepSeek 专属连接与当前项目全量中文交接指令"
             >
               <span class="provider-dot"></span>
               <strong>DeepSeek</strong>
-              <small>一键连接/复制</small>
             </button>
             <button
               type="button"
               class="handoff-open-btn"
               data-action="handoff"
-              title="查看完整中文交接文档与四种 AI 详细配置"
             >
-              📄 交接文档与配置
+              交接文档
             </button>
+            <span id="sync-status" class="sync" role="status">已同步</span>
           </div>
         </div>
       </header>
 
-      <div class="toolbar" aria-label="画布阶段与操作">
+      <div class="toolbar" aria-label="画布操作">
         <div class="toolbar-buttons">
-          <button class="primary" data-action="record">
-            ＋ 记一条（功能 / 规定做法）
-          </button>
-          <button data-action="consolidate">
-            ✨ 整理本阶段
-          </button>
-          <button data-action="advance">
-            ➡ 开启下一阶段
-          </button>
-          <button class="gold-button" data-action="finalize">
-            🏆 项目结尾总整理（提炼好用法）
-          </button>
+          <button class="primary" data-action="record">＋ 记一条</button>
+          <button data-action="consolidate">阶段整理</button>
+          <button data-action="advance">下一阶段</button>
+          <button class="gold-button" data-action="finalize">总整理</button>
         </div>
 
-        <nav id="stage-jumps" class="stage-jumps" aria-label="阶段快速跳转"></nav>
+        <nav id="stage-jumps" class="stage-jumps" aria-label="阶段跳转"></nav>
         <span id="canvas-stats" class="muted stats-pill"></span>
       </div>
 
       <div
         id="viewport"
         tabindex="0"
-        aria-label="无限画布视口：鼠标拖动平移，滚轮缩放，方向键移动，按 F 适应全图"
+        aria-label="无限画布视口"
       >
         <div id="world"></div>
         <div id="empty-state" class="empty-state" hidden>
           <span class="empty-mark">∞</span>
-          <h2>还没有项目画布</h2>
-          <p>点击下方按钮新建一个分组或画布，开始按阶段沉淀项目做法。</p>
+          <h2>暂无画布</h2>
           <div class="empty-actions">
-            <button data-action="group">新建画布分组</button>
-            <button class="primary" data-action="canvas">新建项目画布</button>
+            <button data-action="group">新建分组</button>
+            <button class="primary" data-action="canvas">新建画布</button>
           </div>
         </div>
       </div>
 
       <footer class="canvas-footer">
-        <span>💡 操作提示：按住鼠标左键拖动画布 · 滚轮缩放 · 点击任意卡片查看完整中文内容</span>
+        <span></span>
         <div class="zoom-controls">
           <button data-action="zoom-out" aria-label="缩小">−</button>
           <output id="zoom-level">100%</output>
@@ -205,10 +176,10 @@
     <dialog id="drawer" class="drawer" aria-labelledby="drawer-title">
       <header>
         <div>
-          <span class="eyebrow">全中文交接与一键 MCP 接入</span>
-          <h2 id="drawer-title">跨 AI 无缝交接 / MCP 接入</h2>
+          <span class="eyebrow">MCP 接入与交接</span>
+          <h2 id="drawer-title">交接文档</h2>
         </div>
-        <button data-action="close-drawer" aria-label="关闭详情">×</button>
+        <button data-action="close-drawer" aria-label="关闭">×</button>
       </header>
       <div id="drawer-content"></div>
     </dialog>
@@ -217,7 +188,7 @@
       <form id="action-form">
         <header>
           <h2 id="modal-title"></h2>
-          <button type="button" data-action="close-modal" aria-label="关闭弹窗">
+          <button type="button" data-action="close-modal" aria-label="关闭">
             ×
           </button>
         </header>
@@ -226,7 +197,7 @@
         <p id="form-error" class="error" role="alert"></p>
         <footer>
           <button type="button" data-action="close-modal">取消</button>
-          <button id="form-submit" class="primary" type="submit">确定保存</button>
+          <button id="form-submit" class="primary" type="submit">保存</button>
         </footer>
       </form>
     </dialog>

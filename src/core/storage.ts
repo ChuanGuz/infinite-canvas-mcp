@@ -18,6 +18,39 @@ export function demoFingerprint(store: Store): string {
 const learning = (category: LearningInput['category'], title: string, content: string, tags: string[], open = false): LearningInput =>
   ({ category, title, content, tags, importance: 4, validated: !open, status: open ? 'open' : 'active' });
 
+/** 用户确认的核心约定；原文同时保留在画布与跨项目经验库中。 */
+export const CORE_CONVENTIONS: LearningInput[] = [
+  {
+    ...learning('convention_practice', '交互与设计准则：简约直观优先，拒绝多余解释',
+      '设计时无论是设计程序、游戏、人物还是交互，简约直观都是非常大的优势。虽然不同领域具体有所细分，但对于设计程序的交互界面而言，简约直观的优势尤为明显：直接使用原本直觉化的符号（如 −、□、×）和简练短词，不添加多余的汉字解释或说明文案；全屏时直接无边框铺满全屏，隐藏顶栏多余文字与窗口按钮。',
+      ['交互设计', '简约直观', '核心约定']), importance: 5,
+  },
+  {
+    ...learning('convention_practice', '平等交流与视觉架构分工约定',
+      '交流时直接用“你”平等沟通，不用“您”；界面先铺垫好简约直观的视觉架构，再交由 Codex 实现具体功能并分阶段上传 GitHub 云端。',
+      ['平等交流', '视觉架构', '协作约定']), importance: 5,
+  },
+];
+
+/** 发布明确确认的约定，不把仍在进行的项目提前结项。重复执行保留经验身份与引用。 */
+export function publishCoreConventions(store: Store, canvasId: string): void {
+  const canvas = store.canvases.find(c => c.id === canvasId);
+  if (!canvas) throw new Error('未找到画布');
+  for (const convention of CORE_CONVENTIONS) {
+    const node = canvas.nodes.find(n => n.kind === 'learning' && n.category === 'convention_practice' &&
+      n.title === convention.title && n.content === convention.content && n.validated && n.status === 'active');
+    if (!node) throw new Error(`请先记录并确认核心约定：${convention.title}`);
+    if (store.crossProjectExperiences.some(e => e.sourceCanvasId === canvasId && e.sourceNodeIds.includes(node.id))) continue;
+    const timestamp = new Date().toISOString();
+    store.crossProjectExperiences.push({
+      id: `experience_${randomUUID()}`, title: node.title, content: node.content, category: 'best_practice',
+      summaryBullets: node.summaryBullets, tags: node.tags, relatedFiles: node.relatedFiles,
+      sourceCanvasId: canvasId, sourceNodeIds: [node.id], validated: true, appliedCanvasIds: [],
+      createdAt: timestamp, updatedAt: timestamp,
+    });
+  }
+}
+
 /** 所有示例叙述均为简体中文；协议字段与内部标识仍保持稳定。 */
 export const DEMO_PROJECTS = [
   {
@@ -39,6 +72,7 @@ export const DEMO_PROJECTS = [
         learning('best_practice', '交接文档可以重建', '项目数据库是唯一事实来源。启动时重新生成交接文档，修复意外中断造成的文档不同步。', ['交接', '恢复']),
       ] },
       { title: '交互画布与使用验收', learnings: [
+        ...CORE_CONVENTIONS,
         learning('feature_impl', '画布平移与缩放', '已实现鼠标拖动平移和滚轮缩放。卡片坐标保持稳定，阶段跳转能快速定位当前工作区。', ['画布', '视口']),
         learning('feature_impl', '键盘导航验收', '待验证分类区域与终局卡片之间的键盘焦点移动。发布前确认读屏标签能够准确表达操作含义。', ['无障碍', '待办'], true),
         learning('architecture_design', '大画布性能验证', '待完成五千张卡片的性能测试，再决定是否只渲染视口附近的卡片。', ['性能', '待办'], true),

@@ -1,4 +1,12 @@
 const $ = (selector) => document.querySelector(selector);
+document.title = "\uFEFF";
+// Keep project names inside the workbench, including after live canvas updates.
+new MutationObserver(() => {
+  if (document.title !== "\uFEFF") document.title = "\uFEFF";
+}).observe(document.querySelector("title"), { childList: true, characterData: true, subtree: true });
+
+// Desktop F11/Esc and maximize belong to Launcher.cs. Browser windows keep
+// their native fullscreen shortcuts; neither path needs an extra UI control.
 const categories = {
   convention_practice: ["规定做法与约定", "#a65e2e"],
   architecture_design: ["架构与模型设计", "#2f6c78"],

@@ -5,7 +5,7 @@ import type { Canvas, CanvasGroup, CanvasNode, CrossProjectExperience, LearningI
 import { classifyLearning, uniqueText } from './classifier.js';
 import { buildHandoff } from './handoff.js';
 import { initialBounds, layoutCanvas } from './layout.js';
-import { emptyStore, JsonStorage, DEMO_PROJECTS } from './storage.js';
+import { emptyStore, JsonStorage, DEMO_PROJECTS, publishCoreConventions } from './storage.js';
 
 const now = () => new Date().toISOString();
 const id = (prefix: string) => `${prefix}_${randomUUID()}`;
@@ -348,5 +348,6 @@ export function createDemoStore(): Store {
     if (demo.completed) finalize(store, canvas);
   }
   store.activeCanvasId = store.canvases[0]!.id;
+  publishCoreConventions(store, store.activeCanvasId);
   return store;
 }
