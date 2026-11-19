@@ -238,7 +238,7 @@
             "x": 3000,
             "y": 0,
             "width": 1400,
-            "height": 1510
+            "height": 1542
           },
           "clusters": {
             "feature_impl": {
@@ -249,11 +249,12 @@
                 "x": 3032,
                 "y": 836,
                 "width": 1336,
-                "height": 330
+                "height": 362
               },
               "nodeIds": [
                 "node_067b94d2-ef85-4721-8b81-a8be954c2c71",
-                "node_db8139df-5581-4ede-9078-32cd2fe79618"
+                "node_db8139df-5581-4ede-9078-32cd2fe79618",
+                "node_369818bf-3980-4d28-86bd-143f93445134"
               ],
               "summaryNodeId": null
             },
@@ -269,7 +270,8 @@
               },
               "nodeIds": [
                 "node_a9c7c6f4-9902-49f8-8bb5-13e73a297cdb",
-                "node_b23998bc-d146-451e-aca4-d753450742c4"
+                "node_b23998bc-d146-451e-aca4-d753450742c4",
+                "node_84ecc4d4-6a1c-4230-901d-2f7ed01f705a"
               ],
               "summaryNodeId": null
             },
@@ -284,7 +286,8 @@
                 "height": 330
               },
               "nodeIds": [
-                "node_bbcd5f1d-b379-41d1-b5a2-c98612ca7105"
+                "node_bbcd5f1d-b379-41d1-b5a2-c98612ca7105",
+                "node_f15d8b9a-5aca-4382-a1c3-d853792d6b0e"
               ],
               "summaryNodeId": null
             },
@@ -294,7 +297,7 @@
               "title": "踩坑与问题修复",
               "bounds": {
                 "x": 3032,
-                "y": 1190,
+                "y": 1222,
                 "width": 1336,
                 "height": 120
               },
@@ -307,7 +310,7 @@
               "title": "最终确定的好用法",
               "bounds": {
                 "x": 3032,
-                "y": 1334,
+                "y": 1366,
                 "width": 1336,
                 "height": 120
               },
@@ -1216,6 +1219,115 @@
           },
           "createdAt": "2026-11-19T13:25:44.109Z",
           "updatedAt": "2026-11-19T13:25:44.109Z"
+        },
+        {
+          "id": "node_84ecc4d4-6a1c-4230-901d-2f7ed01f705a",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 3,
+          "zone": "stage",
+          "kind": "imported",
+          "category": "convention_practice",
+          "title": "推广经验前先提供证据",
+          "content": "可靠性方案必须通过恢复测试后才能进入共享经验库。引入新项目时仍需结合实际条件重新验证。",
+          "summaryBullets": [
+            "可靠性方案必须通过恢复测试后才能进入共享经验库。",
+            "引入新项目时仍需结合实际条件重新验证。"
+          ],
+          "reusablePatterns": [
+            "可靠性方案必须通过恢复测试后才能进入共享经验库。"
+          ],
+          "tags": [
+            "测试",
+            "经验复用"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": false,
+          "status": "active",
+          "sourceNodeIds": [],
+          "sourceExperienceId": "experience_62d824e8-af57-4b49-a8df-bd37fa73053c",
+          "bounds": {
+            "x": 3944,
+            "y": 164,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T13:52:06.302Z",
+          "updatedAt": "2026-11-19T13:52:06.302Z"
+        },
+        {
+          "id": "node_f15d8b9a-5aca-4382-a1c3-d853792d6b0e",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 3,
+          "zone": "stage",
+          "kind": "imported",
+          "category": "architecture_design",
+          "title": "发布编排保持幂等",
+          "content": "每次发布请求使用唯一幂等标识。将输入校验、持久化状态流转与部署操作分离，避免重复执行。",
+          "summaryBullets": [
+            "每次发布请求使用唯一幂等标识。",
+            "将输入校验、持久化状态流转与部署操作分离，避免重复执行。"
+          ],
+          "reusablePatterns": [
+            "每次发布请求使用唯一幂等标识。",
+            "将输入校验、持久化状态流转与部署操作分离，避免重复执行。"
+          ],
+          "tags": [
+            "幂等",
+            "架构"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": false,
+          "status": "active",
+          "sourceNodeIds": [],
+          "sourceExperienceId": "experience_a90674c6-e3ae-4abf-b7f6-3babdf8a0bc9",
+          "bounds": {
+            "x": 3504,
+            "y": 550,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T13:52:14.402Z",
+          "updatedAt": "2026-11-19T13:52:14.402Z"
+        },
+        {
+          "id": "node_369818bf-3980-4d28-86bd-143f93445134",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 3,
+          "zone": "stage",
+          "kind": "learning",
+          "category": "feature_impl",
+          "title": "极简界面移除冗余小字并通过回归验证",
+          "content": "已清理网页动态渲染中的阶段统计与标语、弹窗说明、分类卡片数量、知识卡片验证后缀、画布导航副标题、经验卡片小字及助手卡片说明。保留用户更新的页面结构与样式，文件哈希核对一致。浏览器回归覆盖空阶段、已整理阶段、终局区域和全部表单，确认冗余元素不再生成。桌面程序构建、全部五十五项测试、类型检查和程序构建均通过。",
+          "summaryBullets": [
+            "已清理网页动态渲染中的阶段统计与标语、弹窗说明、分类卡片数量、知识卡片验证后缀、画布导航副标题、经验卡片小字及助手卡片说明。",
+            "保留用户更新的页面结构与样式，文件哈希核对一致。",
+            "浏览器回归覆盖空阶段、已整理阶段、终局区域和全部表单，确认冗余元素不再生成。",
+            "桌面程序构建、全部五十五项测试、类型检查和程序构建均通过。"
+          ],
+          "reusablePatterns": [],
+          "tags": [
+            "极简界面",
+            "回归验证"
+          ],
+          "relatedFiles": [
+            "src/web/app.js",
+            "tests/web_e2e.test.ts"
+          ],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 3944,
+            "y": 904,
+            "width": 416,
+            "height": 262
+          },
+          "createdAt": "2026-11-19T14:01:08.168Z",
+          "updatedAt": "2026-11-19T14:01:08.168Z"
         }
       ],
       "edges": [
@@ -1401,7 +1513,7 @@
         }
       ],
       "createdAt": "2026-11-19T12:37:21.242Z",
-      "updatedAt": "2026-11-19T13:25:44.109Z"
+      "updatedAt": "2026-11-19T14:01:08.168Z"
     },
     {
       "id": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
@@ -2433,9 +2545,11 @@
         "node_63e2c974-81c9-49a7-b8cd-56a9ec14b4d5"
       ],
       "validated": true,
-      "appliedCanvasIds": [],
+      "appliedCanvasIds": [
+        "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac"
+      ],
       "createdAt": "2026-11-19T12:37:21.259Z",
-      "updatedAt": "2026-11-19T12:37:21.259Z"
+      "updatedAt": "2026-11-19T13:52:14.402Z"
     },
     {
       "id": "experience_61c37a86-5443-4257-a2e2-97ee441a8de6",
@@ -2526,9 +2640,11 @@
         "node_63304d65-8642-4199-9eed-affbe5b13f60"
       ],
       "validated": true,
-      "appliedCanvasIds": [],
+      "appliedCanvasIds": [
+        "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac"
+      ],
       "createdAt": "2026-11-19T12:37:21.259Z",
-      "updatedAt": "2026-11-19T12:37:21.259Z"
+      "updatedAt": "2026-11-19T13:52:06.303Z"
     },
     {
       "id": "experience_d9d727c3-9407-4f07-b0a6-a27254c8dd19",

@@ -164,7 +164,7 @@ function renderNavigation() {
     canvases
       .map(
         (c) =>
-          `<button class="nav-item ${c.id === store.activeCanvasId ? "active" : ""}" data-canvas="${c.id}" aria-pressed="${c.id === store.activeCanvasId}"><span class="nav-copy">${escape(c.title)}<small><span class="badge">阶段 ${c.currentStageNumber}</span> ${canvasStatus(c)}</small></span><span>↗</span></button>`,
+          `<button class="nav-item ${c.id === store.activeCanvasId ? "active" : ""}" data-canvas="${c.id}" aria-pressed="${c.id === store.activeCanvasId}"><span class="nav-copy">${escape(c.title)}</span></button>`,
       )
       .join("") || '<p class="muted">此分组还没有画布。</p>';
 }
@@ -215,11 +215,11 @@ function renderCanvas() {
   const zones = canvas.stages
     .map(
       (s) =>
-        `<section class="zone ${s.stageNumber === canvas.currentStageNumber ? "current" : ""}" data-zone="${s.id}" style="${boundsStyle(s.bounds)}"><header><h2>阶段 ${s.stageNumber} <span> / ${escape(s.title)}</span></h2><span class="badge">${s.status === "consolidated" ? "已整理归档" : "进行中"}</span><p class="zone-summary">${escape(s.summary || "记录、探索、验证，让知识在这里积累。")}</p></header></section>` +
+        `<section class="zone ${s.stageNumber === canvas.currentStageNumber ? "current" : ""}" data-zone="${s.id}" style="${boundsStyle(s.bounds)}"><header><h2>阶段 ${s.stageNumber} <span> / ${escape(s.title)}</span></h2><span class="badge">${s.status === "consolidated" ? "已整理归档" : "进行中"}</span></header></section>` +
         Object.entries(categories)
           .map(([category, [label, color]]) => {
             const cluster = s.clusters[category];
-            return `<section class="cluster" data-cluster="${cluster.id}" style="${boundsStyle(cluster.bounds)}--category:${color}"><h3>${label}<small>${cluster.nodeIds.length} 张卡片</small></h3>${cluster.nodeIds.length ? "" : '<small class="cluster-empty">等待这个阶段的第一条记录</small>'}</section>`;
+            return `<section class="cluster" data-cluster="${cluster.id}" style="${boundsStyle(cluster.bounds)}--category:${color}"><h3>${label}</h3></section>`;
           })
           .join(""),
     )
@@ -231,12 +231,12 @@ function renderCanvas() {
       )
     : [];
   const finalHTML = final
-    ? `<section class="zone final" data-zone="${final.id}" style="${boundsStyle(final.bounds)}"><header><h2>✧ 项目结尾总整理 / 终局精华区</h2><span class="badge">已结项 · ${patterns.length} 个可复用模式</span><p class="zone-summary">${escape(final.handoffSummary)}</p></header></section><section class="final-patterns" style="${boundsStyle(patternBounds(final, patterns))}"><h3>跨项目可复用模式 · ${patterns.length}</h3>${patterns.map((e) => `<div class="pattern"><strong>${escape(e.title)}</strong><p>${escape(e.content)}</p></div>`).join("") || "<p>暂无已验证的可复用模式。</p>"}</section>`
+    ? `<section class="zone final" data-zone="${final.id}" style="${boundsStyle(final.bounds)}"><header><h2>✧ 项目结尾总整理 / 终局精华区</h2><span class="badge">已结项 · ${patterns.length} 个可复用模式</span></header></section><section class="final-patterns" style="${boundsStyle(patternBounds(final, patterns))}"><h3>跨项目可复用模式 · ${patterns.length}</h3>${patterns.map((e) => `<div class="pattern"><strong>${escape(e.title)}</strong><p>${escape(e.content)}</p></div>`).join("") || "<p>暂无已验证的可复用模式。</p>"}</section>`
     : "";
   const nodes = canvas.nodes
     .map(
       (n) =>
-        `<button class="node ${n.kind}" data-node="${n.id}" aria-label="查看：${escape(n.title)}" style="${boundsStyle(n.bounds)}--category:${categories[n.category][1]}"><span class="category-badge">${categories[n.category][0]} · ${n.kind === "stage_summary" ? "阶段小结" : n.validated ? "已验证" : n.status === "open" ? "待解决" : "待验证"}</span><h3>${escape(n.title)}</h3>${bullets(n.summaryBullets.slice(0, 2).map(text => text.length > 56 ? text.slice(0, 55) + "…" : text))}</button>`,
+        `<button class="node ${n.kind}" data-node="${n.id}" aria-label="查看：${escape(n.title)}" style="${boundsStyle(n.bounds)}--category:${categories[n.category][1]}"><span class="category-badge">${categories[n.category][0]}</span><h3>${escape(n.title)}</h3>${bullets(n.summaryBullets.slice(0, 2).map(text => text.length > 56 ? text.slice(0, 55) + "…" : text))}</button>`,
     )
     .join("");
   $("#world").innerHTML = zones + finalHTML + renderEdges(canvas) + nodes;
@@ -295,7 +295,7 @@ async function renderExperiences() {
             (n) => n.sourceExperienceId === e.id,
           );
           const own = e.sourceCanvasId === canvas?.id;
-          return `<article class="experience-card"><small>${categories[e.category][0]}</small><h3>${escape(e.title)}</h3><p>${escape(e.content)}</p><small>来自 ${escape(store.canvases.find((c) => c.id === e.sourceCanvasId)?.title ?? "历史项目")}</small><button data-experience="${e.id}" ${!writable(canvas) || applied || own || pending ? "disabled" : ""}>${applied ? "✓ 已应用到当前画布" : own ? "来自当前画布" : "应用到当前画布 ↗"}</button></article>`;
+          return `<article class="experience-card"><h3>${escape(e.title)}</h3><p>${escape(e.content)}</p><button data-experience="${e.id}" ${!writable(canvas) || applied || own || pending ? "disabled" : ""}>${applied ? "✓ 已应用到当前画布" : own ? "来自当前画布" : "应用到当前画布 ↗"}</button></article>`;
         })
         .join("") ||
       '<p class="muted" style="margin-top:14px">暂无匹配经验。项目结尾总整理后，已验证的做法会出现在这里。</p>';
@@ -464,9 +464,8 @@ function openForm(action) {
     finalize: "项目结尾总整理",
   };
   $("#modal-title").textContent = titles[action];
-  $("#modal-context").textContent = ["group", "canvas"].includes(action)
-    ? "让每一份项目知识都有自己的归属。"
-    : `当前目标：${activeCanvas()?.title} · 阶段 ${activeCanvas()?.currentStageNumber}`;
+  $("#modal-context").textContent = "";
+  $("#modal-context").hidden = true;
   let fields = "";
   if (action === "group")
     fields =
@@ -501,12 +500,10 @@ function openForm(action) {
       '<label for="field-status">记录状态</label><select id="field-status" name="status"><option value="active">有效记录</option><option value="open">待解决</option><option value="superseded">已被替代</option></select><label class="check"><input type="checkbox" name="validated"> 已经过实践验证，可参与项目结尾总整理</label>';
   if (action === "consolidate")
     fields =
-      '<p class="muted">按五大分类生成阶段小结并归档。归档后，需开启下一阶段才能继续记录。</p><label class="check"><input type="checkbox" name="advanceToNextStage"> 整理后自动开启下一阶段</label>' +
+      '<label class="check"><input type="checkbox" name="advanceToNextStage"> 整理后自动开启下一阶段</label>' +
       field("nextStageTitle", "下一阶段名称（可选）");
   if (action === "advance")
-    fields =
-      '<p class="muted">当前阶段将自动整理归档，随后创建新的阶段区域。</p>' +
-      field("title", "下一阶段名称（可选）");
+    fields = field("title", "下一阶段名称（可选）");
   if (action === "finalize") {
     const candidates = activeCanvas().nodes.filter(
       (n) =>
@@ -515,16 +512,14 @@ function openForm(action) {
         !n.validated,
     );
     fields =
-      '<p class="muted">结项后画布将只读。已验证的约定与好用法，以及重要程度 ≥ 4 的架构、实现和修复，将发布到跨项目经验库。</p>' +
       textArea("summary", "项目交接总结（可选）") +
-      '<h3>确认已验证的记录</h3><p class="muted">仅勾选你已实际验证的内容。未勾选记录仍保留在交接文档中。</p><div class="review-list">' +
+      '<h3>确认已验证的记录</h3><div class="review-list">' +
       candidates
         .map(
           (n) =>
             `<label class="check"><input type="checkbox" name="validatedNodeIds" value="${n.id}"><span>${escape(n.title)} <small>· ${categories[n.category][0]} · 重要程度 ${n.importance}</small></span></label>`,
         )
         .join("") +
-      (candidates.length ? "" : '<p class="muted">没有待确认的有效记录。</p>') +
       "</div>";
   }
   $("#form-fields").innerHTML = fields;
@@ -631,7 +626,7 @@ async function renderHandoff() {
     $("#drawer-content").innerHTML =
       '<div class="provider-cards-grid">' + Object.values(bundle.providers).map(provider =>
         '<article class="provider-card"><div class="provider-card-header"><strong>' + escape(provider.label) +
-        '</strong></div><p>' + escape(provider.description) + '</p><div class="provider-card-actions">' +
+        '</strong></div><div class="provider-card-actions">' +
         '<button data-action="copy-provider" data-provider="' + provider.id + '">📋 一键复制发给 ' + escape(provider.label) + '</button>' +
         '<button data-action="configure-provider" data-provider="' + provider.id + '">⚡ 一键自动写入本机 ' + escape(provider.label) + ' 配置</button>' +
         '</div><details><summary>查看连接配置</summary><pre>' + escape(provider.configSnippet) + '</pre></details></article>'

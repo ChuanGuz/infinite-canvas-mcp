@@ -30,7 +30,7 @@
       <section class="sidebar-block">
         <div class="section-heading">
           <h2>画布分组</h2>
-          <button data-action="group" aria-label="新建分组" title="新建分组">＋</button>
+          <button data-action="group" aria-label="新建分组">＋</button>
         </div>
         <nav id="groups" aria-label="画布分组"></nav>
       </section>
@@ -38,7 +38,7 @@
       <section class="sidebar-block">
         <div class="section-heading">
           <h2>项目画布</h2>
-          <button data-action="canvas" aria-label="新建画布" title="新建画布">＋</button>
+          <button data-action="canvas" aria-label="新建画布">＋</button>
         </div>
         <nav id="canvases" aria-label="画布列表"></nav>
       </section>
@@ -46,22 +46,22 @@
       <section class="sidebar-block experience-section">
         <div class="section-heading">
           <h2>跨项目经验库</h2>
-          <span id="experience-count" class="badge">0</span>
+          <span id="experience-count" class="badge" hidden>0</span>
         </div>
         <label class="sr-only" for="experience-search">搜索经验</label>
         <input
           id="experience-search"
           type="search"
-          placeholder="搜索经验…"
+          placeholder="搜索…"
         />
         <label class="sr-only" for="experience-category">经验分类</label>
         <select id="experience-category">
-          <option value="">全部分类</option>
+          <option value="">全部</option>
         </select>
         <div id="experiences" aria-live="polite"></div>
       </section>
 
-      <footer class="sidebar-footer"></footer>
+      <footer class="sidebar-footer" hidden></footer>
     </aside>
 
     <main>
@@ -76,10 +76,10 @@
         </button>
 
         <div class="title-area">
-          <div class="eyebrow" id="project-group">画布分组</div>
+          <div class="eyebrow" id="project-group" hidden></div>
           <div class="title-row">
             <h1 id="project-title">无限画布</h1>
-            <span id="project-status" class="badge">进行中</span>
+            <span id="project-status" class="badge" hidden></span>
           </div>
           <p id="canvas-description" class="subtitle" hidden></p>
         </div>
@@ -129,7 +129,7 @@
             >
               交接文档
             </button>
-            <span id="sync-status" class="sync" role="status">已同步</span>
+            <span id="sync-status" class="sync" role="status" hidden></span>
           </div>
         </div>
       </header>
@@ -143,7 +143,7 @@
         </div>
 
         <nav id="stage-jumps" class="stage-jumps" aria-label="阶段跳转"></nav>
-        <span id="canvas-stats" class="muted stats-pill"></span>
+        <span id="canvas-stats" class="muted stats-pill" hidden></span>
       </div>
 
       <div
@@ -176,7 +176,6 @@
     <dialog id="drawer" class="drawer" aria-labelledby="drawer-title">
       <header>
         <div>
-          <span class="eyebrow">MCP 接入与交接</span>
           <h2 id="drawer-title">交接文档</h2>
         </div>
         <button data-action="close-drawer" aria-label="关闭">×</button>
@@ -192,7 +191,7 @@
             ×
           </button>
         </header>
-        <p id="modal-context" class="muted"></p>
+        <p id="modal-context" class="muted" hidden></p>
         <div id="form-fields"></div>
         <p id="form-error" class="error" role="alert"></p>
         <footer>

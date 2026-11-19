@@ -48,8 +48,22 @@ async function createCanvas(page: Page, title: string, projectKey: string) {
   await expect(page.locator('#project-title')).toHaveText(title);
 }
 
+async function expectMinimalCanvas(page: Page) {
+  await expect(page.locator('.zone-summary, .zone > header p')).toHaveCount(0);
+  for (const text of ['记录、探索、验证，让知识在这里积累。', '让每一份项目知识都有自己的归属。']) {
+    await expect(page.locator('body')).not.toContainText(text);
+  }
+  await expect(page.locator('.cluster small, .cluster-empty, #canvases small, #canvases .badge, .experience-card small')).toHaveCount(0);
+  await expect(page.locator('.cluster > :not(h3)')).toHaveCount(0);
+  await expect(page.locator('.cluster > h3')).toHaveCount(await page.locator('.cluster').count());
+  const badges = await page.locator('.node .category-badge').allTextContents();
+  for (const badge of badges) {
+    assert.match(badge, /^(规定做法与约定|架构与模型设计|功能实现|踩坑与问题修复|最终确定的好用法)$/);
+  }
+}
+
 test('minimal workbench keeps its blank title without fullscreen controls or shortcut interception', async t => {
-  const { page } = await fixture(t, true);
+  const { page, engine } = await fixture(t, true);
   await expect(page).toHaveTitle('\uFEFF');
   await expect(page.locator('#project-title')).toHaveText('无限画布知识工作台');
   await expect(page.locator('[data-action="fullscreen"], #fullscreen-toggle')).toHaveCount(0);
@@ -68,7 +82,22 @@ test('minimal workbench keeps its blank title without fullscreen controls or sho
     await expect(page.locator('.node h3').filter({ hasText: convention.title })).toHaveCount(1);
     const experience = page.locator('.experience-card').filter({ hasText: convention.title });
     await expect(experience).toContainText(convention.content);
-    await expect(experience).toContainText('最终确定的好用法');
+    await expect(experience.locator('small')).toHaveCount(0);
+  }
+  await expectMinimalCanvas(page);
+  for (const canvas of engine.listCanvases()) {
+    await expect(page.locator(`#canvases [data-canvas="${canvas.id}"]`)).toHaveText(canvas.title);
+  }
+  for (const action of ['group', 'canvas', 'record', 'consolidate', 'advance', 'finalize']) {
+    await page.locator(`[data-action="${action}"]`).first().click();
+    await expect(page.locator('#modal')).toBeVisible();
+    await expect(page.locator('#modal-context')).toHaveText('');
+    await expect(page.locator('#modal-context')).toHaveAttribute('hidden', '');
+    await expect(page.locator('#modal-context')).not.toBeVisible();
+    await expect(page.locator('#form-fields p.muted')).toHaveCount(0);
+    await expect(page.locator('#modal')).not.toContainText('当前目标：');
+    await expectMinimalCanvas(page);
+    await page.locator('#modal [data-action="close-modal"]').first().click();
   }
 });
 
@@ -88,6 +117,11 @@ test('production static assets and complete browser workflow connect REST, stdio
   await submit(page);
   await createCanvas(page, '端到端项目', 'browser-source');
   await expect(page.locator('.cluster')).toHaveCount(5);
+  await expectMinimalCanvas(page);
+  await page.locator('[data-action="finalize"]').click();
+  await expect(page.locator('.review-list')).toBeEmpty();
+  await expect(page.locator('#form-fields p.muted')).toHaveCount(0);
+  await page.locator('#modal [data-action="close-modal"]').first().click();
   const sourceId = engine.getCanvas().id;
   const cases = [
     ['Coding conventions', 'Always use strict TypeScript. Never commit secrets.', 'convention_practice'],
@@ -116,6 +150,7 @@ test('production static assets and complete browser workflow connect REST, stdio
   await expect(page.locator('#project-status')).toContainText('阶段 2');
   assert.equal(engine.getCanvas().stages[0]!.status, 'consolidated');
   for (const category of CATEGORY_ORDER) assert.ok(engine.getCanvas().stages[0]!.clusters[category].summaryNodeId);
+  await expectMinimalCanvas(page);
 
   const client = new Client({ name: 'stage3-browser', version: '1.0.0' });
   t.after(() => client.close());
@@ -140,6 +175,8 @@ test('production static assets and complete browser workflow connect REST, stdio
   await submit(page);
   await expect(page.locator('#project-status')).toContainText('已结项');
   await expect(page.locator('.zone.final')).toHaveCount(1);
+  await expectMinimalCanvas(page);
+  await expect(page.locator('.zone.final')).not.toContainText('端到端验收完成，知识可交接。');
   await expect(page.locator('.pattern')).toHaveCount(6);
   await expect(page.locator('.node.distillation')).toHaveCount(4);
   await expect(page.locator('[data-action="advance"]')).toBeDisabled();
@@ -264,6 +301,7 @@ test('four quick buttons and drawer cards configure and copy the pinned canvas, 
   }
   await page.locator('[data-action="handoff"]').click();
   await expect(page.locator('.provider-cards-grid .provider-card')).toHaveCount(4);
+  await expect(page.locator('.provider-card p')).toHaveCount(0);
   for (const provider of Object.keys(labels)) {
     await page.locator(`[data-action="copy-provider"][data-provider="${provider}"]`).click();
     await expect(page.locator('#notice')).toContainText('已复制');
