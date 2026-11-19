@@ -72,5 +72,5 @@ export function classifyLearning(input: LearningInput): ClassificationResult {
   if (!reusablePatterns.length && ['convention_practice', 'architecture_design', 'best_practice'].includes(category))
     reusablePatterns.push(...summaryBullets.slice(0, 2));
   return { category, summaryBullets, reusablePatterns, scores,
-    reason: item.category ? 'Explicit category' : scores[winner] ? 'Weighted title, tags, and content rules' : 'Default implementation category' };
+    reason: item.category ? '按指定分类记录' : scores[winner] ? '根据标题、标签与内容综合分类' : '默认归入功能实现' };
 }

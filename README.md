@@ -1,4 +1,23 @@
-# Infinite Canvas MCP — Stage 3
+# 无限画布 · 第四阶段
+
+保留暖纸色与鼠尾草绿的护眼设计，新增全中文示例、四种助手的一键连接指令和独立桌面启动器。
+
+在 Windows 上安装 Node.js 22 或更高版本并执行 `npm install` 后，双击项目根目录的 **无限画布.exe**。
+启动器静默启动本机服务，再以 Edge 或 Chrome 应用窗口打开画布。窗口退出后只清理本次启动器创建的服务，
+复用的已有服务不受影响。程序需要与项目源码及依赖放在一起；重新编译使用 `npm run build:exe`。
+如果没有现代浏览器，系统内置兼容视图会提示安装浏览器后重试。
+
+顶部四个按钮会生成连接配置并复制当前画布的中文指令；抽屉中可单独复制、写入配置或阅读完整交接文档。
+Codex 会自动注册 `~/.codex/config.toml` 中的 `[mcp_servers.infinite_canvas]`，修改前备份原文件，保留其他配置。
+Claude、Gemini、DeepSeek 的配置生成在 `data/mcp-configs/`，通用配置同时保存到根目录 `mcp-config.json`；
+将配置合并到支持本地工具协议的客户端后重新加载即可使用。纯网页版只能阅读交接文本，不能通过粘贴指令访问本机。
+
+连接接口为 `GET /api/mcp/connect-bundle?canvasId=...` 和
+`POST /api/mcp/quick-connect`（`provider` 支持 `codex`、`claude`、`gemini`、`deepseek`、`all`，可指定 `canvasId`）。
+自动配置不会安装客户端或创建付费账户。新助手先调用 `get_handoff_context`，所有新增叙述、总结与好用法使用简体中文。
+
+中文示例数据库和交接文档随仓库交付。启动时仅对内容完全匹配的旧版默认示例进行备份升级；已修改的项目和空数据库不会重置。
+浏览器独立配置目录、连接配置和升级备份不进入版本控制。
 
 A local infinite canvas workbench for stage-based project learning, validated
 cross-project experience, and seamless AI handoff. The implementation follows
@@ -28,8 +47,9 @@ On first boot it creates `data/store.json` and one
 groups, an active project with stages 1 and 2 consolidated and stage 3 in progress,
 and a completed project with final practices and reusable experiences. Demo history
 illustrates the domain model, with populated category clusters and provenance links.
-An existing store, including an empty store, is never reseeded. Runtime data is ignored
-by Git; fixture generation lives in `createDemoStore()`.
+Existing user stores, including empty stores, are preserved. Only the exact unmodified
+legacy demo is backed up and upgraded. Chinese fixtures and handoffs are tracked;
+fixture content lives in `src/core/storage.ts` and generation uses `createDemoStore()`.
 
 Open **http://127.0.0.1:3456** after `npm start`. To run the compiled HTTP entrypoint,
 use `node dist/src/index.js` after building; keep `src/web` alongside `dist`.
@@ -165,9 +185,11 @@ args = ["E:/idm/无限画布/dist/src/mcp/server.js"]
 DATA_DIR = "E:/idm/无限画布/data"
 ```
 
-The drawer offers both ready-to-copy JSON and Codex TOML, generated from the running
+The four drawer cards offer JSON and Codex TOML, generated from the running
 server's **absolute Node executable, checkout path, and actual data directory** via
-`GET /api/mcp/config`. This also works when the host does not support `cwd`. If using
+`GET /api/mcp/connect-bundle`. These configurations use the installed local loader and
+do not require a prior build. The legacy `/api/mcp/config` endpoint remains available.
+This also works when the host does not support `cwd`. If using
 the manual examples, ensure `node` is available on the client's PATH. Use forward
 slashes in hand-written Windows configuration, or escape backslashes correctly.
 

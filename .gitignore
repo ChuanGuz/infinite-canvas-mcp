@@ -3,4 +3,11 @@ dist/
 *.log
 .DS_Store
 .codex_last_message*.txt
-data/
+data/*
+!data/store.json
+!data/handoffs/
+data/handoffs/*
+!data/handoffs/*.md
+data/desktop_app_profile/
+data/mcp-configs/
+mcp-config.json

@@ -100,7 +100,7 @@ test('multi-group management validates input, persists updates, and isolates ret
   other.name = 'external mutation';
   assert.equal(engine.listGroups()[1]!.name, 'Platform');
   assert.throws(() => engine.createGroup({ name: ' ' }));
-  assert.throws(() => engine.updateGroup('missing', { name: 'x' }), /Group not found/);
+  assert.throws(() => engine.updateGroup('missing', { name: 'x' }), /未找到分组/);
   assert.equal(new CanvasEngine({ dataDir }).listGroups()[0]!.name, 'AI Engineering');
 });
 
@@ -115,9 +115,9 @@ test('multi-canvas creation, filtering, selection, unique project keys, and rest
   const detached = engine.getCanvas();
   detached.title = 'mutated';
   assert.equal(engine.getCanvas().title, canvas.title);
-  assert.throws(() => engine.createCanvas({ groupId: group.id, title: 'Duplicate', projectKey: 'KNOWLEDGE' }), /already exists/);
-  assert.throws(() => engine.createCanvas({ groupId: 'missing', title: 'No group', projectKey: 'missing' }), /Group not found/);
-  assert.throws(() => engine.switchCanvas('missing'), /Canvas not found/);
+  assert.throws(() => engine.createCanvas({ groupId: group.id, title: 'Duplicate', projectKey: 'KNOWLEDGE' }), /项目标识已存在/);
+  assert.throws(() => engine.createCanvas({ groupId: 'missing', title: 'No group', projectKey: 'missing' }), /未找到分组/);
+  assert.throws(() => engine.switchCanvas('missing'), /未找到画布/);
 });
 
 test('recordLearning classifies, places, preserves metadata, and merges exact duplicates without losing evidence', t => {
@@ -161,7 +161,7 @@ test('checkpoint covers every category, preserves sources, is idempotent, and cr
   const checkpoint = engine.getCanvas();
   engine.consolidateStage();
   assert.deepEqual(engine.getCanvas(), checkpoint);
-  assert.throws(() => engine.recordLearning({ title: 'Too late', content: 'Record after checkpoint.' }), /advance/);
+  assert.throws(() => engine.recordLearning({ title: 'Too late', content: 'Record after checkpoint.' }), /开启下一阶段/);
   engine.advanceStage(undefined, 'Follow-up');
   engine.recordLearning({ title: 'Feature two', content: 'Implemented another endpoint.', category: 'feature_impl' });
   const second = engine.consolidateStage(undefined, { advanceToNextStage: true, nextStageTitle: 'Acceptance' });
@@ -179,7 +179,7 @@ test('explicit stage advancement automatically checkpoints and supports empty st
   const { engine } = project(t);
   engine.advanceStage();
   assert.equal(engine.getCanvas().stages[0]!.status, 'consolidated');
-  assert.match(engine.getCanvas().stages[0]!.summary, /No learning/);
+  assert.match(engine.getCanvas().stages[0]!.summary, /尚未记录学习成果/);
   const before = engine.getCanvas();
   assert.throws(() => engine.advanceStage(undefined, ' '));
   assert.deepEqual(engine.getCanvas(), before);
@@ -207,8 +207,8 @@ test('final distillation synthesizes validated findings, excludes unsafe candida
   engine.finalizeProjectDistillation();
   assert.deepEqual(engine.getCanvas(), canvas);
   assert.equal(engine.queryCrossProjectExperiences().length, 5);
-  assert.throws(() => engine.advanceStage(), /completed/);
-  assert.throws(() => engine.recordLearning({ title: 'x', content: 'y' }), /completed/);
+  assert.throws(() => engine.advanceStage(), /已结项/);
+  assert.throws(() => engine.recordLearning({ title: 'x', content: 'y' }), /已结项/);
 });
 
 test('review can resolve open items, supersede conventions, and explicitly validate final candidates', t => {
@@ -220,7 +220,7 @@ test('review can resolve open items, supersede conventions, and explicitly valid
   engine.updateLearning(old.id, { status: 'superseded' });
   assert.equal(engine.getHandoffContext().conventions.length, 0);
   const reviewed = engine.recordLearning({ title: 'New rule', content: 'Use current conventions.', category: 'convention_practice' });
-  assert.throws(() => engine.finalizeProjectDistillation(undefined, { validatedNodeIds: [reviewed.id, 'missing'] }), /Cannot validate/);
+  assert.throws(() => engine.finalizeProjectDistillation(undefined, { validatedNodeIds: [reviewed.id, 'missing'] }), /无法验证/);
   assert.equal(engine.getCanvas().nodes.find(n => n.id === reviewed.id)!.validated, false, 'Failed transaction must roll back all validation');
   engine.finalizeProjectDistillation(undefined, { validatedNodeIds: [reviewed.id] });
   assert.equal(engine.queryCrossProjectExperiences().length, 2);
@@ -284,7 +284,7 @@ test('cross-project search filters keywords/category/tags, imports with provenan
   const architecture = engine.queryCrossProjectExperiences({ category: 'architecture_design' })[0]!;
   assert.equal(engine.applyExperienceToCanvas(architecture.id).category, 'architecture_design');
   assert.equal(engine.getHandoffContext().appliedExperiences.length, 2);
-  assert.throws(() => engine.applyExperienceToCanvas('missing'), /Experience not found/);
+  assert.throws(() => engine.applyExperienceToCanvas('missing'), /未找到经验/);
   engine.finalizeProjectDistillation();
   assert.equal(engine.queryCrossProjectExperiences().length, 2, 'Imported guidance must not become proof in a new project');
 });
@@ -339,7 +339,7 @@ test('every requested domain schema validates real fixtures and rejects malforme
 test('existing empty stores remain empty; corrupt stores fail loudly and are never replaced by demo data', t => {
   const { engine, dataDir } = setup(t);
   assert.equal(new CanvasEngine({ dataDir }).listGroups().length, 0);
-  assert.throws(() => engine.getCanvas(), /no active canvas/);
+  assert.throws(() => engine.getCanvas(), /未找到画布/);
   writeFileSync(engine.storage.storePath, '{ corrupt');
   assert.throws(() => new CanvasEngine({ dataDir }));
   assert.equal(readFileSync(engine.storage.storePath, 'utf8'), '{ corrupt');
@@ -367,7 +367,7 @@ test('concurrent-writer lock fails safely instead of overwriting state', t => {
   const before = readFileSync(engine.storage.storePath, 'utf8');
   const lock = join(dataDir, 'store.lock');
   writeFileSync(lock, 'another writer');
-  assert.throws(() => engine.createGroup({ name: 'Blocked' }), /Store is locked/);
+  assert.throws(() => engine.createGroup({ name: 'Blocked' }), /存储正在写入/);
   assert.equal(readFileSync(engine.storage.storePath, 'utf8'), before);
   assert.equal(readFileSync(lock, 'utf8'), 'another writer');
   rmSync(lock);
@@ -380,7 +380,7 @@ test('mirror failure reports committed JSON and startup repairs the handoff afte
   const mirror = join(dataDir, 'handoffs', `HANDOFF-${canvas.id}.md`);
   rmSync(mirror);
   mkdirSync(mirror); // A directory at the file path prevents handoff replacement.
-  assert.throws(() => engine.recordLearning({ title: 'Committed evidence', content: 'Implemented durable recording.' }), /Store committed, but handoff synchronization failed/);
+  assert.throws(() => engine.recordLearning({ title: 'Committed evidence', content: 'Implemented durable recording.' }), /数据已保存，但交接文档同步失败/);
   assert.equal(engine.getCanvas().nodes.length, 1);
   rmSync(mirror, { recursive: true });
   const recovered = new CanvasEngine({ dataDir });

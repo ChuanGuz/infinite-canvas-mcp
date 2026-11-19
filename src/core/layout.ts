@@ -11,8 +11,8 @@ const COLUMNS = 3;
 export const initialBounds = (): Bounds => ({ x: 0, y: 0, width: 1, height: 1 });
 
 function cardHeight(node: CanvasNode): number {
-  const lines = node.summaryBullets.reduce((sum, bullet) => sum + Math.ceil([...bullet].length / 36), 0);
-  return Math.max(200, 104 + Math.ceil([...node.title].length / 32) * 26 + lines * 22);
+  const lines = node.summaryBullets.slice(0, 2).reduce((sum, bullet) => sum + Math.ceil(Math.min([...bullet].length, 56) / 22), 0);
+  return Math.max(230, 104 + Math.ceil([...node.title].length / 22) * 28 + lines * 26);
 }
 
 function placeGrid(nodes: CanvasNode[], x: number, y: number): number {

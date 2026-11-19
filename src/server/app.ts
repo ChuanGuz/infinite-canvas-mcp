@@ -9,8 +9,10 @@ import { CanvasEngine } from '../core/engine.js';
 import type { EngineOptions } from '../core/engine.js';
 import { IdSchema } from '../types/schema.js';
 import { invokeTool, invocationError, listTools, parseInput, ToolInvocationError } from '../mcp/tools.js';
+import { connectionBundle, quickConnect, PROVIDERS } from './mcp-connect.js';
+import type { ConnectOptions } from './mcp-connect.js';
 
-export interface AppOptions extends EngineOptions {
+export interface AppOptions extends EngineOptions, ConnectOptions {
   engine?: CanvasEngine;
   webDir?: string;
   onError?: (error: unknown) => void;
@@ -125,6 +127,20 @@ export function createApp(options: AppOptions = {}) {
     }));
   });
   app.get('/api/mcp/tools', (_req, res) => res.json({ tools: listTools() }));
+  app.get('/api/mcp/connect-bundle', (req, res) => {
+    const canvasId = parseInput(IdSchema.optional(), req.query.canvasId);
+    const { providers, canvasId: selected } = connectionBundle(engine, canvasId, options);
+    res.json({ providers, canvasId: selected });
+  });
+  app.post('/api/mcp/quick-connect', (req, res) => {
+    // Local settings must not be writable through a foreign browser origin or DNS rebinding.
+    const origin = req.get('origin');
+    const localHost = /^(127\.0\.0\.1|localhost|\[::1\])(?::\d+)?$/i.test(req.get('host') ?? '');
+    if (!localHost || (origin && origin !== `${req.protocol}://${req.get('host')}`) || req.get('sec-fetch-site') === 'cross-site')
+      throw new ToolInvocationError('FORBIDDEN', '请从本机画布页面配置连接。', 403);
+    const input = parseInput(z.object({ provider: z.enum([...PROVIDERS, 'all']), canvasId: IdSchema.optional() }).strict(), req.body);
+    res.json(quickConnect(engine, input.provider, input.canvasId, options));
+  });
   app.get('/api/mcp/config', (_req, res) => {
     const projectRoot = fileURLToPath(new URL(import.meta.url.includes('/dist/src/') ? '../../../' : '../../', import.meta.url));
     // Compiled entrypoint needs neither cwd nor a globally installed tsx loader.
@@ -138,14 +154,14 @@ export function createApp(options: AppOptions = {}) {
     const input = parseInput(z.object({ name: z.string().min(1), arguments: bodySchema.optional() }).strict(), req.body);
     res.json({ result: call(input.name, input.arguments ?? {}) });
   });
-  app.use('/api', (_req, res) => res.status(404).json({ error: { code: 'NOT_FOUND', message: 'Unknown API endpoint' } }));
+  app.use('/api', (_req, res) => res.status(404).json({ error: { code: 'NOT_FOUND', message: '未找到请求的接口' } }));
   // The same source assets work under tsx and dist/src/server/app.js after a build.
   const defaultWebDir = fileURLToPath(new URL(import.meta.url.includes('/dist/src/') ? '../../../src/web/' : '../web/', import.meta.url));
   app.use(express.static(options.webDir ?? defaultWebDir));
   const errorHandler: ErrorRequestHandler = (error: unknown, _req, res, _next) => {
     const type = (error as { type?: string } | null)?.type;
-    const failure = type === 'entity.parse.failed' ? new ToolInvocationError('INVALID_JSON', 'Request body must be valid JSON.', 400)
-      : type === 'entity.too.large' ? new ToolInvocationError('PAYLOAD_TOO_LARGE', 'Request body exceeds 1 MB.', 413)
+    const failure = type === 'entity.parse.failed' ? new ToolInvocationError('INVALID_JSON', '请求内容必须符合结构化数据格式。', 400)
+      : type === 'entity.too.large' ? new ToolInvocationError('PAYLOAD_TOO_LARGE', '请求内容超过一兆字节。', 413)
       : invocationError(error);
     if (failure.status === 500) onError(error);
     if (!res.headersSent) res.status(failure.status).json({ error: { code: failure.code, message: failure.message } });

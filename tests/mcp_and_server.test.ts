@@ -166,8 +166,8 @@ test('MCP protocol discovers and invokes all tools and reads every resource', as
   assert.equal(invalid.isError, true);
   const conflict = await client.callTool({ name: 'advance_project_stage' });
   assert.equal(conflict.isError, true);
-  await assert.rejects(client.callTool({ name: 'missing' }), /Unknown tool/);
-  await assert.rejects(client.readResource({ uri: 'canvas://missing' }), /Unknown resource/);
+  await assert.rejects(client.callTool({ name: 'missing' }), /未找到工具|Unknown tool/);
+  await assert.rejects(client.readResource({ uri: 'canvas://missing' }), /未找到资源|Unknown resource/);
 });
 
 test('invalid arguments and domain failures leave store unchanged and return typed errors', t => {
@@ -193,8 +193,8 @@ test('invalid arguments and domain failures leave store unchanged and return typ
   for (const [name, args] of invalid) assert.throws(() => invokeTool(engine, name, args),
     (error: unknown) => error instanceof ToolInvocationError && error.status === 400, name);
   assert.throws(() => invokeTool(engine, 'missing'), (error: unknown) => error instanceof ToolInvocationError && error.status === 404);
-  assert.throws(() => invokeTool(engine, 'get_handoff_context'), /Canvas not found/);
-  assert.throws(() => readResource(engine, 'canvas://active/handoff.md'), /Canvas not found/);
+  assert.throws(() => invokeTool(engine, 'get_handoff_context'), /未找到画布/);
+  assert.throws(() => readResource(engine, 'canvas://active/handoff.md'), /未找到画布/);
   assert.deepEqual(JSON.parse(readResource(engine, 'canvas://global/experiences').contents[0]!.text), []);
   assert.equal(readFileSync(engine.storage.storePath, 'utf8'), before);
 });

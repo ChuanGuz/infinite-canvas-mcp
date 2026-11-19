@@ -1,10 +1,10 @@
 const $ = (selector) => document.querySelector(selector);
 const categories = {
-  convention_practice: ["规定做法与约定", "#bbd8a0"],
-  architecture_design: ["架构与模型设计", "#9bc5ed"],
-  feature_impl: ["功能实现", "#a3e8ce"],
-  pitfall_fix: ["踩坑与问题修复", "#e8b39d"],
-  best_practice: ["最终确定的好用法", "#e1c58b"],
+  convention_practice: ["规定做法与约定", "#a65e2e"],
+  architecture_design: ["架构与模型设计", "#2f6c78"],
+  feature_impl: ["功能实现", "#2f6b55"],
+  pitfall_fix: ["踩坑与问题修复", "#b84a39"],
+  best_practice: ["最终确定的好用法", "#9e6b1e"],
 };
 const escape = (value) =>
   String(value ?? "").replace(
@@ -47,12 +47,12 @@ function toggleNavigation(
   document.body.classList.toggle("sidebar-open", open);
   const toggle = $("[aria-controls='sidebar']");
   toggle.setAttribute("aria-expanded", String(open));
-  if (matchMedia("(max-width: 650px)").matches) {
+  if (matchMedia("(max-width: 720px)").matches) {
     $("main").inert = open;
     (open ? $("#sidebar button") : toggle).focus();
   }
 }
-matchMedia("(max-width: 650px)").addEventListener("change", () => {
+matchMedia("(max-width: 720px)").addEventListener("change", () => {
   $("main").inert = false;
   document.body.classList.remove("sidebar-open");
   $("[aria-controls='sidebar']").setAttribute("aria-expanded", "false");
@@ -156,7 +156,7 @@ function renderNavigation() {
     canvases
       .map(
         (c) =>
-          `<button class="nav-item ${c.id === store.activeCanvasId ? "active" : ""}" data-canvas="${c.id}" aria-pressed="${c.id === store.activeCanvasId}"><span class="nav-copy">${escape(c.title)}<small><span class="badge">Stage ${c.currentStageNumber}</span> ${canvasStatus(c)}</small></span><span>↗</span></button>`,
+          `<button class="nav-item ${c.id === store.activeCanvasId ? "active" : ""}" data-canvas="${c.id}" aria-pressed="${c.id === store.activeCanvasId}"><span class="nav-copy">${escape(c.title)}<small><span class="badge">阶段 ${c.currentStageNumber}</span> ${canvasStatus(c)}</small></span><span>↗</span></button>`,
       )
       .join("") || '<p class="muted">此分组还没有画布。</p>';
 }
@@ -172,10 +172,10 @@ function renderCanvas() {
   $("#empty-state").hidden = Boolean(canvas);
   $("#project-title").textContent = canvas?.title ?? "无限画布工作台";
   $("#project-group").textContent = canvas
-    ? `${store.groups.find((g) => g.id === canvas.groupId)?.name} / PROJECT WORKBENCH`
-    : "PROJECT WORKBENCH";
+    ? `${store.groups.find((g) => g.id === canvas.groupId)?.name} / 项目工作台`
+    : "项目工作台";
   $("#project-status").textContent = canvas
-    ? `Stage ${canvas.currentStageNumber} · ${canvasStatus(canvas)}`
+    ? `阶段 ${canvas.currentStageNumber} · ${canvasStatus(canvas)}`
     : "尚未创建画布";
   $("#canvas-description").textContent =
     canvas?.description || "从学习记录，到可复用的好用法。";
@@ -192,7 +192,7 @@ function renderCanvas() {
     ? canvas.stages
         .map(
           (s) =>
-            `<button data-stage="${s.id}" class="${s.stageNumber === canvas.currentStageNumber ? "current" : ""}">Stage ${s.stageNumber} ${s.status === "consolidated" ? "✓" : "·"}</button>`,
+            `<button data-stage="${s.id}" class="${s.stageNumber === canvas.currentStageNumber ? "current" : ""}">阶段 ${s.stageNumber} ${s.status === "consolidated" ? "✓" : "·"}</button>`,
         )
         .join("") +
       (canvas.finalZone
@@ -207,7 +207,7 @@ function renderCanvas() {
   const zones = canvas.stages
     .map(
       (s) =>
-        `<section class="zone ${s.stageNumber === canvas.currentStageNumber ? "current" : ""}" data-zone="${s.id}" style="${boundsStyle(s.bounds)}"><header><h2>Stage ${s.stageNumber} <span> / ${escape(s.title)}</span></h2><span class="badge">${s.status === "consolidated" ? "已整理归档" : "进行中"}</span><p class="zone-summary">${escape(s.summary || "记录、探索、验证，让知识在这里积累。")}</p></header></section>` +
+        `<section class="zone ${s.stageNumber === canvas.currentStageNumber ? "current" : ""}" data-zone="${s.id}" style="${boundsStyle(s.bounds)}"><header><h2>阶段 ${s.stageNumber} <span> / ${escape(s.title)}</span></h2><span class="badge">${s.status === "consolidated" ? "已整理归档" : "进行中"}</span><p class="zone-summary">${escape(s.summary || "记录、探索、验证，让知识在这里积累。")}</p></header></section>` +
         Object.entries(categories)
           .map(([category, [label, color]]) => {
             const cluster = s.clusters[category];
@@ -228,7 +228,7 @@ function renderCanvas() {
   const nodes = canvas.nodes
     .map(
       (n) =>
-        `<button class="node ${n.kind}" data-node="${n.id}" aria-label="查看：${escape(n.title)}" style="${boundsStyle(n.bounds)}--category:${categories[n.category][1]}"><span class="category-badge">${categories[n.category][0]} · ${n.kind === "stage_summary" ? "阶段小结" : n.validated ? "已验证" : n.status === "open" ? "待解决" : "待验证"}</span><h3>${escape(n.title)}</h3>${bullets(n.summaryBullets)}<span class="tags">${n.tags.map((tag) => `<span class="tag">${escape(tag)}</span>`).join("")}</span></button>`,
+        `<button class="node ${n.kind}" data-node="${n.id}" aria-label="查看：${escape(n.title)}" style="${boundsStyle(n.bounds)}--category:${categories[n.category][1]}"><span class="category-badge">${categories[n.category][0]} · ${n.kind === "stage_summary" ? "阶段小结" : n.validated ? "已验证" : n.status === "open" ? "待解决" : "待验证"}</span><h3>${escape(n.title)}</h3>${bullets(n.summaryBullets.slice(0, 2).map(text => text.length > 56 ? text.slice(0, 55) + "…" : text))}</button>`,
     )
     .join("");
   $("#world").innerHTML = zones + finalHTML + renderEdges(canvas) + nodes;
@@ -458,12 +458,12 @@ function openForm(action) {
   $("#modal-title").textContent = titles[action];
   $("#modal-context").textContent = ["group", "canvas"].includes(action)
     ? "让每一份项目知识都有自己的归属。"
-    : `当前目标：${activeCanvas()?.title} · Stage ${activeCanvas()?.currentStageNumber}`;
+    : `当前目标：${activeCanvas()?.title} · 阶段 ${activeCanvas()?.currentStageNumber}`;
   let fields = "";
   if (action === "group")
     fields =
       field("name", "分组名称", "text", "required") +
-      field("color", "分组颜色", "color", 'value="#a3e8ce"') +
+      field("color", "分组颜色", "color", 'value="#2f6b55"') +
       textArea("description", "说明");
   if (action === "canvas")
     fields =
@@ -472,7 +472,7 @@ function openForm(action) {
         "projectKey",
         "项目唯一标识",
         "text",
-        'required placeholder="例如 release-service"',
+        'required placeholder="例如 发布服务"',
       ) +
       `<label for="field-groupId">所属分组</label><select id="field-groupId" name="groupId">${store.groups.map((g) => `<option value="${g.id}" ${g.id === groupFilter ? "selected" : ""}>${escape(g.name)}</option>`).join("")}</select>` +
       textArea("description", "项目说明") +
@@ -481,7 +481,7 @@ function openForm(action) {
     fields =
       field("title", "标题", "text", 'required maxlength="300"') +
       textArea("content", "内容 / 学习记录", true) +
-      `<label for="field-category">分类</label><select id="field-category" name="category"><option value="">自动分类（中英文规则）</option>${options()}</select>` +
+      `<label for="field-category">分类</label><select id="field-category" name="category"><option value="">自动分类</option>${options()}</select>` +
       field("tags", "标签（逗号分隔）") +
       field("relatedFiles", "相关文件（逗号分隔）") +
       field(
@@ -610,25 +610,60 @@ async function renderHandoff() {
   const request = ++handoffRequest;
   const canvas = activeCanvas();
   handoff = null;
-  $("#drawer-title").textContent = "跨 AI 无缝交接 / MCP 接入";
+  $("#drawer-title").textContent = "中文项目交接与助手接入";
   $("#drawer-content").innerHTML = '<p class="muted">正在读取最新交接文档…</p>';
   try {
-    const [context, settings] = await Promise.all([
-      canvas ? api(`canvases/${canvas.id}/handoff`) : null,
-      config ?? api("mcp/config"),
+    const [context, bundle] = await Promise.all([
+      canvas ? api('canvases/' + canvas.id + '/handoff') : null,
+      api('mcp/connect-bundle' + (canvas ? '?canvasId=' + encodeURIComponent(canvas.id) : '')),
     ]);
     if (request !== handoffRequest || drawerMode !== "handoff") return;
     handoff = context;
-    config = settings;
+    config = bundle;
     $("#drawer-content").innerHTML =
-      (context
-        ? `<p>${escape(context.project.title)} · Stage ${context.currentStage.stageNumber} · ${canvasStatus(canvas)}</p><section><h3>规定做法与约定</h3>${bullets(context.conventions.map((n) => n.title))}<h3>阶段历史</h3>${bullets(context.stages.map((s) => `Stage ${s.stageNumber} · ${s.title} · ${s.status === "consolidated" ? "已整理归档" : "进行中"} — ${s.summary || "尚未整理"}`))}<h3>最终确定的好用法</h3>${bullets(context.bestPractices.map((n) => n.title))}<h3>下一步 / 未决事项</h3>${bullets(context.nextSteps)}</section><section><div class="copy-row"><h3>HANDOFF.md · 实时文档</h3><button data-copy="handoff">复制交接文档</button></div><pre id="handoff-markdown">${escape(context.markdown)}</pre></section>`
-        : "<p>创建画布后，这里会显示实时交接文档。</p>") +
-      `<section><h3>MCP 接入</h3><p class="muted">先在项目目录运行 npm run build。以下配置连接同一个数据目录；无需客户端支持 cwd。新 AI 会话先调用 get_handoff_context。</p><label for="mcp-client">AI 客户端</label><select id="mcp-client"><option value="json">Claude Code / Cursor / Antigravity · JSON</option><option value="codex">Codex · TOML</option></select><div class="copy-row"><h3>Server 配置</h3><button data-copy="config">复制 MCP 配置</button></div><pre id="mcp-config">${escape(JSON.stringify(settings.json, null, 2))}</pre><p class="muted">Claude Code：项目 .mcp.json<br>Cursor：项目 .cursor/mcp.json<br>Antigravity：MCP Servers → Manage MCP Servers → View raw config<br>Codex：~/.codex/config.toml<br>Codex 使用相同的 command / args / env，格式为 TOML。</p></section>`;
+      '<div class="provider-cards-grid">' + Object.values(bundle.providers).map(provider =>
+        '<article class="provider-card"><div class="provider-card-header"><strong>' + escape(provider.label) +
+        '</strong></div><p>' + escape(provider.description) + '</p><div class="provider-card-actions">' +
+        '<button data-action="copy-provider" data-provider="' + provider.id + '">📋 一键复制发给 ' + escape(provider.label) + '</button>' +
+        '<button data-action="configure-provider" data-provider="' + provider.id + '">⚡ 一键自动写入本机 ' + escape(provider.label) + ' 配置</button>' +
+        '</div><details><summary>查看连接配置</summary><pre>' + escape(provider.configSnippet) + '</pre></details></article>'
+      ).join('') + '</div>' +
+      (context ? '<section><div class="copy-row"><h3>HANDOFF.md · 完整中文交接文档</h3><button data-copy="handoff">复制交接文档</button></div><pre id="handoff-markdown">' +
+        escape(context.markdown) + '</pre></section>' : '<p>创建画布后，这里会显示完整中文交接文档。</p>');
   } catch (error) {
     if (request === handoffRequest && drawerMode === "handoff")
-      $("#drawer-content").textContent = `交接加载失败：${error.message}`;
+      $("#drawer-content").textContent = '交接加载失败：' + error.message;
   }
+}
+
+async function connectProvider(button, action) {
+  const providerId = button.dataset.provider;
+  const canvasId = activeCanvas()?.id;
+  button.disabled = true;
+  try {
+    const bundle = await api('mcp/connect-bundle' + (canvasId ? '?canvasId=' + encodeURIComponent(canvasId) : ''));
+    const provider = bundle.providers[providerId];
+    if (!provider) throw new Error('未找到所选助手的连接配置。');
+    let result;
+    if (action !== 'copy-provider')
+      result = await api('mcp/quick-connect', { provider: providerId, ...(canvasId ? { canvasId } : {}) });
+    if (action !== 'configure-provider') {
+      try { await copyText(provider.aiPrompt); }
+      catch {
+        drawerMode = 'copy-fallback';
+        $("#drawer-title").textContent = '请手动复制连接与交接指令';
+        $("#drawer-content").innerHTML = '<p>浏览器未允许自动复制。请选择下方完整指令复制。</p><textarea aria-label="连接与交接指令" readonly></textarea>';
+        $("#drawer-content textarea").value = provider.aiPrompt;
+        if (!$("#drawer").open) $("#drawer").showModal();
+        $("#drawer-content textarea").select();
+        notify('自动复制未成功，请在详情中手动复制。');
+        return;
+      }
+      notify(action === 'quick-ai'
+        ? '已一键配置并复制【' + provider.label + '】连接与交接指令！直接粘贴发给 ' + provider.label + ' 即可连接并继续项目。'
+        : '已复制【' + provider.label + '】连接与交接指令，可直接粘贴发送。');
+    } else notify(result.message);
+  } finally { button.disabled = false; }
 }
 function renderNodeDetails() {
   const node = activeCanvas()?.nodes.find((n) => n.id === selectedNode);
@@ -638,19 +673,22 @@ function renderNodeDetails() {
     return;
   }
   $("#drawer-content").innerHTML =
-    `<p><span class="badge">${categories[node.category][0]}</span> ${node.zone === "final" ? "终局精华区" : `Stage ${node.stageNumber}`} · ${node.validated ? "已验证" : "待验证"} · ${escape(node.status)}</p><h3>完整记录</h3><p class="detail-content">${escape(node.content)}</p><h3>摘要</h3>${bullets(node.summaryBullets)}<h3>标签</h3>${bullets(node.tags)}<h3>相关文件</h3>${bullets(node.relatedFiles)}<h3>可复用做法</h3>${bullets(node.reusablePatterns)}<h3>来源与证据</h3>${bullets(node.sourceNodeIds.map((id) => activeCanvas().nodes.find((n) => n.id === id)?.title ?? id))}${node.sourceExperienceId ? `<p>来源经验：${escape(node.sourceExperienceId)}</p>` : ""}<p class="muted">重要程度 ${node.importance}/5 · ${escape(node.kind)}<br>更新于 ${escape(node.updatedAt)}</p>`;
+    `<p><span class="badge">${categories[node.category][0]}</span> ${node.zone === "final" ? "终局精华区" : `阶段 ${node.stageNumber}`} · ${node.validated ? "已验证" : "待验证"} · ${({ active: '有效记录', open: '待解决', superseded: '已替代' })[node.status]}</p><h3>完整记录</h3><p class="detail-content">${escape(node.content)}</p><h3>摘要</h3>${bullets(node.summaryBullets)}<h3>标签</h3>${bullets(node.tags)}<h3>相关文件</h3>${bullets(node.relatedFiles)}<h3>可复用做法</h3>${bullets(node.reusablePatterns)}<h3>来源与证据</h3>${bullets(node.sourceNodeIds.map((id) => activeCanvas().nodes.find((n) => n.id === id)?.title ?? id))}${node.sourceExperienceId ? `<p>来源经验：${escape(node.sourceExperienceId)}</p>` : ""}<p class="muted">重要程度 ${node.importance}/5 · ${({ learning: '学习记录', imported: '引入经验', stage_summary: '阶段小结', distillation: '终局精华' })[node.kind]}<br>更新于 ${escape(node.updatedAt)}</p>`;
 }
 async function copyText(text) {
-  if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(text);
-  else {
-    const area = document.createElement("textarea");
-    area.value = text;
-    $("#drawer").append(area);
-    area.select();
-    const success = document.execCommand("copy");
-    area.remove();
-    if (!success) throw new Error("复制失败，请手动选择并复制文档。");
+  if (navigator.clipboard?.writeText) {
+    try { await navigator.clipboard.writeText(text); notify("已复制到剪贴板。"); return; }
+    catch { /* Fall back when the browser blocks asynchronous clipboard access. */ }
   }
+  const area = document.createElement("textarea");
+  area.value = text;
+  const previous = document.activeElement;
+  ($("#drawer").open ? $("#drawer") : document.body).append(area);
+  area.select();
+  const success = document.execCommand("copy");
+  area.remove();
+  previous?.focus({ preventScroll: true });
+  if (!success) throw new Error("复制失败，请手动选择并复制文档。");
   notify("已复制到剪贴板。");
 }
 document.addEventListener("click", async (event) => {
@@ -658,7 +696,8 @@ document.addEventListener("click", async (event) => {
   if (!button || button.disabled) return;
   const data = button.dataset;
   try {
-    if (data.action === "navigation") toggleNavigation();
+    if (["quick-ai", "copy-provider", "configure-provider"].includes(data.action)) await connectProvider(button, data.action);
+    else if (data.action === "navigation") toggleNavigation();
     else if ("group" in data) {
       groupFilter = data.group;
       renderNavigation();
@@ -694,9 +733,7 @@ document.addEventListener("click", async (event) => {
       }
     } else if (data.copy)
       await copyText(
-        data.copy === "handoff"
-          ? handoff.markdown
-          : $("#mcp-config").textContent,
+        handoff.markdown,
       );
     else if (data.action === "close-modal") {
       if (!pending) $("#modal").close();
@@ -729,13 +766,6 @@ $("#modal").addEventListener("cancel", (event) => {
 $("#drawer").addEventListener("close", () => {
   drawerMode = "";
   handoffRequest++;
-});
-document.addEventListener("change", (event) => {
-  if (event.target.id === "mcp-client")
-    $("#mcp-config").textContent =
-      event.target.value === "codex"
-        ? config.codexToml
-        : JSON.stringify(config.json, null, 2);
 });
 $("#experience-category").insertAdjacentHTML("beforeend", options());
 $("#experience-category").addEventListener(

@@ -5,14 +5,14 @@ import type { Canvas, CanvasGroup, CanvasNode, CrossProjectExperience, LearningI
 import { classifyLearning, uniqueText } from './classifier.js';
 import { buildHandoff } from './handoff.js';
 import { initialBounds, layoutCanvas } from './layout.js';
-import { emptyStore, JsonStorage } from './storage.js';
+import { emptyStore, JsonStorage, DEMO_PROJECTS } from './storage.js';
 
 const now = () => new Date().toISOString();
 const id = (prefix: string) => `${prefix}_${randomUUID()}`;
 const normalize = (text: string) => text.trim().toLocaleLowerCase().replace(/\s+/gu, ' ');
 export const GroupInputSchema = z.object({
   name: z.string().trim().min(1), description: z.string().default(''),
-  color: z.string().trim().min(1).default('#6366f1'), icon: z.string().trim().min(1).default('folder'),
+  color: z.string().trim().min(1).default('#2f6b55'), icon: z.string().trim().min(1).default('folder'),
 });
 // Patch validation must not reapply create defaults to omitted fields (Zod 4).
 export const GroupPatchSchema = GroupInputSchema.extend({
@@ -22,7 +22,7 @@ export const GroupPatchSchema = GroupInputSchema.extend({
 }).partial().strict();
 export const CanvasInputSchema = z.object({
   groupId: z.string().min(1), title: z.string().trim().min(1), projectKey: z.string().trim().min(1),
-  description: z.string().default(''), stageTitle: z.string().trim().min(1).default('Project foundation'),
+  description: z.string().default(''), stageTitle: z.string().trim().min(1).default('项目基础'),
 });
 export type CreateGroupInput = z.input<typeof GroupInputSchema>;
 export type CreateCanvasInput = z.input<typeof CanvasInputSchema>;
@@ -30,7 +30,7 @@ export interface ConsolidateOptions { advanceToNextStage?: boolean; nextStageTit
 export interface FinalizeOptions { validatedNodeIds?: string[]; summary?: string }
 export interface ExperienceQuery { query?: string; category?: NodeCategory; tags?: string[]; excludeCanvasId?: string; limit?: number }
 
-function makeStage(stageNumber: number, title = `Stage ${stageNumber}`): StageZone {
+function makeStage(stageNumber: number, title = `阶段 ${stageNumber}`): StageZone {
   return {
     id: id('stage'), stageNumber, title, summary: '', status: 'in_progress',
     bounds: initialBounds(), consolidatedAt: null,
@@ -49,8 +49,8 @@ function addGroup(store: Store, input: CreateGroupInput): CanvasGroup {
 
 function addCanvas(store: Store, input: CreateCanvasInput): Canvas {
   const { stageTitle, ...fields } = CanvasInputSchema.parse(input);
-  if (!store.groups.some(g => g.id === fields.groupId)) throw new Error(`Group not found: ${fields.groupId}`);
-  if (store.canvases.some(c => normalize(c.projectKey) === normalize(fields.projectKey))) throw new Error('Project key already exists');
+  if (!store.groups.some(g => g.id === fields.groupId)) throw new Error('未找到分组');
+  if (store.canvases.some(c => normalize(c.projectKey) === normalize(fields.projectKey))) throw new Error('项目标识已存在');
   const timestamp = now();
   const canvas: Canvas = { ...fields, id: id('canvas'), status: 'active', currentStageNumber: 1,
     viewport: { x: 0, y: 0, zoom: 1 }, stages: [makeStage(1, stageTitle)], finalZone: null,
@@ -62,11 +62,11 @@ function addCanvas(store: Store, input: CreateCanvasInput): Canvas {
 
 function findCanvas(store: Store, canvasId?: string): Canvas {
   const canvas = store.canvases.find(c => c.id === (canvasId ?? store.activeCanvasId));
-  if (!canvas) throw new Error(`Canvas not found: ${canvasId ?? store.activeCanvasId ?? '(no active canvas)'}`);
+  if (!canvas) throw new Error('未找到画布');
   return canvas;
 }
 function requireActive(canvas: Canvas): void {
-  if (canvas.status !== 'active') throw new Error(`Canvas is ${canvas.status}; it cannot be modified`);
+  if (canvas.status !== 'active') throw new Error(`画布${canvas.status === 'completed' ? '已结项' : '已归档'}，无法修改`);
 }
 function currentStage(canvas: Canvas): StageZone {
   return canvas.stages.find(s => s.stageNumber === canvas.currentStageNumber)!;
@@ -75,7 +75,7 @@ function touch(canvas: Canvas): void { canvas.updatedAt = now(); layoutCanvas(ca
 
 function addLearning(canvas: Canvas, input: LearningInput, experienceId: string | null = null): CanvasNode {
   requireActive(canvas);
-  if (currentStage(canvas).status !== 'in_progress') throw new Error('Current stage is consolidated; advance to the next stage first');
+  if (currentStage(canvas).status !== 'in_progress') throw new Error('当前阶段已整理，请先开启下一阶段');
   const item = LearningInputSchema.parse(input);
   const classified = classifyLearning(item);
   const existing = canvas.nodes.find(n => n.stageNumber === canvas.currentStageNumber &&
@@ -110,7 +110,7 @@ function addEdge(canvas: Canvas, source: string, target: string, type: Canvas['e
 }
 
 function summarizeNodes(nodes: CanvasNode[]): string[] {
-  return uniqueText(nodes.flatMap(n => n.summaryBullets.map(b => `${n.status === 'open' ? '[OPEN] ' : ''}${n.title}: ${b}`)));
+  return uniqueText(nodes.flatMap(n => n.summaryBullets.map(b => `${n.status === 'open' ? '【待解决】' : ''}${n.title}：${b}`)));
 }
 
 function derivedNode(canvas: Canvas, category: NodeCategory, sources: CanvasNode[], kind: 'stage_summary' | 'distillation', title: string): CanvasNode {
@@ -140,19 +140,19 @@ function consolidate(canvas: Canvas): StageZone {
       ['learning', 'imported'].includes(n.kind) && n.status !== 'superseded');
     const cluster = stage.clusters[category];
     if (sources.length) {
-      const summary = derivedNode(canvas, category, sources, 'stage_summary', `Stage ${stage.stageNumber} — ${CATEGORY_LABELS[category]}`);
+      const summary = derivedNode(canvas, category, sources, 'stage_summary', `阶段 ${stage.stageNumber} · ${CATEGORY_LABELS[category]}`);
       canvas.nodes.push(summary);
       cluster.summaryNodeId = summary.id;
-      for (const source of sources) addEdge(canvas, source.id, summary.id, 'summarizes', 'Evidence for category checkpoint');
+      for (const source of sources) addEdge(canvas, source.id, summary.id, 'summarizes', '分类小结的原始依据');
       const priorSummary = previous?.clusters[category].summaryNodeId;
-      if (priorSummary) addEdge(canvas, priorSummary, summary.id, 'evolution', 'Category checkpoint evolution');
-      counts.push(`${CATEGORY_LABELS[category]}: ${sources.length} item(s)`);
+      if (priorSummary) addEdge(canvas, priorSummary, summary.id, 'evolution', '分类小结的阶段演进');
+      counts.push(`${CATEGORY_LABELS[category]}：${sources.length} 条`);
     }
     if (previous) addEdge(canvas, previous.clusters[category].id, cluster.id, 'evolution', CATEGORY_LABELS[category]);
   }
   stage.status = 'consolidated';
   stage.consolidatedAt = now();
-  stage.summary = counts.join('; ') || 'No learning items recorded in this stage.';
+  stage.summary = counts.join('；') || '本阶段尚未记录学习成果。';
   touch(canvas);
   return stage;
 }
@@ -174,7 +174,7 @@ function finalize(store: Store, canvas: Canvas, options: FinalizeOptions = {}): 
   const parsed = z.object({ validatedNodeIds: z.array(z.string()).default([]), summary: z.string().trim().min(1).optional() }).parse(options);
   for (const nodeId of parsed.validatedNodeIds) {
     const node = canvas.nodes.find(n => n.id === nodeId && ['learning', 'imported'].includes(n.kind) && n.status === 'active');
-    if (!node) throw new Error(`Cannot validate missing, open, superseded, or derived node: ${nodeId}`);
+    if (!node) throw new Error('无法验证不存在、待解决、已替代或自动生成的记录');
     node.validated = true;
     node.updatedAt = now();
   }
@@ -185,10 +185,10 @@ function finalize(store: Store, canvas: Canvas, options: FinalizeOptions = {}): 
   for (const category of CATEGORY_ORDER) {
     const sources = eligible.filter(n => (n.category === 'pitfall_fix' ? 'best_practice' : n.category) === category);
     if (!sources.length) continue;
-    const summary = derivedNode(canvas, category, sources, 'distillation', `Final — ${CATEGORY_LABELS[category]}`);
+    const summary = derivedNode(canvas, category, sources, 'distillation', `终局精华 · ${CATEGORY_LABELS[category]}`);
     canvas.nodes.push(summary);
     finalNodes.push(summary);
-    for (const source of sources) addEdge(canvas, source.id, summary.id, 'distills', 'Validated evidence for final practice');
+    for (const source of sources) addEdge(canvas, source.id, summary.id, 'distills', '最终好用法的已验证依据');
   }
   // Merge equivalent findings across stages, keeping every contributing source ID.
   const buckets = new Map<string, CanvasNode[]>();
@@ -212,11 +212,11 @@ function finalize(store: Store, canvas: Canvas, options: FinalizeOptions = {}): 
   }
   store.crossProjectExperiences.push(...patterns);
   canvas.finalZone = {
-    id: id('final'), title: 'Final Distillation — Validated project knowledge', bounds: initialBounds(),
+    id: id('final'), title: '终局精华 · 已验证的项目知识', bounds: initialBounds(),
     confirmedPractices: finalNodes.filter(n => ['best_practice', 'convention_practice'].includes(n.category)).map(n => n.id),
     coreImplementations: finalNodes.filter(n => ['feature_impl', 'architecture_design'].includes(n.category)).map(n => n.id),
     reusablePatterns: patterns.map(p => p.id),
-    handoffSummary: parsed.summary ?? `${canvas.title}: ${canvas.stages.length} stage(s) consolidated; ${eligible.length} validated findings synthesized into ${finalNodes.length} category summaries and ${patterns.length} reusable patterns.`,
+    handoffSummary: parsed.summary ?? `${canvas.title}：已整理 ${canvas.stages.length} 个阶段，将 ${eligible.length} 条已验证成果提炼为 ${finalNodes.length} 份分类小结和 ${patterns.length} 条可复用经验。`,
     distilledAt: now(),
   };
   canvas.status = 'completed';
@@ -243,7 +243,7 @@ export class CanvasEngine {
     const patch = GroupPatchSchema.parse(input);
     return this.storage.transaction(store => {
       const group = store.groups.find(g => g.id === groupId);
-      if (!group) throw new Error(`Group not found: ${groupId}`);
+      if (!group) throw new Error('未找到分组');
       Object.assign(group, patch, { updatedAt: now() });
       return group;
     });
@@ -270,7 +270,7 @@ export class CanvasEngine {
       const canvas = findCanvas(store, canvasId);
       requireActive(canvas);
       const node = canvas.nodes.find(n => n.id === nodeId && ['learning', 'imported'].includes(n.kind));
-      if (!node) throw new Error(`Learning not found: ${nodeId}`);
+      if (!node) throw new Error('未找到学习记录');
       Object.assign(node, patch, { updatedAt: now() });
       // Checkpoints are historical snapshots; current evidence and final distillation use the reviewed original.
       touch(canvas);
@@ -317,8 +317,8 @@ export class CanvasEngine {
       const canvas = findCanvas(store, canvasId);
       requireActive(canvas);
       const experience = store.crossProjectExperiences.find(e => e.id === experienceId);
-      if (!experience) throw new Error(`Experience not found: ${experienceId}`);
-      if (experience.sourceCanvasId === canvas.id) throw new Error('Experience must come from a different project');
+      if (!experience) throw new Error('未找到经验');
+      if (experience.sourceCanvasId === canvas.id) throw new Error('只能引入其他项目的经验');
       const existing = canvas.nodes.find(n => n.sourceExperienceId === experience.id);
       if (existing) return existing;
       const category = ['feature_impl', 'architecture_design'].includes(experience.category) ? 'architecture_design' : 'convention_practice';
@@ -334,41 +334,19 @@ export class CanvasEngine {
   }
 }
 
-/** Realistic first-boot fixtures use exactly the same domain operations as user projects. */
+/** 示例与用户项目共用领域操作，保留真实阶段演进与经验来源。 */
 export function createDemoStore(): Store {
   const store = emptyStore();
-  const tooling = addGroup(store, { name: 'AI 工具链 / AI Tooling', description: 'Developer tooling and knowledge continuity', color: '#6366f1', icon: 'sparkles' });
-  const platform = addGroup(store, { name: '平台工程 / Platform Engineering', description: 'Reusable service foundations', color: '#14b8a6', icon: 'layers' });
-  const active = addCanvas(store, { groupId: tooling.id, title: 'Infinite Canvas Knowledge Workbench', projectKey: 'canvas-workbench',
-    description: 'Capture AI-assisted engineering decisions, preserve stage history, and provide seamless handoff across sessions.', stageTitle: 'Foundation and persistence' });
-  const learn = (canvas: Canvas, category: NodeCategory, title: string, content: string, tags: string[], relatedFiles: string[] = []) =>
-    addLearning(canvas, { category, title, content, tags, relatedFiles, importance: 4, validated: true });
-  learn(active, 'convention_practice', 'Strict TypeScript and reviewable changes', 'Use strict TypeScript for all domain modules. Run type checks and the Node test suite before each stage checkpoint.', ['typescript', 'workflow'], ['tsconfig.json']);
-  learn(active, 'architecture_design', 'Transport-independent domain engine', 'Keep classification, layout, and persistence independent of MCP and HTTP. Transport adapters call the same engine API.', ['architecture', 'mcp'], ['src/core/engine.ts']);
-  learn(active, 'feature_impl', 'Atomic JSON persistence', 'Implemented a same-directory temporary write, flush, and atomic rename. Validate the store before replacing persisted state.', ['storage', 'atomic'], ['src/core/storage.ts']);
-  learn(active, 'pitfall_fix', 'UTF-8 metadata on Windows', 'Fixed mojibake caused by the default PowerShell file encoding. Read and write all project metadata explicitly as UTF-8.', ['windows', 'encoding']);
-  learn(active, 'best_practice', 'Provenance-preserving summaries', 'Validated summaries retain source node IDs. Keep original evidence available in the handoff appendix.', ['handoff', 'provenance']);
-  advance(active, 'MCP tools and live synchronization');
-  learn(active, 'convention_practice', 'Structured tool validation', 'Validate every tool input before mutation. Return explicit errors for missing canvases or invalid stage transitions.', ['mcp', 'validation']);
-  learn(active, 'architecture_design', 'Shared engine for MCP and HTTP', 'Use one transactional store for MCP and REST adapters. Publish committed updates over SSE after successful mutations.', ['mcp', 'sse']);
-  learn(active, 'feature_impl', 'Canvas switching and stage checkpoint tools', 'Implemented tool handlers for canvas selection, learning capture, and checkpoint consolidation in the demo project.', ['mcp', 'tools']);
-  learn(active, 'pitfall_fix', 'Keep diagnostics off the stdio protocol stream', 'Fixed protocol corruption from console logging. Send diagnostics to stderr and reserve stdout for MCP frames.', ['mcp', 'stdio']);
-  learn(active, 'best_practice', 'Recoverable handoff mirrors', 'Use store.json as the source of truth. Rebuild Markdown handoffs on startup to repair interrupted mirror synchronization.', ['handoff', 'recovery']);
-  advance(active, 'Interactive canvas and acceptance');
-  learn(active, 'feature_impl', 'Viewport navigation prototype', 'Implemented a prototype for pan and zoom while retaining world-space node bounds.', ['canvas', 'viewport']);
-  addLearning(active, { title: 'Keyboard navigation acceptance', content: 'TODO: validate focus navigation across category clusters and final distillation cards. Confirm screen-reader labels before release.', category: 'feature_impl', tags: ['accessibility', 'todo'], status: 'open', importance: 4 });
-  addLearning(active, { title: 'Large-canvas performance decision', content: 'Pending: benchmark 5,000 cards before selecting viewport culling thresholds.', category: 'architecture_design', status: 'open', tags: ['performance'] });
-
-  const completed = addCanvas(store, { groupId: platform.id, title: 'Reliable Release Service', projectKey: 'release-service',
-    description: 'A completed internal release orchestration project with validated engineering conventions and reusable service patterns.', stageTitle: 'Service contracts and reliability' });
-  learn(completed, 'convention_practice', 'Validate API inputs at the boundary', 'Use Zod schemas at every service boundary. Reject invalid input before invoking domain logic.', ['validation', 'zod'], ['src/api/contracts.ts']);
-  learn(completed, 'architecture_design', 'Idempotent release orchestration', 'Use an idempotency key for each release request. Separate request validation, durable state transitions, and deployment side effects.', ['idempotency', 'architecture']);
-  learn(completed, 'feature_impl', 'Retry-safe deployment queue', 'Implemented durable job IDs and bounded retries. Preserve the last failure reason so interrupted deployments can resume safely.', ['queue', 'reliability']);
-  learn(completed, 'pitfall_fix', 'Backoff prevents retry storms', 'Fixed synchronized retries by adding randomized exponential backoff and a retry budget.', ['retry', 'reliability']);
-  advance(completed, 'Operational validation and release');
-  learn(completed, 'best_practice', 'Atomic state replacement', 'Use atomic file replacement for small local state stores. Write and flush a temporary file before renaming it over the previous snapshot.', ['storage', 'atomic', 'reliability']);
-  learn(completed, 'convention_practice', 'Evidence before promotion', 'Require a successful recovery test before promoting a reliability pattern to shared guidance.', ['testing', 'workflow']);
-  finalize(store, completed, { summary: 'Release service completed with validated boundary contracts, idempotent orchestration, bounded retries, and atomic local persistence. Reuse these patterns after checking target-project constraints.' });
-  store.activeCanvasId = active.id;
+  for (const demo of DEMO_PROJECTS) {
+    const group = addGroup(store, demo.group);
+    const canvas = addCanvas(store, { groupId: group.id, title: demo.title,
+      projectKey: demo.title, description: demo.description, stageTitle: demo.stages[0]!.title });
+    demo.stages.forEach((stage, index) => {
+      if (index) advance(canvas, stage.title);
+      for (const learning of stage.learnings) addLearning(canvas, learning);
+    });
+    if (demo.completed) finalize(store, canvas);
+  }
+  store.activeCanvasId = store.canvases[0]!.id;
   return store;
 }

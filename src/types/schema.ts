@@ -8,11 +8,11 @@ export const CATEGORY_ORDER: readonly NodeCategory[] = [
   'convention_practice', 'architecture_design', 'feature_impl', 'pitfall_fix', 'best_practice',
 ];
 export const CATEGORY_LABELS: Record<NodeCategory, string> = {
-  convention_practice: 'Agreed conventions and practices',
-  architecture_design: 'Architecture and models',
-  feature_impl: 'Feature implementations',
-  pitfall_fix: 'Pitfalls and fixes',
-  best_practice: 'Validated best practices',
+  convention_practice: '我们规定的做法',
+  architecture_design: '架构与模型设计',
+  feature_impl: '功能实现',
+  pitfall_fix: '踩坑与问题修复',
+  best_practice: '最终确定的好用法',
 };
 
 export const IdSchema = z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9_-]*$/);

@@ -1,0 +1,2460 @@
+{
+  "schemaVersion": 1,
+  "activeCanvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+  "groups": [
+    {
+      "id": "group_819a44c5-e0bb-4640-870f-f7225921a0e7",
+      "name": "智能工具研发",
+      "description": "沉淀研发经验，让项目知识连续传承。",
+      "color": "#2f6b55",
+      "icon": "工具",
+      "createdAt": "2026-11-19T12:37:21.241Z",
+      "updatedAt": "2026-11-19T12:37:21.241Z"
+    },
+    {
+      "id": "group_48257f8b-b593-43f2-864e-c713be12c8ac",
+      "name": "平台工程",
+      "description": "积累可复用的服务基础能力。",
+      "color": "#2f6c78",
+      "icon": "平台",
+      "createdAt": "2026-11-19T12:37:21.257Z",
+      "updatedAt": "2026-11-19T12:37:21.257Z"
+    }
+  ],
+  "canvases": [
+    {
+      "id": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+      "groupId": "group_819a44c5-e0bb-4640-870f-f7225921a0e7",
+      "title": "无限画布知识工作台",
+      "projectKey": "无限画布知识工作台",
+      "description": "按阶段记录功能、架构与约定，让不同助手接手时都能理解项目。",
+      "status": "active",
+      "currentStageNumber": 3,
+      "viewport": {
+        "x": 0,
+        "y": 0,
+        "zoom": 1
+      },
+      "stages": [
+        {
+          "id": "stage_081cc155-0e2e-4ab1-98df-fbfac245e830",
+          "stageNumber": 1,
+          "title": "基础架构与可靠存储",
+          "summary": "我们规定的做法：1 条；架构与模型设计：1 条；功能实现：1 条；踩坑与问题修复：1 条；最终确定的好用法：1 条",
+          "status": "consolidated",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1400,
+            "height": 1922
+          },
+          "clusters": {
+            "feature_impl": {
+              "id": "cluster_235d2f4d-38dd-47d3-84fa-fdbf75e6d2ca",
+              "category": "feature_impl",
+              "title": "功能实现",
+              "bounds": {
+                "x": 32,
+                "y": 816,
+                "width": 1336,
+                "height": 336
+              },
+              "nodeIds": [
+                "node_be4a7ce7-6ddc-40b6-8684-6f3db0beeb29",
+                "node_0fb9baf3-3fc5-4cc6-bb2e-ea5303946688"
+              ],
+              "summaryNodeId": "node_be4a7ce7-6ddc-40b6-8684-6f3db0beeb29"
+            },
+            "convention_practice": {
+              "id": "cluster_e7cc85e4-a5b6-411c-8a24-55a8eae3bb52",
+              "category": "convention_practice",
+              "title": "我们规定的做法",
+              "bounds": {
+                "x": 32,
+                "y": 96,
+                "width": 1336,
+                "height": 336
+              },
+              "nodeIds": [
+                "node_f9cb4b77-f3f7-4271-8fca-0796cfffb317",
+                "node_74b6620d-e40a-4811-8c84-ecba1a3f71c3"
+              ],
+              "summaryNodeId": "node_f9cb4b77-f3f7-4271-8fca-0796cfffb317"
+            },
+            "architecture_design": {
+              "id": "cluster_2c50a459-ccc4-4651-8745-b77d881a653e",
+              "category": "architecture_design",
+              "title": "架构与模型设计",
+              "bounds": {
+                "x": 32,
+                "y": 456,
+                "width": 1336,
+                "height": 336
+              },
+              "nodeIds": [
+                "node_53f6badd-10e3-430a-aec1-0cee6680d151",
+                "node_39484709-37cc-4810-a2af-6859809e4ae3"
+              ],
+              "summaryNodeId": "node_53f6badd-10e3-430a-aec1-0cee6680d151"
+            },
+            "pitfall_fix": {
+              "id": "cluster_806f283d-d549-4726-96ce-65a199abe755",
+              "category": "pitfall_fix",
+              "title": "踩坑与问题修复",
+              "bounds": {
+                "x": 32,
+                "y": 1176,
+                "width": 1336,
+                "height": 336
+              },
+              "nodeIds": [
+                "node_e9f897da-9989-409e-ae60-0b41799a3592",
+                "node_4b2cc23d-24a8-4a02-89d8-429c85742f98"
+              ],
+              "summaryNodeId": "node_e9f897da-9989-409e-ae60-0b41799a3592"
+            },
+            "best_practice": {
+              "id": "cluster_c5c359a9-8449-4ca5-b76d-7d906fd29bab",
+              "category": "best_practice",
+              "title": "最终确定的好用法",
+              "bounds": {
+                "x": 32,
+                "y": 1536,
+                "width": 1336,
+                "height": 330
+              },
+              "nodeIds": [
+                "node_76ee25a1-9e58-46db-b7df-78d446015bfd",
+                "node_f2b81b5e-c20b-44e6-b284-3471593b8f60"
+              ],
+              "summaryNodeId": "node_76ee25a1-9e58-46db-b7df-78d446015bfd"
+            }
+          },
+          "consolidatedAt": "2026-11-19T12:37:21.247Z"
+        },
+        {
+          "id": "stage_d10dee6c-cd08-4142-851c-3d17c86d4723",
+          "stageNumber": 2,
+          "title": "助手接入与实时同步",
+          "summary": "我们规定的做法：1 条；架构与模型设计：1 条；功能实现：1 条；踩坑与问题修复：1 条；最终确定的好用法：1 条",
+          "status": "consolidated",
+          "bounds": {
+            "x": 1500,
+            "y": 0,
+            "width": 1400,
+            "height": 1910
+          },
+          "clusters": {
+            "feature_impl": {
+              "id": "cluster_07b37327-d44d-461f-94ca-be0459887d0e",
+              "category": "feature_impl",
+              "title": "功能实现",
+              "bounds": {
+                "x": 1532,
+                "y": 804,
+                "width": 1336,
+                "height": 336
+              },
+              "nodeIds": [
+                "node_abb92c60-34b2-4898-9cc8-683462393792",
+                "node_263582c5-1ae3-4bee-8d61-566ebe11576a"
+              ],
+              "summaryNodeId": "node_abb92c60-34b2-4898-9cc8-683462393792"
+            },
+            "convention_practice": {
+              "id": "cluster_0302b8b4-39a4-4553-ae73-f2b8cef7a7ba",
+              "category": "convention_practice",
+              "title": "我们规定的做法",
+              "bounds": {
+                "x": 1532,
+                "y": 96,
+                "width": 1336,
+                "height": 330
+              },
+              "nodeIds": [
+                "node_df108f92-7df4-4cb2-af89-7711bcbbbf01",
+                "node_1267e67d-d8f6-497c-b2d4-dd6452d001b9"
+              ],
+              "summaryNodeId": "node_df108f92-7df4-4cb2-af89-7711bcbbbf01"
+            },
+            "architecture_design": {
+              "id": "cluster_a468f9cd-354a-468d-aad5-92d5469037cc",
+              "category": "architecture_design",
+              "title": "架构与模型设计",
+              "bounds": {
+                "x": 1532,
+                "y": 450,
+                "width": 1336,
+                "height": 330
+              },
+              "nodeIds": [
+                "node_d250a7e1-ba55-4217-a0bc-334812b0c150",
+                "node_c7e3b869-e019-410e-b284-c117a9705e59"
+              ],
+              "summaryNodeId": "node_d250a7e1-ba55-4217-a0bc-334812b0c150"
+            },
+            "pitfall_fix": {
+              "id": "cluster_3ce2df26-ce23-4537-a819-d738a164966b",
+              "category": "pitfall_fix",
+              "title": "踩坑与问题修复",
+              "bounds": {
+                "x": 1532,
+                "y": 1164,
+                "width": 1336,
+                "height": 336
+              },
+              "nodeIds": [
+                "node_3922ff42-21bf-4c79-b829-51ee026d04c6",
+                "node_226f145c-2e92-4b4a-9683-098a1e442068"
+              ],
+              "summaryNodeId": "node_3922ff42-21bf-4c79-b829-51ee026d04c6"
+            },
+            "best_practice": {
+              "id": "cluster_fb9e815a-95b7-44cd-875d-a081b4792388",
+              "category": "best_practice",
+              "title": "最终确定的好用法",
+              "bounds": {
+                "x": 1532,
+                "y": 1524,
+                "width": 1336,
+                "height": 330
+              },
+              "nodeIds": [
+                "node_a820ce0c-c426-46aa-b31e-6cce458b6386",
+                "node_baef82d3-17ac-4601-bcde-a46affad41c5"
+              ],
+              "summaryNodeId": "node_a820ce0c-c426-46aa-b31e-6cce458b6386"
+            }
+          },
+          "consolidatedAt": "2026-11-19T12:37:21.248Z"
+        },
+        {
+          "id": "stage_d982fe45-28c5-4e89-8f35-67a753f886cd",
+          "stageNumber": 3,
+          "title": "交互画布与使用验收",
+          "summary": "",
+          "status": "in_progress",
+          "bounds": {
+            "x": 3000,
+            "y": 0,
+            "width": 1400,
+            "height": 1268
+          },
+          "clusters": {
+            "feature_impl": {
+              "id": "cluster_22a7ac76-5d97-45c3-ad6c-ad4199b85419",
+              "category": "feature_impl",
+              "title": "功能实现",
+              "bounds": {
+                "x": 3032,
+                "y": 594,
+                "width": 1336,
+                "height": 330
+              },
+              "nodeIds": [
+                "node_067b94d2-ef85-4721-8b81-a8be954c2c71",
+                "node_db8139df-5581-4ede-9078-32cd2fe79618"
+              ],
+              "summaryNodeId": null
+            },
+            "convention_practice": {
+              "id": "cluster_fbb306ce-570f-4abe-82d9-02f64abf3cf8",
+              "category": "convention_practice",
+              "title": "我们规定的做法",
+              "bounds": {
+                "x": 3032,
+                "y": 96,
+                "width": 1336,
+                "height": 120
+              },
+              "nodeIds": [],
+              "summaryNodeId": null
+            },
+            "architecture_design": {
+              "id": "cluster_11b10222-6698-43cb-9f7f-adba8f2d018f",
+              "category": "architecture_design",
+              "title": "架构与模型设计",
+              "bounds": {
+                "x": 3032,
+                "y": 240,
+                "width": 1336,
+                "height": 330
+              },
+              "nodeIds": [
+                "node_bbcd5f1d-b379-41d1-b5a2-c98612ca7105"
+              ],
+              "summaryNodeId": null
+            },
+            "pitfall_fix": {
+              "id": "cluster_078d1d4d-5924-4cce-8dbc-ec29bd2ba394",
+              "category": "pitfall_fix",
+              "title": "踩坑与问题修复",
+              "bounds": {
+                "x": 3032,
+                "y": 948,
+                "width": 1336,
+                "height": 120
+              },
+              "nodeIds": [],
+              "summaryNodeId": null
+            },
+            "best_practice": {
+              "id": "cluster_71d82a7f-2535-4c3b-9ab4-1a15ad9904e1",
+              "category": "best_practice",
+              "title": "最终确定的好用法",
+              "bounds": {
+                "x": 3032,
+                "y": 1092,
+                "width": 1336,
+                "height": 120
+              },
+              "nodeIds": [],
+              "summaryNodeId": null
+            }
+          },
+          "consolidatedAt": null
+        }
+      ],
+      "finalZone": null,
+      "nodes": [
+        {
+          "id": "node_74b6620d-e40a-4811-8c84-ecba1a3f71c3",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 1,
+          "zone": "stage",
+          "kind": "learning",
+          "category": "convention_practice",
+          "title": "严格检查与小步提交",
+          "content": "所有业务模块必须通过严格类型检查。每次阶段整理前运行测试，并保持改动便于审查。",
+          "summaryBullets": [
+            "所有业务模块必须通过严格类型检查。",
+            "每次阶段整理前运行测试，并保持改动便于审查。"
+          ],
+          "reusablePatterns": [
+            "所有业务模块必须通过严格类型检查。"
+          ],
+          "tags": [
+            "类型检查",
+            "提交约定"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 504,
+            "y": 164,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T12:37:21.246Z",
+          "updatedAt": "2026-11-19T12:37:21.246Z"
+        },
+        {
+          "id": "node_39484709-37cc-4810-a2af-6859809e4ae3",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 1,
+          "zone": "stage",
+          "kind": "learning",
+          "category": "architecture_design",
+          "title": "业务引擎独立于接入方式",
+          "content": "分类、布局和存储放在独立业务层。网页接口与助手工具调用同一套业务逻辑。",
+          "summaryBullets": [
+            "分类、布局和存储放在独立业务层。",
+            "网页接口与助手工具调用同一套业务逻辑。"
+          ],
+          "reusablePatterns": [
+            "分类、布局和存储放在独立业务层。",
+            "网页接口与助手工具调用同一套业务逻辑。"
+          ],
+          "tags": [
+            "架构分层",
+            "模块边界"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 504,
+            "y": 524,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T12:37:21.246Z",
+          "updatedAt": "2026-11-19T12:37:21.246Z"
+        },
+        {
+          "id": "node_0fb9baf3-3fc5-4cc6-bb2e-ea5303946688",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 1,
+          "zone": "stage",
+          "kind": "learning",
+          "category": "feature_impl",
+          "title": "原子保存项目数据",
+          "content": "先在同目录写入临时文件并刷新到磁盘，再整体替换旧文件。保存前校验数据，避免留下半份内容。",
+          "summaryBullets": [
+            "先在同目录写入临时文件并刷新到磁盘，再整体替换旧文件。",
+            "保存前校验数据，避免留下半份内容。"
+          ],
+          "reusablePatterns": [
+            "保存前校验数据，避免留下半份内容。"
+          ],
+          "tags": [
+            "可靠存储",
+            "原子替换"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 504,
+            "y": 884,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T12:37:21.246Z",
+          "updatedAt": "2026-11-19T12:37:21.246Z"
+        },
+        {
+          "id": "node_4b2cc23d-24a8-4a02-89d8-429c85742f98",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 1,
+          "zone": "stage",
+          "kind": "learning",
+          "category": "pitfall_fix",
+          "title": "修复中文文件乱码",
+          "content": "读写项目文件时明确使用统一的万国码编码。避免终端默认编码不同导致中文内容损坏。",
+          "summaryBullets": [
+            "读写项目文件时明确使用统一的万国码编码。",
+            "避免终端默认编码不同导致中文内容损坏。"
+          ],
+          "reusablePatterns": [
+            "读写项目文件时明确使用统一的万国码编码。",
+            "避免终端默认编码不同导致中文内容损坏。"
+          ],
+          "tags": [
+            "中文编码",
+            "环境排查"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 504,
+            "y": 1244,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T12:37:21.246Z",
+          "updatedAt": "2026-11-19T12:37:21.246Z"
+        },
+        {
+          "id": "node_f2b81b5e-c20b-44e6-b284-3471593b8f60",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 1,
+          "zone": "stage",
+          "kind": "learning",
+          "category": "best_practice",
+          "title": "摘要保留原始依据",
+          "content": "阶段小结必须保留来源记录。交接时可以回到原文核对结论，避免只留下无法验证的摘要。",
+          "summaryBullets": [
+            "阶段小结必须保留来源记录。",
+            "交接时可以回到原文核对结论，避免只留下无法验证的摘要。"
+          ],
+          "reusablePatterns": [
+            "阶段小结必须保留来源记录。",
+            "交接时可以回到原文核对结论，避免只留下无法验证的摘要。"
+          ],
+          "tags": [
+            "交接",
+            "证据追溯"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 504,
+            "y": 1604,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T12:37:21.246Z",
+          "updatedAt": "2026-11-19T12:37:21.246Z"
+        },
+        {
+          "id": "node_f9cb4b77-f3f7-4271-8fca-0796cfffb317",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 1,
+          "zone": "stage",
+          "kind": "stage_summary",
+          "category": "convention_practice",
+          "title": "阶段 1 · 我们规定的做法",
+          "content": "- 严格检查与小步提交：所有业务模块必须通过严格类型检查。\n- 严格检查与小步提交：每次阶段整理前运行测试，并保持改动便于审查。",
+          "summaryBullets": [
+            "严格检查与小步提交：所有业务模块必须通过严格类型检查。",
+            "严格检查与小步提交：每次阶段整理前运行测试，并保持改动便于审查。"
+          ],
+          "reusablePatterns": [
+            "所有业务模块必须通过严格类型检查。"
+          ],
+          "tags": [
+            "类型检查",
+            "提交约定"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [
+            "node_74b6620d-e40a-4811-8c84-ecba1a3f71c3"
+          ],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 64,
+            "y": 164,
+            "width": 416,
+            "height": 236
+          },
+          "createdAt": "2026-11-19T12:37:21.247Z",
+          "updatedAt": "2026-11-19T12:37:21.247Z"
+        },
+        {
+          "id": "node_53f6badd-10e3-430a-aec1-0cee6680d151",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 1,
+          "zone": "stage",
+          "kind": "stage_summary",
+          "category": "architecture_design",
+          "title": "阶段 1 · 架构与模型设计",
+          "content": "- 业务引擎独立于接入方式：分类、布局和存储放在独立业务层。\n- 业务引擎独立于接入方式：网页接口与助手工具调用同一套业务逻辑。",
+          "summaryBullets": [
+            "业务引擎独立于接入方式：分类、布局和存储放在独立业务层。",
+            "业务引擎独立于接入方式：网页接口与助手工具调用同一套业务逻辑。"
+          ],
+          "reusablePatterns": [
+            "分类、布局和存储放在独立业务层。",
+            "网页接口与助手工具调用同一套业务逻辑。"
+          ],
+          "tags": [
+            "架构分层",
+            "模块边界"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [
+            "node_39484709-37cc-4810-a2af-6859809e4ae3"
+          ],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 64,
+            "y": 524,
+            "width": 416,
+            "height": 236
+          },
+          "createdAt": "2026-11-19T12:37:21.247Z",
+          "updatedAt": "2026-11-19T12:37:21.247Z"
+        },
+        {
+          "id": "node_be4a7ce7-6ddc-40b6-8684-6f3db0beeb29",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 1,
+          "zone": "stage",
+          "kind": "stage_summary",
+          "category": "feature_impl",
+          "title": "阶段 1 · 功能实现",
+          "content": "- 原子保存项目数据：先在同目录写入临时文件并刷新到磁盘，再整体替换旧文件。\n- 原子保存项目数据：保存前校验数据，避免留下半份内容。",
+          "summaryBullets": [
+            "原子保存项目数据：先在同目录写入临时文件并刷新到磁盘，再整体替换旧文件。",
+            "原子保存项目数据：保存前校验数据，避免留下半份内容。"
+          ],
+          "reusablePatterns": [
+            "保存前校验数据，避免留下半份内容。"
+          ],
+          "tags": [
+            "可靠存储",
+            "原子替换"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [
+            "node_0fb9baf3-3fc5-4cc6-bb2e-ea5303946688"
+          ],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 64,
+            "y": 884,
+            "width": 416,
+            "height": 236
+          },
+          "createdAt": "2026-11-19T12:37:21.247Z",
+          "updatedAt": "2026-11-19T12:37:21.247Z"
+        },
+        {
+          "id": "node_e9f897da-9989-409e-ae60-0b41799a3592",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 1,
+          "zone": "stage",
+          "kind": "stage_summary",
+          "category": "pitfall_fix",
+          "title": "阶段 1 · 踩坑与问题修复",
+          "content": "- 修复中文文件乱码：读写项目文件时明确使用统一的万国码编码。\n- 修复中文文件乱码：避免终端默认编码不同导致中文内容损坏。",
+          "summaryBullets": [
+            "修复中文文件乱码：读写项目文件时明确使用统一的万国码编码。",
+            "修复中文文件乱码：避免终端默认编码不同导致中文内容损坏。"
+          ],
+          "reusablePatterns": [
+            "读写项目文件时明确使用统一的万国码编码。",
+            "避免终端默认编码不同导致中文内容损坏。"
+          ],
+          "tags": [
+            "中文编码",
+            "环境排查"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [
+            "node_4b2cc23d-24a8-4a02-89d8-429c85742f98"
+          ],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 64,
+            "y": 1244,
+            "width": 416,
+            "height": 236
+          },
+          "createdAt": "2026-11-19T12:37:21.247Z",
+          "updatedAt": "2026-11-19T12:37:21.247Z"
+        },
+        {
+          "id": "node_76ee25a1-9e58-46db-b7df-78d446015bfd",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 1,
+          "zone": "stage",
+          "kind": "stage_summary",
+          "category": "best_practice",
+          "title": "阶段 1 · 最终确定的好用法",
+          "content": "- 摘要保留原始依据：阶段小结必须保留来源记录。\n- 摘要保留原始依据：交接时可以回到原文核对结论，避免只留下无法验证的摘要。",
+          "summaryBullets": [
+            "摘要保留原始依据：阶段小结必须保留来源记录。",
+            "摘要保留原始依据：交接时可以回到原文核对结论，避免只留下无法验证的摘要。"
+          ],
+          "reusablePatterns": [
+            "阶段小结必须保留来源记录。",
+            "交接时可以回到原文核对结论，避免只留下无法验证的摘要。"
+          ],
+          "tags": [
+            "交接",
+            "证据追溯"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [
+            "node_f2b81b5e-c20b-44e6-b284-3471593b8f60"
+          ],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 64,
+            "y": 1604,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T12:37:21.247Z",
+          "updatedAt": "2026-11-19T12:37:21.247Z"
+        },
+        {
+          "id": "node_1267e67d-d8f6-497c-b2d4-dd6452d001b9",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 2,
+          "zone": "stage",
+          "kind": "learning",
+          "category": "convention_practice",
+          "title": "先校验再写入",
+          "content": "所有工具输入必须先完成校验。画布不存在或阶段状态不允许修改时，返回清晰的中文提示。",
+          "summaryBullets": [
+            "所有工具输入必须先完成校验。",
+            "画布不存在或阶段状态不允许修改时，返回清晰的中文提示。"
+          ],
+          "reusablePatterns": [
+            "所有工具输入必须先完成校验。"
+          ],
+          "tags": [
+            "输入校验",
+            "工具约定"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 2004,
+            "y": 164,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T12:37:21.247Z",
+          "updatedAt": "2026-11-19T12:37:21.247Z"
+        },
+        {
+          "id": "node_c7e3b869-e019-410e-b284-c117a9705e59",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 2,
+          "zone": "stage",
+          "kind": "learning",
+          "category": "architecture_design",
+          "title": "共享事务存储",
+          "content": "网页与助手共用同一份事务存储。提交成功后再推送更新，保证看到的都是已经保存的数据。",
+          "summaryBullets": [
+            "网页与助手共用同一份事务存储。",
+            "提交成功后再推送更新，保证看到的都是已经保存的数据。"
+          ],
+          "reusablePatterns": [
+            "网页与助手共用同一份事务存储。",
+            "提交成功后再推送更新，保证看到的都是已经保存的数据。"
+          ],
+          "tags": [
+            "事务",
+            "实时同步"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 2004,
+            "y": 518,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T12:37:21.247Z",
+          "updatedAt": "2026-11-19T12:37:21.247Z"
+        },
+        {
+          "id": "node_263582c5-1ae3-4bee-8d61-566ebe11576a",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 2,
+          "zone": "stage",
+          "kind": "learning",
+          "category": "feature_impl",
+          "title": "画布切换与阶段整理",
+          "content": "已实现画布选择、学习记录和阶段整理。切换后继续写入当前画布，阶段成果按类别自动归拢。",
+          "summaryBullets": [
+            "已实现画布选择、学习记录和阶段整理。",
+            "切换后继续写入当前画布，阶段成果按类别自动归拢。"
+          ],
+          "reusablePatterns": [],
+          "tags": [
+            "画布切换",
+            "阶段整理"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 2004,
+            "y": 872,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T12:37:21.248Z",
+          "updatedAt": "2026-11-19T12:37:21.248Z"
+        },
+        {
+          "id": "node_226f145c-2e92-4b4a-9683-098a1e442068",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 2,
+          "zone": "stage",
+          "kind": "learning",
+          "category": "pitfall_fix",
+          "title": "诊断日志与工具通信分离",
+          "content": "诊断日志写入错误输出通道。标准输出只保留协议消息，避免调试内容破坏助手通信。",
+          "summaryBullets": [
+            "诊断日志写入错误输出通道。",
+            "标准输出只保留协议消息，避免调试内容破坏助手通信。"
+          ],
+          "reusablePatterns": [
+            "标准输出只保留协议消息，避免调试内容破坏助手通信。"
+          ],
+          "tags": [
+            "通信",
+            "日志排查"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 2004,
+            "y": 1232,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T12:37:21.248Z",
+          "updatedAt": "2026-11-19T12:37:21.248Z"
+        },
+        {
+          "id": "node_baef82d3-17ac-4601-bcde-a46affad41c5",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 2,
+          "zone": "stage",
+          "kind": "learning",
+          "category": "best_practice",
+          "title": "交接文档可以重建",
+          "content": "项目数据库是唯一事实来源。启动时重新生成交接文档，修复意外中断造成的文档不同步。",
+          "summaryBullets": [
+            "项目数据库是唯一事实来源。",
+            "启动时重新生成交接文档，修复意外中断造成的文档不同步。"
+          ],
+          "reusablePatterns": [
+            "项目数据库是唯一事实来源。",
+            "启动时重新生成交接文档，修复意外中断造成的文档不同步。"
+          ],
+          "tags": [
+            "交接",
+            "恢复"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 2004,
+            "y": 1592,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T12:37:21.248Z",
+          "updatedAt": "2026-11-19T12:37:21.248Z"
+        },
+        {
+          "id": "node_df108f92-7df4-4cb2-af89-7711bcbbbf01",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 2,
+          "zone": "stage",
+          "kind": "stage_summary",
+          "category": "convention_practice",
+          "title": "阶段 2 · 我们规定的做法",
+          "content": "- 先校验再写入：所有工具输入必须先完成校验。\n- 先校验再写入：画布不存在或阶段状态不允许修改时，返回清晰的中文提示。",
+          "summaryBullets": [
+            "先校验再写入：所有工具输入必须先完成校验。",
+            "先校验再写入：画布不存在或阶段状态不允许修改时，返回清晰的中文提示。"
+          ],
+          "reusablePatterns": [
+            "所有工具输入必须先完成校验。"
+          ],
+          "tags": [
+            "输入校验",
+            "工具约定"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [
+            "node_1267e67d-d8f6-497c-b2d4-dd6452d001b9"
+          ],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 1564,
+            "y": 164,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T12:37:21.248Z",
+          "updatedAt": "2026-11-19T12:37:21.248Z"
+        },
+        {
+          "id": "node_d250a7e1-ba55-4217-a0bc-334812b0c150",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 2,
+          "zone": "stage",
+          "kind": "stage_summary",
+          "category": "architecture_design",
+          "title": "阶段 2 · 架构与模型设计",
+          "content": "- 共享事务存储：网页与助手共用同一份事务存储。\n- 共享事务存储：提交成功后再推送更新，保证看到的都是已经保存的数据。",
+          "summaryBullets": [
+            "共享事务存储：网页与助手共用同一份事务存储。",
+            "共享事务存储：提交成功后再推送更新，保证看到的都是已经保存的数据。"
+          ],
+          "reusablePatterns": [
+            "网页与助手共用同一份事务存储。",
+            "提交成功后再推送更新，保证看到的都是已经保存的数据。"
+          ],
+          "tags": [
+            "事务",
+            "实时同步"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [
+            "node_c7e3b869-e019-410e-b284-c117a9705e59"
+          ],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 1564,
+            "y": 518,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T12:37:21.248Z",
+          "updatedAt": "2026-11-19T12:37:21.248Z"
+        },
+        {
+          "id": "node_abb92c60-34b2-4898-9cc8-683462393792",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 2,
+          "zone": "stage",
+          "kind": "stage_summary",
+          "category": "feature_impl",
+          "title": "阶段 2 · 功能实现",
+          "content": "- 画布切换与阶段整理：已实现画布选择、学习记录和阶段整理。\n- 画布切换与阶段整理：切换后继续写入当前画布，阶段成果按类别自动归拢。",
+          "summaryBullets": [
+            "画布切换与阶段整理：已实现画布选择、学习记录和阶段整理。",
+            "画布切换与阶段整理：切换后继续写入当前画布，阶段成果按类别自动归拢。"
+          ],
+          "reusablePatterns": [],
+          "tags": [
+            "画布切换",
+            "阶段整理"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [
+            "node_263582c5-1ae3-4bee-8d61-566ebe11576a"
+          ],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 1564,
+            "y": 872,
+            "width": 416,
+            "height": 236
+          },
+          "createdAt": "2026-11-19T12:37:21.248Z",
+          "updatedAt": "2026-11-19T12:37:21.248Z"
+        },
+        {
+          "id": "node_3922ff42-21bf-4c79-b829-51ee026d04c6",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 2,
+          "zone": "stage",
+          "kind": "stage_summary",
+          "category": "pitfall_fix",
+          "title": "阶段 2 · 踩坑与问题修复",
+          "content": "- 诊断日志与工具通信分离：诊断日志写入错误输出通道。\n- 诊断日志与工具通信分离：标准输出只保留协议消息，避免调试内容破坏助手通信。",
+          "summaryBullets": [
+            "诊断日志与工具通信分离：诊断日志写入错误输出通道。",
+            "诊断日志与工具通信分离：标准输出只保留协议消息，避免调试内容破坏助手通信。"
+          ],
+          "reusablePatterns": [
+            "标准输出只保留协议消息，避免调试内容破坏助手通信。"
+          ],
+          "tags": [
+            "通信",
+            "日志排查"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [
+            "node_226f145c-2e92-4b4a-9683-098a1e442068"
+          ],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 1564,
+            "y": 1232,
+            "width": 416,
+            "height": 236
+          },
+          "createdAt": "2026-11-19T12:37:21.248Z",
+          "updatedAt": "2026-11-19T12:37:21.248Z"
+        },
+        {
+          "id": "node_a820ce0c-c426-46aa-b31e-6cce458b6386",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 2,
+          "zone": "stage",
+          "kind": "stage_summary",
+          "category": "best_practice",
+          "title": "阶段 2 · 最终确定的好用法",
+          "content": "- 交接文档可以重建：项目数据库是唯一事实来源。\n- 交接文档可以重建：启动时重新生成交接文档，修复意外中断造成的文档不同步。",
+          "summaryBullets": [
+            "交接文档可以重建：项目数据库是唯一事实来源。",
+            "交接文档可以重建：启动时重新生成交接文档，修复意外中断造成的文档不同步。"
+          ],
+          "reusablePatterns": [
+            "项目数据库是唯一事实来源。",
+            "启动时重新生成交接文档，修复意外中断造成的文档不同步。"
+          ],
+          "tags": [
+            "交接",
+            "恢复"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [
+            "node_baef82d3-17ac-4601-bcde-a46affad41c5"
+          ],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 1564,
+            "y": 1592,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T12:37:21.248Z",
+          "updatedAt": "2026-11-19T12:37:21.248Z"
+        },
+        {
+          "id": "node_067b94d2-ef85-4721-8b81-a8be954c2c71",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 3,
+          "zone": "stage",
+          "kind": "learning",
+          "category": "feature_impl",
+          "title": "画布平移与缩放",
+          "content": "已实现鼠标拖动平移和滚轮缩放。卡片坐标保持稳定，阶段跳转能快速定位当前工作区。",
+          "summaryBullets": [
+            "已实现鼠标拖动平移和滚轮缩放。",
+            "卡片坐标保持稳定，阶段跳转能快速定位当前工作区。"
+          ],
+          "reusablePatterns": [],
+          "tags": [
+            "画布",
+            "视口"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 3064,
+            "y": 662,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T12:37:21.249Z",
+          "updatedAt": "2026-11-19T12:37:21.249Z"
+        },
+        {
+          "id": "node_db8139df-5581-4ede-9078-32cd2fe79618",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 3,
+          "zone": "stage",
+          "kind": "learning",
+          "category": "feature_impl",
+          "title": "键盘导航验收",
+          "content": "待验证分类区域与终局卡片之间的键盘焦点移动。发布前确认读屏标签能够准确表达操作含义。",
+          "summaryBullets": [
+            "待验证分类区域与终局卡片之间的键盘焦点移动。",
+            "发布前确认读屏标签能够准确表达操作含义。"
+          ],
+          "reusablePatterns": [],
+          "tags": [
+            "无障碍",
+            "待办"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": false,
+          "status": "open",
+          "sourceNodeIds": [],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 3504,
+            "y": 662,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T12:37:21.249Z",
+          "updatedAt": "2026-11-19T12:37:21.249Z"
+        },
+        {
+          "id": "node_bbcd5f1d-b379-41d1-b5a2-c98612ca7105",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "stageNumber": 3,
+          "zone": "stage",
+          "kind": "learning",
+          "category": "architecture_design",
+          "title": "大画布性能验证",
+          "content": "待完成五千张卡片的性能测试，再决定是否只渲染视口附近的卡片。",
+          "summaryBullets": [
+            "待完成五千张卡片的性能测试，再决定是否只渲染视口附近的卡片。"
+          ],
+          "reusablePatterns": [
+            "待完成五千张卡片的性能测试，再决定是否只渲染视口附近的卡片。"
+          ],
+          "tags": [
+            "性能",
+            "待办"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": false,
+          "status": "open",
+          "sourceNodeIds": [],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 3064,
+            "y": 308,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T12:37:21.257Z",
+          "updatedAt": "2026-11-19T12:37:21.257Z"
+        }
+      ],
+      "edges": [
+        {
+          "id": "edge_567134f4-e55a-4b42-b9e8-6a1d7fde8c2a",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "source": "node_74b6620d-e40a-4811-8c84-ecba1a3f71c3",
+          "target": "node_f9cb4b77-f3f7-4271-8fca-0796cfffb317",
+          "type": "summarizes",
+          "label": "分类小结的原始依据",
+          "createdAt": "2026-11-19T12:37:21.247Z"
+        },
+        {
+          "id": "edge_49b13c80-9838-42c6-bfb5-68418341b4b8",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "source": "node_39484709-37cc-4810-a2af-6859809e4ae3",
+          "target": "node_53f6badd-10e3-430a-aec1-0cee6680d151",
+          "type": "summarizes",
+          "label": "分类小结的原始依据",
+          "createdAt": "2026-11-19T12:37:21.247Z"
+        },
+        {
+          "id": "edge_63d3c379-9dc6-41f1-ae43-332eea5ee980",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "source": "node_0fb9baf3-3fc5-4cc6-bb2e-ea5303946688",
+          "target": "node_be4a7ce7-6ddc-40b6-8684-6f3db0beeb29",
+          "type": "summarizes",
+          "label": "分类小结的原始依据",
+          "createdAt": "2026-11-19T12:37:21.247Z"
+        },
+        {
+          "id": "edge_354e9d56-6e0f-4465-9278-605d275ba95d",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "source": "node_4b2cc23d-24a8-4a02-89d8-429c85742f98",
+          "target": "node_e9f897da-9989-409e-ae60-0b41799a3592",
+          "type": "summarizes",
+          "label": "分类小结的原始依据",
+          "createdAt": "2026-11-19T12:37:21.247Z"
+        },
+        {
+          "id": "edge_04c396f2-0550-4730-9b1e-d00c418266e3",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "source": "node_f2b81b5e-c20b-44e6-b284-3471593b8f60",
+          "target": "node_76ee25a1-9e58-46db-b7df-78d446015bfd",
+          "type": "summarizes",
+          "label": "分类小结的原始依据",
+          "createdAt": "2026-11-19T12:37:21.247Z"
+        },
+        {
+          "id": "edge_de249162-b601-4b5f-8b34-efc6d084ffd8",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "source": "node_1267e67d-d8f6-497c-b2d4-dd6452d001b9",
+          "target": "node_df108f92-7df4-4cb2-af89-7711bcbbbf01",
+          "type": "summarizes",
+          "label": "分类小结的原始依据",
+          "createdAt": "2026-11-19T12:37:21.248Z"
+        },
+        {
+          "id": "edge_009ca9c6-cb10-4bd3-9048-0439a0cafd37",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "source": "node_f9cb4b77-f3f7-4271-8fca-0796cfffb317",
+          "target": "node_df108f92-7df4-4cb2-af89-7711bcbbbf01",
+          "type": "evolution",
+          "label": "分类小结的阶段演进",
+          "createdAt": "2026-11-19T12:37:21.248Z"
+        },
+        {
+          "id": "edge_d7acab23-2f24-44d8-8746-5f9f212c39ca",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "source": "cluster_e7cc85e4-a5b6-411c-8a24-55a8eae3bb52",
+          "target": "cluster_0302b8b4-39a4-4553-ae73-f2b8cef7a7ba",
+          "type": "evolution",
+          "label": "我们规定的做法",
+          "createdAt": "2026-11-19T12:37:21.248Z"
+        },
+        {
+          "id": "edge_538963cc-094d-4e80-a506-5b1834e39b24",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "source": "node_c7e3b869-e019-410e-b284-c117a9705e59",
+          "target": "node_d250a7e1-ba55-4217-a0bc-334812b0c150",
+          "type": "summarizes",
+          "label": "分类小结的原始依据",
+          "createdAt": "2026-11-19T12:37:21.248Z"
+        },
+        {
+          "id": "edge_764f7006-f88d-4271-b279-cb0800df2c35",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "source": "node_53f6badd-10e3-430a-aec1-0cee6680d151",
+          "target": "node_d250a7e1-ba55-4217-a0bc-334812b0c150",
+          "type": "evolution",
+          "label": "分类小结的阶段演进",
+          "createdAt": "2026-11-19T12:37:21.248Z"
+        },
+        {
+          "id": "edge_3319b443-00df-4fb0-8488-c18ead7745c2",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "source": "cluster_2c50a459-ccc4-4651-8745-b77d881a653e",
+          "target": "cluster_a468f9cd-354a-468d-aad5-92d5469037cc",
+          "type": "evolution",
+          "label": "架构与模型设计",
+          "createdAt": "2026-11-19T12:37:21.248Z"
+        },
+        {
+          "id": "edge_01428df8-e4b7-4417-a81d-7cfe7fd51370",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "source": "node_263582c5-1ae3-4bee-8d61-566ebe11576a",
+          "target": "node_abb92c60-34b2-4898-9cc8-683462393792",
+          "type": "summarizes",
+          "label": "分类小结的原始依据",
+          "createdAt": "2026-11-19T12:37:21.248Z"
+        },
+        {
+          "id": "edge_ce744ecc-cec2-4c5c-9cc1-3ac90537d031",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "source": "node_be4a7ce7-6ddc-40b6-8684-6f3db0beeb29",
+          "target": "node_abb92c60-34b2-4898-9cc8-683462393792",
+          "type": "evolution",
+          "label": "分类小结的阶段演进",
+          "createdAt": "2026-11-19T12:37:21.248Z"
+        },
+        {
+          "id": "edge_5f8d58be-e799-431b-bad7-001a608e491b",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "source": "cluster_235d2f4d-38dd-47d3-84fa-fdbf75e6d2ca",
+          "target": "cluster_07b37327-d44d-461f-94ca-be0459887d0e",
+          "type": "evolution",
+          "label": "功能实现",
+          "createdAt": "2026-11-19T12:37:21.248Z"
+        },
+        {
+          "id": "edge_c7ae4c2d-c8d6-4753-bd55-f980935933af",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "source": "node_226f145c-2e92-4b4a-9683-098a1e442068",
+          "target": "node_3922ff42-21bf-4c79-b829-51ee026d04c6",
+          "type": "summarizes",
+          "label": "分类小结的原始依据",
+          "createdAt": "2026-11-19T12:37:21.248Z"
+        },
+        {
+          "id": "edge_9f65924c-9a37-4d6c-b1f4-15222d6262c3",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "source": "node_e9f897da-9989-409e-ae60-0b41799a3592",
+          "target": "node_3922ff42-21bf-4c79-b829-51ee026d04c6",
+          "type": "evolution",
+          "label": "分类小结的阶段演进",
+          "createdAt": "2026-11-19T12:37:21.248Z"
+        },
+        {
+          "id": "edge_fed08f8e-1e79-49ff-b52d-59c35982320a",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "source": "cluster_806f283d-d549-4726-96ce-65a199abe755",
+          "target": "cluster_3ce2df26-ce23-4537-a819-d738a164966b",
+          "type": "evolution",
+          "label": "踩坑与问题修复",
+          "createdAt": "2026-11-19T12:37:21.248Z"
+        },
+        {
+          "id": "edge_1229a34a-155c-4755-bcdf-4b9aa39ea51c",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "source": "node_baef82d3-17ac-4601-bcde-a46affad41c5",
+          "target": "node_a820ce0c-c426-46aa-b31e-6cce458b6386",
+          "type": "summarizes",
+          "label": "分类小结的原始依据",
+          "createdAt": "2026-11-19T12:37:21.248Z"
+        },
+        {
+          "id": "edge_abc28fa7-965f-4222-b647-da03d20a8c58",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "source": "node_76ee25a1-9e58-46db-b7df-78d446015bfd",
+          "target": "node_a820ce0c-c426-46aa-b31e-6cce458b6386",
+          "type": "evolution",
+          "label": "分类小结的阶段演进",
+          "createdAt": "2026-11-19T12:37:21.248Z"
+        },
+        {
+          "id": "edge_c1aa2495-b925-4613-ac9b-3fbab78207ae",
+          "canvasId": "canvas_60f82947-b4a4-453c-b0f0-a84a2a78b2ac",
+          "source": "cluster_c5c359a9-8449-4ca5-b76d-7d906fd29bab",
+          "target": "cluster_fb9e815a-95b7-44cd-875d-a081b4792388",
+          "type": "evolution",
+          "label": "最终确定的好用法",
+          "createdAt": "2026-11-19T12:37:21.248Z"
+        }
+      ],
+      "createdAt": "2026-11-19T12:37:21.242Z",
+      "updatedAt": "2026-11-19T12:37:21.257Z"
+    },
+    {
+      "id": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+      "groupId": "group_48257f8b-b593-43f2-864e-c713be12c8ac",
+      "title": "可靠发布服务",
+      "projectKey": "可靠发布服务",
+      "description": "已完成的内部发布编排项目，沉淀经过验证的服务规范和恢复经验。",
+      "status": "completed",
+      "currentStageNumber": 2,
+      "viewport": {
+        "x": 0,
+        "y": 0,
+        "zoom": 1
+      },
+      "stages": [
+        {
+          "id": "stage_0aa42abf-0f0c-4dc8-80ee-c30596f53a45",
+          "stageNumber": 1,
+          "title": "服务约定与可靠性",
+          "summary": "我们规定的做法：1 条；架构与模型设计：1 条；功能实现：1 条；踩坑与问题修复：1 条",
+          "status": "consolidated",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1400,
+            "height": 1712
+          },
+          "clusters": {
+            "feature_impl": {
+              "id": "cluster_380a37df-8eb3-462a-90ef-637f42a1fb4a",
+              "category": "feature_impl",
+              "title": "功能实现",
+              "bounds": {
+                "x": 32,
+                "y": 816,
+                "width": 1336,
+                "height": 336
+              },
+              "nodeIds": [
+                "node_45db3d98-5200-4e78-857c-18e471c92481",
+                "node_7e6d627f-f119-4888-9300-6d6e53d0dde4"
+              ],
+              "summaryNodeId": "node_45db3d98-5200-4e78-857c-18e471c92481"
+            },
+            "convention_practice": {
+              "id": "cluster_2206fc65-82b1-4141-a0ea-ed185062e52d",
+              "category": "convention_practice",
+              "title": "我们规定的做法",
+              "bounds": {
+                "x": 32,
+                "y": 96,
+                "width": 1336,
+                "height": 336
+              },
+              "nodeIds": [
+                "node_05662e31-a681-42ac-ae9d-c386433fe4b3",
+                "node_98e38db7-ad65-4b77-94a6-9eac8dc2593e"
+              ],
+              "summaryNodeId": "node_05662e31-a681-42ac-ae9d-c386433fe4b3"
+            },
+            "architecture_design": {
+              "id": "cluster_c93746e0-13d0-461a-95a3-3eb804b0fe01",
+              "category": "architecture_design",
+              "title": "架构与模型设计",
+              "bounds": {
+                "x": 32,
+                "y": 456,
+                "width": 1336,
+                "height": 336
+              },
+              "nodeIds": [
+                "node_68a89f3c-6385-40fe-bc07-eda5c5c98b24",
+                "node_63e2c974-81c9-49a7-b8cd-56a9ec14b4d5"
+              ],
+              "summaryNodeId": "node_68a89f3c-6385-40fe-bc07-eda5c5c98b24"
+            },
+            "pitfall_fix": {
+              "id": "cluster_a0f9179d-1211-400b-ae7f-15b66794b599",
+              "category": "pitfall_fix",
+              "title": "踩坑与问题修复",
+              "bounds": {
+                "x": 32,
+                "y": 1176,
+                "width": 1336,
+                "height": 336
+              },
+              "nodeIds": [
+                "node_4de5ab2d-7077-45ce-b7b3-c4de7ec19115",
+                "node_d595f1ef-3742-4221-b91b-abb27f9c7c74"
+              ],
+              "summaryNodeId": "node_4de5ab2d-7077-45ce-b7b3-c4de7ec19115"
+            },
+            "best_practice": {
+              "id": "cluster_b2a910c0-5178-4397-9c5e-0dee9f5dda49",
+              "category": "best_practice",
+              "title": "最终确定的好用法",
+              "bounds": {
+                "x": 32,
+                "y": 1536,
+                "width": 1336,
+                "height": 120
+              },
+              "nodeIds": [],
+              "summaryNodeId": null
+            }
+          },
+          "consolidatedAt": "2026-11-19T12:37:21.258Z"
+        },
+        {
+          "id": "stage_bb89d293-bd4f-4617-8854-c0772827e09d",
+          "stageNumber": 2,
+          "title": "运行验证与项目收尾",
+          "summary": "我们规定的做法：1 条；最终确定的好用法：1 条",
+          "status": "consolidated",
+          "bounds": {
+            "x": 1500,
+            "y": 0,
+            "width": 1400,
+            "height": 1280
+          },
+          "clusters": {
+            "feature_impl": {
+              "id": "cluster_61e6d601-bf6d-4c39-95c9-fb503da748ad",
+              "category": "feature_impl",
+              "title": "功能实现",
+              "bounds": {
+                "x": 1532,
+                "y": 600,
+                "width": 1336,
+                "height": 120
+              },
+              "nodeIds": [],
+              "summaryNodeId": null
+            },
+            "convention_practice": {
+              "id": "cluster_e6931085-b0b1-4624-ac8a-74d74f22470c",
+              "category": "convention_practice",
+              "title": "我们规定的做法",
+              "bounds": {
+                "x": 1532,
+                "y": 96,
+                "width": 1336,
+                "height": 336
+              },
+              "nodeIds": [
+                "node_fefe6789-c48e-4a5d-94ec-14fb79a68f6b",
+                "node_63304d65-8642-4199-9eed-affbe5b13f60"
+              ],
+              "summaryNodeId": "node_fefe6789-c48e-4a5d-94ec-14fb79a68f6b"
+            },
+            "architecture_design": {
+              "id": "cluster_dfffe723-e66d-4179-892b-083f7d33ab35",
+              "category": "architecture_design",
+              "title": "架构与模型设计",
+              "bounds": {
+                "x": 1532,
+                "y": 456,
+                "width": 1336,
+                "height": 120
+              },
+              "nodeIds": [],
+              "summaryNodeId": null
+            },
+            "pitfall_fix": {
+              "id": "cluster_728cb48f-2db6-4da6-9421-69bb0d139dd1",
+              "category": "pitfall_fix",
+              "title": "踩坑与问题修复",
+              "bounds": {
+                "x": 1532,
+                "y": 744,
+                "width": 1336,
+                "height": 120
+              },
+              "nodeIds": [],
+              "summaryNodeId": null
+            },
+            "best_practice": {
+              "id": "cluster_9bcb4be2-a9c0-406a-8ff8-f115e79deacf",
+              "category": "best_practice",
+              "title": "最终确定的好用法",
+              "bounds": {
+                "x": 1532,
+                "y": 888,
+                "width": 1336,
+                "height": 336
+              },
+              "nodeIds": [
+                "node_0b3e5d69-2ad7-4e56-9540-9eaef3b676b2",
+                "node_319f0cca-58ea-4feb-8be2-d6937a2c9016"
+              ],
+              "summaryNodeId": "node_0b3e5d69-2ad7-4e56-9540-9eaef3b676b2"
+            }
+          },
+          "consolidatedAt": "2026-11-19T12:37:21.259Z"
+        }
+      ],
+      "finalZone": {
+        "id": "final_623a2954-689d-4dfc-ad08-db40b3e04ce8",
+        "title": "终局精华 · 已验证的项目知识",
+        "bounds": {
+          "x": 3000,
+          "y": 0,
+          "width": 1400,
+          "height": 628
+        },
+        "confirmedPractices": [
+          "node_32b0f627-08dd-4bff-b740-978353b99f15",
+          "node_87906fa8-8132-4797-aa17-e377d0bbe08c"
+        ],
+        "coreImplementations": [
+          "node_cb32b01f-c514-4aef-9fc9-db5be1b2e142",
+          "node_addb7dbb-8422-486f-863f-441d55036f80"
+        ],
+        "reusablePatterns": [
+          "experience_93b67486-e27a-4188-aeeb-3f547dce9c12",
+          "experience_a90674c6-e3ae-4abf-b7f6-3babdf8a0bc9",
+          "experience_61c37a86-5443-4257-a2e2-97ee441a8de6",
+          "experience_936d5e7b-8849-4aaf-b03d-29efe1ca0214",
+          "experience_a5e763c4-2420-401e-8aa0-f1a8fa0324e7",
+          "experience_62d824e8-af57-4b49-a8df-bd37fa73053c"
+        ],
+        "handoffSummary": "可靠发布服务：已整理 2 个阶段，将 6 条已验证成果提炼为 4 份分类小结和 6 条可复用经验。",
+        "distilledAt": "2026-11-19T12:37:21.259Z"
+      },
+      "nodes": [
+        {
+          "id": "node_98e38db7-ad65-4b77-94a6-9eac8dc2593e",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "stageNumber": 1,
+          "zone": "stage",
+          "kind": "learning",
+          "category": "convention_practice",
+          "title": "在服务入口校验输入",
+          "content": "每个服务入口都使用结构化规则校验输入。不合法的数据必须在进入业务逻辑前拒绝。",
+          "summaryBullets": [
+            "每个服务入口都使用结构化规则校验输入。",
+            "不合法的数据必须在进入业务逻辑前拒绝。"
+          ],
+          "reusablePatterns": [
+            "每个服务入口都使用结构化规则校验输入。",
+            "不合法的数据必须在进入业务逻辑前拒绝。"
+          ],
+          "tags": [
+            "校验",
+            "服务边界"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 504,
+            "y": 164,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T12:37:21.258Z",
+          "updatedAt": "2026-11-19T12:37:21.258Z"
+        },
+        {
+          "id": "node_63e2c974-81c9-49a7-b8cd-56a9ec14b4d5",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "stageNumber": 1,
+          "zone": "stage",
+          "kind": "learning",
+          "category": "architecture_design",
+          "title": "发布编排保持幂等",
+          "content": "每次发布请求使用唯一幂等标识。将输入校验、持久化状态流转与部署操作分离，避免重复执行。",
+          "summaryBullets": [
+            "每次发布请求使用唯一幂等标识。",
+            "将输入校验、持久化状态流转与部署操作分离，避免重复执行。"
+          ],
+          "reusablePatterns": [
+            "每次发布请求使用唯一幂等标识。",
+            "将输入校验、持久化状态流转与部署操作分离，避免重复执行。"
+          ],
+          "tags": [
+            "幂等",
+            "架构"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 504,
+            "y": 524,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T12:37:21.258Z",
+          "updatedAt": "2026-11-19T12:37:21.258Z"
+        },
+        {
+          "id": "node_7e6d627f-f119-4888-9300-6d6e53d0dde4",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "stageNumber": 1,
+          "zone": "stage",
+          "kind": "learning",
+          "category": "feature_impl",
+          "title": "支持安全重试的部署队列",
+          "content": "任务标识持久化保存，并限制重试次数。保留最近失败原因，让中断后的部署可以恢复。",
+          "summaryBullets": [
+            "任务标识持久化保存，并限制重试次数。",
+            "保留最近失败原因，让中断后的部署可以恢复。"
+          ],
+          "reusablePatterns": [],
+          "tags": [
+            "队列",
+            "可靠性"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 504,
+            "y": 884,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T12:37:21.258Z",
+          "updatedAt": "2026-11-19T12:37:21.258Z"
+        },
+        {
+          "id": "node_d595f1ef-3742-4221-b91b-abb27f9c7c74",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "stageNumber": 1,
+          "zone": "stage",
+          "kind": "learning",
+          "category": "pitfall_fix",
+          "title": "退避机制避免重试风暴",
+          "content": "重试时采用带随机偏移的递增等待时间。设置总体重试预算，避免大量任务同时冲击服务。",
+          "summaryBullets": [
+            "重试时采用带随机偏移的递增等待时间。",
+            "设置总体重试预算，避免大量任务同时冲击服务。"
+          ],
+          "reusablePatterns": [
+            "设置总体重试预算，避免大量任务同时冲击服务。"
+          ],
+          "tags": [
+            "重试",
+            "可靠性"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 504,
+            "y": 1244,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T12:37:21.258Z",
+          "updatedAt": "2026-11-19T12:37:21.258Z"
+        },
+        {
+          "id": "node_05662e31-a681-42ac-ae9d-c386433fe4b3",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "stageNumber": 1,
+          "zone": "stage",
+          "kind": "stage_summary",
+          "category": "convention_practice",
+          "title": "阶段 1 · 我们规定的做法",
+          "content": "- 在服务入口校验输入：每个服务入口都使用结构化规则校验输入。\n- 在服务入口校验输入：不合法的数据必须在进入业务逻辑前拒绝。",
+          "summaryBullets": [
+            "在服务入口校验输入：每个服务入口都使用结构化规则校验输入。",
+            "在服务入口校验输入：不合法的数据必须在进入业务逻辑前拒绝。"
+          ],
+          "reusablePatterns": [
+            "每个服务入口都使用结构化规则校验输入。",
+            "不合法的数据必须在进入业务逻辑前拒绝。"
+          ],
+          "tags": [
+            "校验",
+            "服务边界"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [
+            "node_98e38db7-ad65-4b77-94a6-9eac8dc2593e"
+          ],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 64,
+            "y": 164,
+            "width": 416,
+            "height": 236
+          },
+          "createdAt": "2026-11-19T12:37:21.258Z",
+          "updatedAt": "2026-11-19T12:37:21.258Z"
+        },
+        {
+          "id": "node_68a89f3c-6385-40fe-bc07-eda5c5c98b24",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "stageNumber": 1,
+          "zone": "stage",
+          "kind": "stage_summary",
+          "category": "architecture_design",
+          "title": "阶段 1 · 架构与模型设计",
+          "content": "- 发布编排保持幂等：每次发布请求使用唯一幂等标识。\n- 发布编排保持幂等：将输入校验、持久化状态流转与部署操作分离，避免重复执行。",
+          "summaryBullets": [
+            "发布编排保持幂等：每次发布请求使用唯一幂等标识。",
+            "发布编排保持幂等：将输入校验、持久化状态流转与部署操作分离，避免重复执行。"
+          ],
+          "reusablePatterns": [
+            "每次发布请求使用唯一幂等标识。",
+            "将输入校验、持久化状态流转与部署操作分离，避免重复执行。"
+          ],
+          "tags": [
+            "幂等",
+            "架构"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [
+            "node_63e2c974-81c9-49a7-b8cd-56a9ec14b4d5"
+          ],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 64,
+            "y": 524,
+            "width": 416,
+            "height": 236
+          },
+          "createdAt": "2026-11-19T12:37:21.258Z",
+          "updatedAt": "2026-11-19T12:37:21.258Z"
+        },
+        {
+          "id": "node_45db3d98-5200-4e78-857c-18e471c92481",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "stageNumber": 1,
+          "zone": "stage",
+          "kind": "stage_summary",
+          "category": "feature_impl",
+          "title": "阶段 1 · 功能实现",
+          "content": "- 支持安全重试的部署队列：任务标识持久化保存，并限制重试次数。\n- 支持安全重试的部署队列：保留最近失败原因，让中断后的部署可以恢复。",
+          "summaryBullets": [
+            "支持安全重试的部署队列：任务标识持久化保存，并限制重试次数。",
+            "支持安全重试的部署队列：保留最近失败原因，让中断后的部署可以恢复。"
+          ],
+          "reusablePatterns": [],
+          "tags": [
+            "队列",
+            "可靠性"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [
+            "node_7e6d627f-f119-4888-9300-6d6e53d0dde4"
+          ],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 64,
+            "y": 884,
+            "width": 416,
+            "height": 236
+          },
+          "createdAt": "2026-11-19T12:37:21.258Z",
+          "updatedAt": "2026-11-19T12:37:21.258Z"
+        },
+        {
+          "id": "node_4de5ab2d-7077-45ce-b7b3-c4de7ec19115",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "stageNumber": 1,
+          "zone": "stage",
+          "kind": "stage_summary",
+          "category": "pitfall_fix",
+          "title": "阶段 1 · 踩坑与问题修复",
+          "content": "- 退避机制避免重试风暴：重试时采用带随机偏移的递增等待时间。\n- 退避机制避免重试风暴：设置总体重试预算，避免大量任务同时冲击服务。",
+          "summaryBullets": [
+            "退避机制避免重试风暴：重试时采用带随机偏移的递增等待时间。",
+            "退避机制避免重试风暴：设置总体重试预算，避免大量任务同时冲击服务。"
+          ],
+          "reusablePatterns": [
+            "设置总体重试预算，避免大量任务同时冲击服务。"
+          ],
+          "tags": [
+            "重试",
+            "可靠性"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [
+            "node_d595f1ef-3742-4221-b91b-abb27f9c7c74"
+          ],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 64,
+            "y": 1244,
+            "width": 416,
+            "height": 236
+          },
+          "createdAt": "2026-11-19T12:37:21.258Z",
+          "updatedAt": "2026-11-19T12:37:21.258Z"
+        },
+        {
+          "id": "node_319f0cca-58ea-4feb-8be2-d6937a2c9016",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "stageNumber": 2,
+          "zone": "stage",
+          "kind": "learning",
+          "category": "best_practice",
+          "title": "原子替换本地状态",
+          "content": "小型本地状态文件使用原子替换。先写入并刷新临时文件，再替换之前的完整快照。",
+          "summaryBullets": [
+            "小型本地状态文件使用原子替换。",
+            "先写入并刷新临时文件，再替换之前的完整快照。"
+          ],
+          "reusablePatterns": [
+            "小型本地状态文件使用原子替换。"
+          ],
+          "tags": [
+            "存储",
+            "原子替换",
+            "可靠性"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 2004,
+            "y": 956,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T12:37:21.258Z",
+          "updatedAt": "2026-11-19T12:37:21.258Z"
+        },
+        {
+          "id": "node_63304d65-8642-4199-9eed-affbe5b13f60",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "stageNumber": 2,
+          "zone": "stage",
+          "kind": "learning",
+          "category": "convention_practice",
+          "title": "推广经验前先提供证据",
+          "content": "可靠性方案必须通过恢复测试后才能进入共享经验库。引入新项目时仍需结合实际条件重新验证。",
+          "summaryBullets": [
+            "可靠性方案必须通过恢复测试后才能进入共享经验库。",
+            "引入新项目时仍需结合实际条件重新验证。"
+          ],
+          "reusablePatterns": [
+            "可靠性方案必须通过恢复测试后才能进入共享经验库。"
+          ],
+          "tags": [
+            "测试",
+            "经验复用"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 2004,
+            "y": 164,
+            "width": 416,
+            "height": 230
+          },
+          "createdAt": "2026-11-19T12:37:21.258Z",
+          "updatedAt": "2026-11-19T12:37:21.258Z"
+        },
+        {
+          "id": "node_fefe6789-c48e-4a5d-94ec-14fb79a68f6b",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "stageNumber": 2,
+          "zone": "stage",
+          "kind": "stage_summary",
+          "category": "convention_practice",
+          "title": "阶段 2 · 我们规定的做法",
+          "content": "- 推广经验前先提供证据：可靠性方案必须通过恢复测试后才能进入共享经验库。\n- 推广经验前先提供证据：引入新项目时仍需结合实际条件重新验证。",
+          "summaryBullets": [
+            "推广经验前先提供证据：可靠性方案必须通过恢复测试后才能进入共享经验库。",
+            "推广经验前先提供证据：引入新项目时仍需结合实际条件重新验证。"
+          ],
+          "reusablePatterns": [
+            "可靠性方案必须通过恢复测试后才能进入共享经验库。"
+          ],
+          "tags": [
+            "测试",
+            "经验复用"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [
+            "node_63304d65-8642-4199-9eed-affbe5b13f60"
+          ],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 1564,
+            "y": 164,
+            "width": 416,
+            "height": 236
+          },
+          "createdAt": "2026-11-19T12:37:21.259Z",
+          "updatedAt": "2026-11-19T12:37:21.259Z"
+        },
+        {
+          "id": "node_0b3e5d69-2ad7-4e56-9540-9eaef3b676b2",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "stageNumber": 2,
+          "zone": "stage",
+          "kind": "stage_summary",
+          "category": "best_practice",
+          "title": "阶段 2 · 最终确定的好用法",
+          "content": "- 原子替换本地状态：小型本地状态文件使用原子替换。\n- 原子替换本地状态：先写入并刷新临时文件，再替换之前的完整快照。",
+          "summaryBullets": [
+            "原子替换本地状态：小型本地状态文件使用原子替换。",
+            "原子替换本地状态：先写入并刷新临时文件，再替换之前的完整快照。"
+          ],
+          "reusablePatterns": [
+            "小型本地状态文件使用原子替换。"
+          ],
+          "tags": [
+            "存储",
+            "原子替换",
+            "可靠性"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [
+            "node_319f0cca-58ea-4feb-8be2-d6937a2c9016"
+          ],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 1564,
+            "y": 956,
+            "width": 416,
+            "height": 236
+          },
+          "createdAt": "2026-11-19T12:37:21.259Z",
+          "updatedAt": "2026-11-19T12:37:21.259Z"
+        },
+        {
+          "id": "node_32b0f627-08dd-4bff-b740-978353b99f15",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "stageNumber": null,
+          "zone": "final",
+          "kind": "distillation",
+          "category": "convention_practice",
+          "title": "终局精华 · 我们规定的做法",
+          "content": "- 在服务入口校验输入：每个服务入口都使用结构化规则校验输入。\n- 在服务入口校验输入：不合法的数据必须在进入业务逻辑前拒绝。\n- 推广经验前先提供证据：可靠性方案必须通过恢复测试后才能进入共享经验库。\n- 推广经验前先提供证据：引入新项目时仍需结合实际条件重新验证。",
+          "summaryBullets": [
+            "在服务入口校验输入：每个服务入口都使用结构化规则校验输入。",
+            "在服务入口校验输入：不合法的数据必须在进入业务逻辑前拒绝。",
+            "推广经验前先提供证据：可靠性方案必须通过恢复测试后才能进入共享经验库。",
+            "推广经验前先提供证据：引入新项目时仍需结合实际条件重新验证。"
+          ],
+          "reusablePatterns": [
+            "每个服务入口都使用结构化规则校验输入。",
+            "不合法的数据必须在进入业务逻辑前拒绝。",
+            "可靠性方案必须通过恢复测试后才能进入共享经验库。"
+          ],
+          "tags": [
+            "校验",
+            "服务边界",
+            "测试",
+            "经验复用"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [
+            "node_98e38db7-ad65-4b77-94a6-9eac8dc2593e",
+            "node_63304d65-8642-4199-9eed-affbe5b13f60"
+          ],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 3032,
+            "y": 100,
+            "width": 416,
+            "height": 236
+          },
+          "createdAt": "2026-11-19T12:37:21.259Z",
+          "updatedAt": "2026-11-19T12:37:21.259Z"
+        },
+        {
+          "id": "node_cb32b01f-c514-4aef-9fc9-db5be1b2e142",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "stageNumber": null,
+          "zone": "final",
+          "kind": "distillation",
+          "category": "architecture_design",
+          "title": "终局精华 · 架构与模型设计",
+          "content": "- 发布编排保持幂等：每次发布请求使用唯一幂等标识。\n- 发布编排保持幂等：将输入校验、持久化状态流转与部署操作分离，避免重复执行。",
+          "summaryBullets": [
+            "发布编排保持幂等：每次发布请求使用唯一幂等标识。",
+            "发布编排保持幂等：将输入校验、持久化状态流转与部署操作分离，避免重复执行。"
+          ],
+          "reusablePatterns": [
+            "每次发布请求使用唯一幂等标识。",
+            "将输入校验、持久化状态流转与部署操作分离，避免重复执行。"
+          ],
+          "tags": [
+            "幂等",
+            "架构"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [
+            "node_63e2c974-81c9-49a7-b8cd-56a9ec14b4d5"
+          ],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 3472,
+            "y": 100,
+            "width": 416,
+            "height": 236
+          },
+          "createdAt": "2026-11-19T12:37:21.259Z",
+          "updatedAt": "2026-11-19T12:37:21.259Z"
+        },
+        {
+          "id": "node_addb7dbb-8422-486f-863f-441d55036f80",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "stageNumber": null,
+          "zone": "final",
+          "kind": "distillation",
+          "category": "feature_impl",
+          "title": "终局精华 · 功能实现",
+          "content": "- 支持安全重试的部署队列：任务标识持久化保存，并限制重试次数。\n- 支持安全重试的部署队列：保留最近失败原因，让中断后的部署可以恢复。",
+          "summaryBullets": [
+            "支持安全重试的部署队列：任务标识持久化保存，并限制重试次数。",
+            "支持安全重试的部署队列：保留最近失败原因，让中断后的部署可以恢复。"
+          ],
+          "reusablePatterns": [],
+          "tags": [
+            "队列",
+            "可靠性"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [
+            "node_7e6d627f-f119-4888-9300-6d6e53d0dde4"
+          ],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 3912,
+            "y": 100,
+            "width": 416,
+            "height": 236
+          },
+          "createdAt": "2026-11-19T12:37:21.259Z",
+          "updatedAt": "2026-11-19T12:37:21.259Z"
+        },
+        {
+          "id": "node_87906fa8-8132-4797-aa17-e377d0bbe08c",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "stageNumber": null,
+          "zone": "final",
+          "kind": "distillation",
+          "category": "best_practice",
+          "title": "终局精华 · 最终确定的好用法",
+          "content": "- 退避机制避免重试风暴：重试时采用带随机偏移的递增等待时间。\n- 退避机制避免重试风暴：设置总体重试预算，避免大量任务同时冲击服务。\n- 原子替换本地状态：小型本地状态文件使用原子替换。\n- 原子替换本地状态：先写入并刷新临时文件，再替换之前的完整快照。",
+          "summaryBullets": [
+            "退避机制避免重试风暴：重试时采用带随机偏移的递增等待时间。",
+            "退避机制避免重试风暴：设置总体重试预算，避免大量任务同时冲击服务。",
+            "原子替换本地状态：小型本地状态文件使用原子替换。",
+            "原子替换本地状态：先写入并刷新临时文件，再替换之前的完整快照。"
+          ],
+          "reusablePatterns": [
+            "设置总体重试预算，避免大量任务同时冲击服务。",
+            "小型本地状态文件使用原子替换。"
+          ],
+          "tags": [
+            "重试",
+            "可靠性",
+            "存储",
+            "原子替换"
+          ],
+          "relatedFiles": [],
+          "importance": 4,
+          "validated": true,
+          "status": "active",
+          "sourceNodeIds": [
+            "node_d595f1ef-3742-4221-b91b-abb27f9c7c74",
+            "node_319f0cca-58ea-4feb-8be2-d6937a2c9016"
+          ],
+          "sourceExperienceId": null,
+          "bounds": {
+            "x": 3032,
+            "y": 360,
+            "width": 416,
+            "height": 236
+          },
+          "createdAt": "2026-11-19T12:37:21.259Z",
+          "updatedAt": "2026-11-19T12:37:21.259Z"
+        }
+      ],
+      "edges": [
+        {
+          "id": "edge_ac6dd919-4d1e-4da3-812a-e00afd196c11",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "source": "node_98e38db7-ad65-4b77-94a6-9eac8dc2593e",
+          "target": "node_05662e31-a681-42ac-ae9d-c386433fe4b3",
+          "type": "summarizes",
+          "label": "分类小结的原始依据",
+          "createdAt": "2026-11-19T12:37:21.258Z"
+        },
+        {
+          "id": "edge_a9e08ee7-0654-4688-aa60-6ab213fb03e0",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "source": "node_63e2c974-81c9-49a7-b8cd-56a9ec14b4d5",
+          "target": "node_68a89f3c-6385-40fe-bc07-eda5c5c98b24",
+          "type": "summarizes",
+          "label": "分类小结的原始依据",
+          "createdAt": "2026-11-19T12:37:21.258Z"
+        },
+        {
+          "id": "edge_f885002c-af49-4851-8477-99b41b23ca2d",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "source": "node_7e6d627f-f119-4888-9300-6d6e53d0dde4",
+          "target": "node_45db3d98-5200-4e78-857c-18e471c92481",
+          "type": "summarizes",
+          "label": "分类小结的原始依据",
+          "createdAt": "2026-11-19T12:37:21.258Z"
+        },
+        {
+          "id": "edge_9ddcc3d3-3089-4cea-bffe-c0cc803d744a",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "source": "node_d595f1ef-3742-4221-b91b-abb27f9c7c74",
+          "target": "node_4de5ab2d-7077-45ce-b7b3-c4de7ec19115",
+          "type": "summarizes",
+          "label": "分类小结的原始依据",
+          "createdAt": "2026-11-19T12:37:21.258Z"
+        },
+        {
+          "id": "edge_5a7832ef-25a5-4f3d-8fcb-c48774a77ebe",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "source": "node_63304d65-8642-4199-9eed-affbe5b13f60",
+          "target": "node_fefe6789-c48e-4a5d-94ec-14fb79a68f6b",
+          "type": "summarizes",
+          "label": "分类小结的原始依据",
+          "createdAt": "2026-11-19T12:37:21.259Z"
+        },
+        {
+          "id": "edge_491baaea-ab41-4609-bb83-f3c86f323d66",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "source": "node_05662e31-a681-42ac-ae9d-c386433fe4b3",
+          "target": "node_fefe6789-c48e-4a5d-94ec-14fb79a68f6b",
+          "type": "evolution",
+          "label": "分类小结的阶段演进",
+          "createdAt": "2026-11-19T12:37:21.259Z"
+        },
+        {
+          "id": "edge_6f19b060-63d4-4b29-a7fc-e363f38ad1ce",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "source": "cluster_2206fc65-82b1-4141-a0ea-ed185062e52d",
+          "target": "cluster_e6931085-b0b1-4624-ac8a-74d74f22470c",
+          "type": "evolution",
+          "label": "我们规定的做法",
+          "createdAt": "2026-11-19T12:37:21.259Z"
+        },
+        {
+          "id": "edge_d19504cb-f038-425f-8350-5c75fc23a916",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "source": "cluster_c93746e0-13d0-461a-95a3-3eb804b0fe01",
+          "target": "cluster_dfffe723-e66d-4179-892b-083f7d33ab35",
+          "type": "evolution",
+          "label": "架构与模型设计",
+          "createdAt": "2026-11-19T12:37:21.259Z"
+        },
+        {
+          "id": "edge_7f36f835-ad88-4994-ba95-bdd40c020978",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "source": "cluster_380a37df-8eb3-462a-90ef-637f42a1fb4a",
+          "target": "cluster_61e6d601-bf6d-4c39-95c9-fb503da748ad",
+          "type": "evolution",
+          "label": "功能实现",
+          "createdAt": "2026-11-19T12:37:21.259Z"
+        },
+        {
+          "id": "edge_67c56535-f12d-4e9a-ba8c-6393e152912e",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "source": "cluster_a0f9179d-1211-400b-ae7f-15b66794b599",
+          "target": "cluster_728cb48f-2db6-4da6-9421-69bb0d139dd1",
+          "type": "evolution",
+          "label": "踩坑与问题修复",
+          "createdAt": "2026-11-19T12:37:21.259Z"
+        },
+        {
+          "id": "edge_40733893-2896-48a2-9f24-a6884b84d21a",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "source": "node_319f0cca-58ea-4feb-8be2-d6937a2c9016",
+          "target": "node_0b3e5d69-2ad7-4e56-9540-9eaef3b676b2",
+          "type": "summarizes",
+          "label": "分类小结的原始依据",
+          "createdAt": "2026-11-19T12:37:21.259Z"
+        },
+        {
+          "id": "edge_90fcaa6c-b6a6-4554-83f8-1b3859766872",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "source": "cluster_b2a910c0-5178-4397-9c5e-0dee9f5dda49",
+          "target": "cluster_9bcb4be2-a9c0-406a-8ff8-f115e79deacf",
+          "type": "evolution",
+          "label": "最终确定的好用法",
+          "createdAt": "2026-11-19T12:37:21.259Z"
+        },
+        {
+          "id": "edge_ae0650b1-c0b2-4145-a350-e259904e842b",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "source": "node_98e38db7-ad65-4b77-94a6-9eac8dc2593e",
+          "target": "node_32b0f627-08dd-4bff-b740-978353b99f15",
+          "type": "distills",
+          "label": "最终好用法的已验证依据",
+          "createdAt": "2026-11-19T12:37:21.259Z"
+        },
+        {
+          "id": "edge_e8ec0a9d-9ce4-40bc-90cb-90968786842d",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "source": "node_63304d65-8642-4199-9eed-affbe5b13f60",
+          "target": "node_32b0f627-08dd-4bff-b740-978353b99f15",
+          "type": "distills",
+          "label": "最终好用法的已验证依据",
+          "createdAt": "2026-11-19T12:37:21.259Z"
+        },
+        {
+          "id": "edge_5e6d61c6-052b-426f-8d95-69b7731dc99d",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "source": "node_63e2c974-81c9-49a7-b8cd-56a9ec14b4d5",
+          "target": "node_cb32b01f-c514-4aef-9fc9-db5be1b2e142",
+          "type": "distills",
+          "label": "最终好用法的已验证依据",
+          "createdAt": "2026-11-19T12:37:21.259Z"
+        },
+        {
+          "id": "edge_c8607b25-5548-4304-9848-8c259f2dd3c3",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "source": "node_7e6d627f-f119-4888-9300-6d6e53d0dde4",
+          "target": "node_addb7dbb-8422-486f-863f-441d55036f80",
+          "type": "distills",
+          "label": "最终好用法的已验证依据",
+          "createdAt": "2026-11-19T12:37:21.259Z"
+        },
+        {
+          "id": "edge_abd65997-535d-44c9-9e07-f230e901f6ea",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "source": "node_d595f1ef-3742-4221-b91b-abb27f9c7c74",
+          "target": "node_87906fa8-8132-4797-aa17-e377d0bbe08c",
+          "type": "distills",
+          "label": "最终好用法的已验证依据",
+          "createdAt": "2026-11-19T12:37:21.259Z"
+        },
+        {
+          "id": "edge_8f1c19c2-3ad7-4e6a-b2c2-7b12b4d98bc2",
+          "canvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+          "source": "node_319f0cca-58ea-4feb-8be2-d6937a2c9016",
+          "target": "node_87906fa8-8132-4797-aa17-e377d0bbe08c",
+          "type": "distills",
+          "label": "最终好用法的已验证依据",
+          "createdAt": "2026-11-19T12:37:21.259Z"
+        }
+      ],
+      "createdAt": "2026-11-19T12:37:21.258Z",
+      "updatedAt": "2026-11-19T12:37:21.259Z"
+    }
+  ],
+  "crossProjectExperiences": [
+    {
+      "id": "experience_93b67486-e27a-4188-aeeb-3f547dce9c12",
+      "title": "在服务入口校验输入",
+      "content": "每个服务入口都使用结构化规则校验输入。不合法的数据必须在进入业务逻辑前拒绝。",
+      "category": "convention_practice",
+      "summaryBullets": [
+        "每个服务入口都使用结构化规则校验输入。",
+        "不合法的数据必须在进入业务逻辑前拒绝。"
+      ],
+      "tags": [
+        "校验",
+        "服务边界"
+      ],
+      "relatedFiles": [],
+      "sourceCanvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+      "sourceNodeIds": [
+        "node_98e38db7-ad65-4b77-94a6-9eac8dc2593e"
+      ],
+      "validated": true,
+      "appliedCanvasIds": [],
+      "createdAt": "2026-11-19T12:37:21.259Z",
+      "updatedAt": "2026-11-19T12:37:21.259Z"
+    },
+    {
+      "id": "experience_a90674c6-e3ae-4abf-b7f6-3babdf8a0bc9",
+      "title": "发布编排保持幂等",
+      "content": "每次发布请求使用唯一幂等标识。将输入校验、持久化状态流转与部署操作分离，避免重复执行。",
+      "category": "architecture_design",
+      "summaryBullets": [
+        "每次发布请求使用唯一幂等标识。",
+        "将输入校验、持久化状态流转与部署操作分离，避免重复执行。"
+      ],
+      "tags": [
+        "幂等",
+        "架构"
+      ],
+      "relatedFiles": [],
+      "sourceCanvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+      "sourceNodeIds": [
+        "node_63e2c974-81c9-49a7-b8cd-56a9ec14b4d5"
+      ],
+      "validated": true,
+      "appliedCanvasIds": [],
+      "createdAt": "2026-11-19T12:37:21.259Z",
+      "updatedAt": "2026-11-19T12:37:21.259Z"
+    },
+    {
+      "id": "experience_61c37a86-5443-4257-a2e2-97ee441a8de6",
+      "title": "支持安全重试的部署队列",
+      "content": "任务标识持久化保存，并限制重试次数。保留最近失败原因，让中断后的部署可以恢复。",
+      "category": "feature_impl",
+      "summaryBullets": [
+        "任务标识持久化保存，并限制重试次数。",
+        "保留最近失败原因，让中断后的部署可以恢复。"
+      ],
+      "tags": [
+        "队列",
+        "可靠性"
+      ],
+      "relatedFiles": [],
+      "sourceCanvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+      "sourceNodeIds": [
+        "node_7e6d627f-f119-4888-9300-6d6e53d0dde4"
+      ],
+      "validated": true,
+      "appliedCanvasIds": [],
+      "createdAt": "2026-11-19T12:37:21.259Z",
+      "updatedAt": "2026-11-19T12:37:21.259Z"
+    },
+    {
+      "id": "experience_936d5e7b-8849-4aaf-b03d-29efe1ca0214",
+      "title": "退避机制避免重试风暴",
+      "content": "重试时采用带随机偏移的递增等待时间。设置总体重试预算，避免大量任务同时冲击服务。",
+      "category": "best_practice",
+      "summaryBullets": [
+        "重试时采用带随机偏移的递增等待时间。",
+        "设置总体重试预算，避免大量任务同时冲击服务。"
+      ],
+      "tags": [
+        "重试",
+        "可靠性"
+      ],
+      "relatedFiles": [],
+      "sourceCanvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+      "sourceNodeIds": [
+        "node_d595f1ef-3742-4221-b91b-abb27f9c7c74"
+      ],
+      "validated": true,
+      "appliedCanvasIds": [],
+      "createdAt": "2026-11-19T12:37:21.259Z",
+      "updatedAt": "2026-11-19T12:37:21.259Z"
+    },
+    {
+      "id": "experience_a5e763c4-2420-401e-8aa0-f1a8fa0324e7",
+      "title": "原子替换本地状态",
+      "content": "小型本地状态文件使用原子替换。先写入并刷新临时文件，再替换之前的完整快照。",
+      "category": "best_practice",
+      "summaryBullets": [
+        "小型本地状态文件使用原子替换。",
+        "先写入并刷新临时文件，再替换之前的完整快照。"
+      ],
+      "tags": [
+        "存储",
+        "原子替换",
+        "可靠性"
+      ],
+      "relatedFiles": [],
+      "sourceCanvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+      "sourceNodeIds": [
+        "node_319f0cca-58ea-4feb-8be2-d6937a2c9016"
+      ],
+      "validated": true,
+      "appliedCanvasIds": [],
+      "createdAt": "2026-11-19T12:37:21.259Z",
+      "updatedAt": "2026-11-19T12:37:21.259Z"
+    },
+    {
+      "id": "experience_62d824e8-af57-4b49-a8df-bd37fa73053c",
+      "title": "推广经验前先提供证据",
+      "content": "可靠性方案必须通过恢复测试后才能进入共享经验库。引入新项目时仍需结合实际条件重新验证。",
+      "category": "convention_practice",
+      "summaryBullets": [
+        "可靠性方案必须通过恢复测试后才能进入共享经验库。",
+        "引入新项目时仍需结合实际条件重新验证。"
+      ],
+      "tags": [
+        "测试",
+        "经验复用"
+      ],
+      "relatedFiles": [],
+      "sourceCanvasId": "canvas_5a19cd8c-35f2-49a9-bc61-5c66149ea95d",
+      "sourceNodeIds": [
+        "node_63304d65-8642-4199-9eed-affbe5b13f60"
+      ],
+      "validated": true,
+      "appliedCanvasIds": [],
+      "createdAt": "2026-11-19T12:37:21.259Z",
+      "updatedAt": "2026-11-19T12:37:21.259Z"
+    }
+  ]
+}

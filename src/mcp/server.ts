@@ -12,7 +12,7 @@ export function createMcpServer(engine: CanvasEngine = new CanvasEngine({ dataDi
   // Low-level Server keeps discovery, validation, and execution identical to the HTTP registry.
   const server = new Server({ name: 'infinite-canvas-mcp', version: '0.1.0' }, {
     capabilities: { tools: {}, resources: {} },
-    instructions: 'Call get_handoff_context first to resume a project. Record knowledge throughout a stage, consolidate at checkpoints, and finalize only after validating reusable findings.',
+    instructions: '新会话先调用 get_handoff_context 接续项目。所有写入画布的标题、内容、标签、阶段总结与好用法必须使用简体中文。推进过程中持续记录，阶段结束时整理，验证成果后再进行项目结尾总整理。',
   });
   server.setRequestHandler(ListToolsRequestSchema, () => ({ tools: listTools() }));
   server.setRequestHandler(CallToolRequestSchema, request => {

@@ -10,10 +10,11 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport, getDefaultEnvironment } from '@modelcontextprotocol/sdk/client/stdio.js';
 import { startHttpServer } from '../src/server/app.js';
 import { CATEGORY_ORDER } from '../src/types/schema.js';
+import type { connectionBundle, Provider } from '../src/server/mcp-connect.js';
 
 async function fixture(t: TestContext, seedDemo = false) {
   const dataDir = mkdtempSync(join(tmpdir(), 'canvas-stage3-'));
-  const runtime = await startHttpServer({ dataDir, seedDemo, port: 0 });
+  const runtime = await startHttpServer({ dataDir, seedDemo, port: 0, mcpHomeDir: dataDir, mcpProjectRoot: dataDir });
   t.after(async () => {
     await runtime.stop();
     // Only remove the isolated directory created by this test, never project data.
@@ -87,7 +88,7 @@ test('production static assets and complete browser workflow connect REST, stdio
   await page.getByLabel('整理后自动开启下一阶段').check();
   await page.getByLabel('下一阶段名称（可选）').fill('验证与交付');
   await submit(page);
-  await expect(page.locator('#project-status')).toContainText('Stage 2');
+  await expect(page.locator('#project-status')).toContainText('阶段 2');
   assert.equal(engine.getCanvas().stages[0]!.status, 'consolidated');
   for (const category of CATEGORY_ORDER) assert.ok(engine.getCanvas().stages[0]!.clusters[category].summaryNodeId);
 
@@ -127,13 +128,9 @@ test('production static assets and complete browser workflow connect REST, stdio
   await page.getByRole('button', { name: '复制交接文档' }).click();
   // Windows clipboard text uses CRLF even when the source document uses LF.
   assert.equal(String(await page.evaluate('navigator.clipboard.readText()')).replace(/\r\n/g, '\n'), markdown);
-  const settings = JSON.parse(await page.locator('#mcp-config').innerText());
-  assert.equal(settings.mcpServers['infinite-canvas'].env.DATA_DIR, dataDir);
-  assert.equal(settings.mcpServers['infinite-canvas'].args[0], resolve('dist/src/mcp/server.js'));
-  await page.getByLabel('AI 客户端').selectOption('codex');
-  await expect(page.locator('#mcp-config')).toContainText('[mcp_servers.infinite-canvas]');
-  await page.getByRole('button', { name: '复制 MCP 配置' }).click();
-  assert.equal(String(await page.evaluate('navigator.clipboard.readText()')).replace(/\r\n/g, '\n'), await page.locator('#mcp-config').innerText());
+  await expect(page.locator('.provider-card')).toHaveCount(4);
+  await page.locator('[data-action="copy-provider"][data-provider="codex"]').click();
+  assert.match(String(await page.evaluate('navigator.clipboard.readText()')), /我们规定的做法/);
   await page.getByRole('button', { name: '关闭详情' }).click();
   await createCanvas(page, '经验继承项目', 'browser-successor');
   const successorId = engine.getCanvas().id;
@@ -147,7 +144,7 @@ test('production static assets and complete browser workflow connect REST, stdio
   assert.equal(imported.validated, false);
   assert.ok(imported.sourceExperienceId);
   await page.locator('[data-action="handoff"]').click();
-  await expect(page.locator('#handoff-markdown')).toContainText(imported.sourceExperienceId);
+  await expect(page.locator('#handoff-markdown')).toContainText(imported.title);
   const result = await client.callTool({ name: 'get_handoff_context', arguments: { canvasId: successorId } });
   assert.ok(!result.isError);
   const resource = await client.readResource({ uri: 'canvas://active/handoff.md' });
@@ -158,7 +155,7 @@ test('production static assets and complete browser workflow connect REST, stdio
   await page.locator('[data-action="advance"]').click();
   await page.getByLabel('下一阶段名称（可选）').fill('再次验证');
   await submit(page);
-  await expect(page.locator('#project-status')).toContainText('Stage 2');
+  await expect(page.locator('#project-status')).toContainText('阶段 2');
   await page.locator(`[data-canvas="${sourceId}"]`).click();
   await expect(page.locator('#project-title')).toHaveText('端到端项目');
   await page.locator(`[data-canvas="${successorId}"]`).click();
@@ -224,10 +221,53 @@ test('viewport pan, cursor anchored zoom, fit, stage jumps, inspection, filterin
   assert.equal(await page.evaluate('document.documentElement.scrollWidth > window.innerWidth'), false);
   await expect(page.locator('[data-action="handoff"]')).toBeVisible();
   await expect(page.locator('#sidebar')).not.toBeVisible();
-  await page.getByRole('button', { name: '☰ 项目导航' }).click();
+  await page.getByRole('button', { name: '☰ 画布导航' }).click();
   await expect(page.locator('#sidebar')).toBeVisible();
   await page.getByRole('button', { name: '关闭项目导航' }).click();
   await expect(page.locator('#sidebar')).not.toBeVisible();
+});
+
+test('four quick buttons and drawer cards configure and copy the pinned canvas, with clipboard fallback', { timeout: 45_000 }, async t => {
+  const { page, base, engine, dataDir } = await fixture(t, true);
+  const labels = { codex: 'Codex', claude: 'Claude', gemini: 'Gemini', deepseek: 'DeepSeek' };
+  const bundle = await (await fetch(`${base}/api/mcp/connect-bundle`)).json() as ReturnType<typeof connectionBundle>;
+  for (const [provider, label] of Object.entries(labels)) {
+    await page.locator(`#mcp-quick-bar [data-action="quick-ai"][data-provider="${provider}"]`).click();
+    await expect(page.locator('#notice')).toHaveText(`已一键配置并复制【${label}】连接与交接指令！直接粘贴发给 ${label} 即可连接并继续项目。`);
+    assert.equal(String(await page.evaluate('navigator.clipboard.readText()')).replace(/\r\n/g, '\n'), bundle.providers[provider as Provider].aiPrompt);
+    assert.ok(readFileSync(join(dataDir, 'mcp-configs', `${provider}-mcp-config.${provider === 'codex' ? 'toml' : 'json'}`), 'utf8'));
+  }
+  await page.locator('[data-action="handoff"]').click();
+  await expect(page.locator('.provider-cards-grid .provider-card')).toHaveCount(4);
+  for (const provider of Object.keys(labels)) {
+    await page.locator(`[data-action="copy-provider"][data-provider="${provider}"]`).click();
+    await expect(page.locator('#notice')).toContainText('已复制');
+    assert.equal(String(await page.evaluate('navigator.clipboard.readText()')).replace(/\r\n/g, '\n'), bundle.providers[provider as Provider].aiPrompt);
+    await page.locator(`[data-action="configure-provider"][data-provider="${provider}"]`).click();
+    await expect(page.locator('#notice')).toContainText(provider === 'codex' ? '注册本机 Codex' : '已生成本机连接配置');
+  }
+  assert.equal(await page.locator('#handoff-markdown').innerText(), engine.getHandoffContext().markdown);
+  await page.getByRole('button', { name: '关闭详情' }).click();
+  const bullets = await page.locator('.node').evaluateAll(nodes => nodes.map(n => n.querySelectorAll('li').length));
+  assert.ok(bullets.every(n => n <= 2));
+  await expect(page.locator('.node .tags')).toHaveCount(0);
+  // Explicit target must survive an external active-canvas switch while configuration is pending.
+  const pinned = engine.getCanvas();
+  const other = engine.listCanvases()[1]!;
+  await page.route('**/api/mcp/quick-connect', async route => {
+    assert.equal(route.request().postDataJSON().canvasId, pinned.id);
+    engine.switchCanvas(other.id);
+    await route.continue();
+  });
+  await page.locator('[data-action="quick-ai"][data-provider="claude"]').click();
+  await expect(page.locator('#notice')).toContainText('已一键配置并复制【Claude】');
+  assert.ok(String(await page.evaluate('navigator.clipboard.readText()')).includes(pinned.title));
+  await page.unroute('**/api/mcp/quick-connect');
+  await page.evaluate(`Object.defineProperty(navigator.clipboard, 'writeText', { value: async () => { throw new Error('denied'); } }); document.execCommand = () => false;`);
+  await page.locator('[data-action="quick-ai"][data-provider="deepseek"]').click();
+  await expect(page.getByRole('textbox', { name: '连接与交接指令', exact: true })).toBeVisible();
+  assert.ok((await page.getByRole('textbox', { name: '连接与交接指令', exact: true }).inputValue()).includes('DeepSeek'));
+  await expect(page.locator('#notice')).toContainText('自动复制未成功');
 });
 
 test('SSE reconnect, live drawer, safe text, server errors and in-flight form targets', { timeout: 45_000 }, async t => {
@@ -266,7 +306,7 @@ test('SSE reconnect, live drawer, safe text, server errors and in-flight form ta
   await page.getByLabel('画布名称', { exact: true }).fill('Duplicate');
   await page.getByLabel('项目唯一标识').fill(original.projectKey);
   await page.locator('#form-submit').click();
-  await expect(page.locator('#form-error')).toContainText('Project key already exists');
+  await expect(page.locator('#form-error')).toContainText('项目标识已存在');
   await expect(page.getByLabel('画布名称', { exact: true })).toHaveValue('Duplicate');
   await page.getByLabel('项目唯一标识').fill('recovered-project');
   await submit(page);

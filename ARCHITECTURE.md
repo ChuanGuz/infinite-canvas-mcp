@@ -147,3 +147,61 @@ MCP Server 暴露以下高语义工具，供任意 AI 在开发过程中调用�
 - **Stage 1（架构落地 + 核心存储/自动分类/阶段整理/终局蒸馏/交接引擎 + 单元测试）** -> 完成后进行第 1 次 GitHub 云端上传。
 - **Stage 2（标准 MCP Server `stdio` + REST/SSE 实时同步服务 + 跨项目经验复用接口）** -> 完成后进行第 2 次 GitHub 云端上传。
 - **Stage 3（交互式无限画布 Web 工作台 + 多分组/多画布/阶段泳道/一键交接文档预览 + 全链路验收）** -> 完成后进行第 3 次 GitHub 云端上传。
+- **Stage 4（全中文内容规范 + 极简护眼 UI 重构 + 一键连接/一键复制给 AI + 独立桌面应用 `无限画布.exe`）** -> 完成后进行第 4 次 GitHub 云端上传。
+
+---
+
+## 7. Stage 4 专项升级设计：全中文规范、极简护眼界面、一键连接 MCP 与独立桌面程序 (`无限画布.exe`)
+
+### 7.1 强制全中文呈现规范（All-Chinese Content Policy）
+1. **界面与数据全面中文化**：
+   - 界面上所有按钮、状态、阶段标题、分类名称、提示语 100% 使用自然、直白的简体中文，严禁暴露 `feature_impl`、`consolidated`、UUID 等英文枚举或技术编号。
+   - 默认示例数据库（`data/store.json` 与 `data/handoffs/*.md`）所有分组、画布、阶段、卡片标题、要点、跨项目经验必须 100% 为纯正中文。若检测到旧版含英文示例的默认种子数据，自动升级/重置为全中文种子数据。
+2. **MCP 工具契约强制中文输入与中文输出**：
+   - 在 `src/mcp/tools.ts` 所有 MCP 工具描述与参数说明中明确加入强制规则：**“【强制中文规范】所有写入画布的标题（title）、内容（content）、阶段总结与好用法必须使用简体中文，方便用户在画布中直接阅读。”**
+   - 在 `classifier.ts` / `engine.ts` / `handoff.ts` 中生成的阶段汇总节点、终局精华提炼节点、以及 `HANDOFF.md` 交接文档全部采用清晰的中文结构化排版。
+
+### 7.2 极简、“不费眼”的视觉与交互方案（Low-Fatigue Eye-Care Design）
+1. **柔和护眼纸感配色**：
+   - 采用温暖护眼的羊皮纸/米灰底色（画布背景 `#F4F1EA`、面板背景 `#FAF8F3`、柔和深灰墨色文字 `#262927`、次级文字 `#5C625E`），搭配低饱和度莫兰迪色标区分 5 类卡片，长时间观看不刺眼、不疲劳。
+   - 字体采用 `15px–17px` 舒适大字号与充足行距（`1.65`），卡片留白充足。
+2. **卡片表面极简减负**：
+   - 画布上的卡片表面只显示 **3 样核心信息**：① 中文类别标签（如 `我们的规定做法`、`功能实现`、`最终好用法`）；② 醒目中文标题；③ 1~2 条最核心的中文结论要点。
+   - 不在卡片表面堆砌文件路径、ID、时间戳或长篇大论；点击卡片时才在右侧清爽详情栏查看完整内容。
+3. **顶部与侧边栏极简化**：
+   - 左侧栏只保留直观的 **【画布分组与画布切换】** 和 **【跨项目好用法库（点一下即可用入当前项目）】**。
+   - 顶部栏只保留最核心的阶段跳转胶囊与 4 个大白话主按钮：
+     - `＋ 记一条`
+     - `✨ 整理本阶段`（弹窗内可一键勾选“整理后直接开启下一阶段”）
+     - `🏆 项目结尾总整理`
+     - `🔗 一键连接 MCP / 复制给 AI`
+
+### 7.3 极简 MCP 连接体验：原生支持 Codex、Claude、Gemini、DeepSeek 四种类型（点一下自动连接 / 点一下复制发给对应 AI）
+专门针对 **Codex (`codex`)、Claude (`claude`)、Gemini (`gemini`)、DeepSeek (`deepseek`)** 四种主流 AI 提供专属的一键连接与一键复制卡片：
+1. **四种 AI 专属一键连接/复制面板（`Codex` / `Claude` / `Gemini` / `DeepSeek`）**：
+   - 在顶部工具栏点击 `🔗 一键连接 AI (Codex / Claude / Gemini / DeepSeek)`（或直接在顶部快捷栏点选），展示清晰不费眼的 **4 张 AI 专属卡片**：
+     1) **Codex（OpenAI Codex CLI / 客户端）**：
+        - `⚡ 一键自动接入本机 Codex`（自动写入 `~/.codex/config.toml` 的 `[mcp_servers.infinite_canvas]`）
+        - `📋 点一下复制发给 Codex`（复制针对 Codex 优化的中文连接+当前画布交接指令与 TOML/命令配置）
+     2) **Claude（Claude Code / Claude Desktop）**：
+        - `⚡ 一键自动接入本机 Claude`（自动写入 `~/.claude.json` 或 `%APPDATA%\Claude\claude_desktop_config.json`）
+        - `📋 点一下复制发给 Claude`（复制针对 Claude 优化的 `claude mcp add` 命令 / JSON 配置 + 当前画布中文交接指令）
+     3) **Gemini（Gemini CLI / Google Antigravity）**：
+        - `⚡ 一键自动接入本机 Gemini`（自动写入 `~/.gemini/settings.json` 的 `mcpServers.infinite-canvas`）
+        - `📋 点一下复制发给 Gemini`（复制针对 Gemini CLI / Antigravity 优化的 MCP 配置 + 当前画布中文交接指令）
+     4) **DeepSeek（DeepSeek 客户端 / 支持 MCP 或 HTTP/提示词交接的 DeepSeek 工具）**：
+        - `⚡ 一键生成/写入 DeepSeek 接入配置`（生成通用 MCP JSON & DeepSeek 本地 HTTP API 调用配置 `deepseek-mcp-config.json`）
+        - `📋 点一下复制发给 DeepSeek`（复制专为 DeepSeek 定制的中文全量交接指令 + MCP/本地 REST 接口调用说明，即使在纯网页版 DeepSeek 对话框里粘贴也能直接无缝接手当前项目！）
+2. **后端接口支持（`GET /api/mcp/connect-bundle` & `POST /api/mcp/quick-connect`）**：
+   - `GET /api/mcp/connect-bundle` 返回 `providers: { codex, claude, gemini, deepseek }` 四种类型的专属一键复制中文指令（`aiPrompt`）、专属配置块（`configSnippet`）、一键终端命令（`cliCommand`）及本机检测状态。
+   - `POST /api/mcp/quick-connect` 支持传入 `provider: "codex" | "claude" | "gemini" | "deepseek" | "all"`，一键自动写入对应 AI 的本机配置。
+
+### 7.4 独立桌面应用窗口与一键启动程序（`E:\idm\无限画布\无限画布.exe`）
+1. **原生 `.exe` 启动器（`E:\idm\无限画布\无限画布.exe`）**：
+   - 使用 Windows 原生 C# 编译器（`C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe -target:winexe`）编译生成位于项目根目录的 **`无限画布.exe`**（源码位于 `src/desktop/Launcher.cs`）。
+2. **独立应用窗口框架（脱离普通浏览器标签页）**：
+   - 双击 `无限画布.exe` 时不弹黑框：
+     1) 自动检测本地引擎服务（`http://127.0.0.1:3456`）是否已运行，若未运行则在后台静默启动 Node 服务端并等待就绪；
+     2) 以**独立桌面应用窗口模式**（调用本机 Edge/Chromium WebView `--app=http://127.0.0.1:3456` 搭配独立专属应用配置目录 `data/.desktop-app-profile` 与预设窗口尺寸，或内置 WinForms Web 容器兜底）直接弹出无地址栏、无浏览器标签页、无书签栏的**独立桌面应用程序窗口**；
+     3) 当用户关闭该独立桌面窗口时，自动清理其拉起的后台服务进程（若是由该启动器拉起的），做到真正的桌面软件体验。
+
