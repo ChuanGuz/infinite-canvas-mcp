@@ -1,9 +1,11 @@
-# Infinite Canvas MCP — Stage 2
+# Infinite Canvas MCP — Stage 3
 
-TypeScript domain engine for stage-based project learning, infinite-canvas placement,
-validated cross-project experience, and AI handoff. The implementation follows
-[ARCHITECTURE.md](ARCHITECTURE.md). Stage 2 provides the MCP stdio server and
-REST/SSE adapters. The visual workbench is planned for Stage 3.
+A local infinite canvas workbench for stage-based project learning, validated
+cross-project experience, and seamless AI handoff. The implementation follows
+[ARCHITECTURE.md](ARCHITECTURE.md): Stage 1 supplies the TypeScript domain engine,
+Stage 2 supplies MCP stdio and REST/SSE, and Stage 3 supplies the interactive Chinese
+Web UI and real-browser end-to-end acceptance tests. No external database or LLM
+service is required.
 
 ## Run
 
@@ -11,6 +13,7 @@ Requires Node.js 22 or newer and npm.
 
 ```sh
 npm install
+npm run test:install
 npm test
 npm run typecheck
 npm run build
@@ -24,9 +27,96 @@ On first boot it creates `data/store.json` and one
 `data/handoffs/HANDOFF-<canvasId>.md` per canvas. The illustrative demo contains two
 groups, an active project with stages 1 and 2 consolidated and stage 3 in progress,
 and a completed project with final practices and reusable experiences. Demo history
-illustrates the domain model; it is not a claim that the Stage 3 UI is implemented.
+illustrates the domain model, with populated category clusters and provenance links.
 An existing store, including an empty store, is never reseeded. Runtime data is ignored
 by Git; fixture generation lives in `createDemoStore()`.
+
+Open **http://127.0.0.1:3456** after `npm start`. To run the compiled HTTP entrypoint,
+use `node dist/src/index.js` after building; keep `src/web` alongside `dist`.
+For this Windows checkout:
+
+```powershell
+Set-Location 'E:\idm\无限画布'
+$env:DATA_DIR = 'E:\idm\无限画布\data'
+npm start
+```
+
+The server binds to loopback by default and is intended as a local workbench.
+Its API has no authentication; configure access controls before exposing it remotely.
+
+## Workbench workflow
+
+1. **画布分组**: use `＋` to create a named, colored group. Select a group to filter
+   the canvas list, or select **全部画布**. Filtering does not change the active project.
+2. **画布列表**: create a canvas with a globally unique project key and a group.
+   Select a canvas to switch the persisted active project. Each entry shows its
+   current stage and **进行中 / 已结项 / 已归档** status.
+3. **＋ 记录学习/功能/约定**: enter title, content, optional category, tags, files,
+   importance, and record status. Leave category on **自动分类** for deterministic
+   Chinese/English classification. Only check **已经过实践验证** when verified.
+   The resulting card is placed in its stage's matching category cluster.
+4. **阶段分类整理**: generate category summaries and archive the current stage.
+   Optionally select automatic advancement and name the next stage. Otherwise use
+   **开启下一阶段** before recording more knowledge; it also consolidates the previous
+   stage if needed. History and evidence links remain available.
+5. **项目结尾总整理**: review unvalidated active records, optionally confirm specific
+   records as verified, and supply a handoff summary. This completes the project and
+   makes its canvas read-only. Eligible findings appear in the gold/cyan **终局精华区**
+   with conventions, best practices, core implementations, architecture, and reusable
+   patterns. Unvalidated/open/superseded evidence is preserved but not published.
+6. **跨项目经验库**: search titles/content/tags and filter by category. Create or select
+   an active successor canvas, then click **应用到当前画布** on a practice from another
+   project. The import retains provenance and requires validation in its new context.
+7. **跨 AI 无缝交接**: inspect conventions, stage history, final practices, next steps,
+   and the complete live `HANDOFF.md`. Copy it into a new AI session, or connect that
+   AI using the drawer's MCP configuration and call `get_handoff_context` first.
+
+The five clusters are **规定做法与约定**, **架构与模型设计**, **功能实现**,
+**踩坑与问题修复**, and **最终确定的好用法**. All cards use engine-provided world
+coordinates. Click a card for full content, tags, files, validation, and provenance.
+Stage summaries and long card text can be inspected in the drawer without losing
+the canvas view. SVG arrows connect evidence, checkpoints, and final distilled cards.
+
+Drag an empty part of the canvas to pan; use the wheel to zoom around the cursor.
+The footer provides zoom buttons and **适应全图**. Stage pills jump to any stage or
+the final zone. Focus the viewport for arrow-key panning, `+`/`-` zoom, and `F` to fit.
+Tab navigation brings offscreen cards into view; dialogs support Escape and focus
+containment. View positions persist per canvas in browser local storage. They are
+personal navigation state and do not change the shared domain layout.
+
+The **MCP 实时同步已连接** badge reports the browser's SSE connection, not whether a
+particular AI client is running. Successful REST and MCP writes update the canvas,
+experience pool, and open handoff drawer automatically. A disconnected browser
+shows a reconnecting state and receives the latest snapshot on reconnect. Forms
+retain their explicit target canvas if another client switches the active canvas.
+Server errors are displayed without discarding entered form values.
+
+## Architecture overview
+
+```mermaid
+flowchart LR
+  AI[Claude / Codex / Cursor / Antigravity] -->|MCP stdio| Tools[Validated tool registry]
+  Web[HTML + CSS + native ES module workbench] -->|REST| HTTP[Express HTTP adapter]
+  HTTP --> Tools
+  Tools --> Engine[CanvasEngine]
+  Engine --> Classify[Rule classifier]
+  Engine --> Layout[World-space layout]
+  Engine --> Store[Atomic JSON storage + lock]
+  Store --> Handoff[Markdown handoff mirrors]
+  Store -->|Directory watcher| SSE[SSE snapshots]
+  HTTP --> SSE
+  SSE --> Web
+```
+
+`src/types/schema.ts` validates the domain. `src/core` owns classification, geometry,
+stage transitions, validation gates, experience provenance, and persistence.
+`src/mcp` exposes nine tools and three resources; `src/server/app.ts` serves REST,
+SSE, and static assets. `src/web/index.html`, `styles.css`, and `app.js` implement
+the UI without a frontend framework or CDN dependency. DOM cards and SVG edges share
+one translated/scaled world container. The UI escapes project content and treats
+Markdown as text. Full snapshots are reconciled without resetting the viewport;
+stale asynchronous handoff/search responses are ignored. The current renderer
+renders every card; very large stores may eventually benefit from viewport culling.
 
 ## MCP stdio and resources
 
@@ -37,24 +127,51 @@ Server diagnostics go to stderr; stdout is reserved for MCP JSON-RPC frames.
 The implementation uses the installed v1 SDK's `Server` and `StdioServerTransport`;
 see the [official SDK transport documentation](https://ts.sdk.modelcontextprotocol.io/server).
 
-Example host configuration for this checkout:
+### Claude Code / Cursor / Antigravity
+
+Run `npm run build` first, then use this JSON for the compiled stdio server:
 
 ```json
 {
   "mcpServers": {
     "infinite-canvas": {
       "command": "node",
-      "args": ["--import", "tsx", "E:/idm/无限画布/src/mcp/server.ts"],
-      "cwd": "E:/idm/无限画布",
+      "args": ["E:/idm/无限画布/dist/src/mcp/server.js"],
       "env": { "DATA_DIR": "E:/idm/无限画布/data" }
     }
   }
 }
 ```
 
-Hosts that do not support `cwd` can use the compiled server after `npm run build`:
-`node E:/idm/无限画布/dist/src/mcp/server.js`, with the same absolute `DATA_DIR`.
-Set the HTTP process's `DATA_DIR` to that directory as well. Each operation reloads
+Place this in the project's `.mcp.json` for
+[Claude Code](https://code.claude.com/docs/en/mcp), or `.cursor/mcp.json` for
+[Cursor](https://cursor.com/docs/mcp). In
+[Antigravity](https://antigravity.google/docs/ide-mcp), open **MCP Servers → Manage
+MCP Servers → View raw config** and merge the entry into the custom configuration.
+Keep other existing server entries. Restart/refresh the client's MCP connection.
+
+### Codex
+
+[Codex uses TOML](https://developers.openai.com/codex/mcp), rather than the JSON
+wrapper above. Add this to `~/.codex/config.toml` (or the trusted project's
+`.codex/config.toml`):
+
+```toml
+[mcp_servers.infinite-canvas]
+command = "node"
+args = ["E:/idm/无限画布/dist/src/mcp/server.js"]
+
+[mcp_servers.infinite-canvas.env]
+DATA_DIR = "E:/idm/无限画布/data"
+```
+
+The drawer offers both ready-to-copy JSON and Codex TOML, generated from the running
+server's **absolute Node executable, checkout path, and actual data directory** via
+`GET /api/mcp/config`. This also works when the host does not support `cwd`. If using
+the manual examples, ensure `node` is available on the client's PATH. Use forward
+slashes in hand-written Windows configuration, or escape backslashes correctly.
+
+Set the HTTP process's `DATA_DIR` to that same directory. Each operation reloads
 the shared store; changing the active canvas affects subsequent calls from every client.
 Pass an explicit `canvasId` when multiple agents work on different projects.
 
@@ -120,6 +237,7 @@ MCP endpoints shown below. Successful creation/recording/import endpoints return
 | `GET /api/experiences` | Search using `query`, `category`, `tags`, `excludeCanvasId`, `limit` |
 | `POST /api/experiences/apply` | Import `experienceId` into optional `canvasId` |
 | `GET /api/mcp/tools` | `{ tools: [...] }`, including JSON input schemas |
+| `GET /api/mcp/config` | `{ json, codexToml }` using this checkout, Node executable, and data directory |
 | `POST /api/mcp/call` | `{ name, arguments?: {...} }` → `{ result: ... }` |
 | `GET /api/events` | SSE stream of complete store snapshots |
 
@@ -144,12 +262,12 @@ SSE carries application state, not an MCP HTTP transport.
 const events = new EventSource('/api/events');
 events.addEventListener('canvas-update', event => {
   const store = JSON.parse(event.data);
-  // Render store.groups, store.canvases, and store.activeCanvasId in Stage 3.
+  // Reconcile navigation, world geometry, experience pool, and open handoff drawer.
 });
 ```
 
 Static assets are served from `src/web` (also when running compiled server code).
-Until Stage 3 adds those files, `/` returns 404; the API and SSE are fully available.
+`/` serves the workbench, and `/app.js` and `/styles.css` serve its native assets.
 For embedding/tests, `createApp({ engine, webDir? })` returns `{ app, engine, close }`;
 call `close()` to dispose its watcher and SSE clients. `startHttpServer({ port: 0 })`
 returns the HTTP `server` and an idempotent async `stop()` for complete shutdown.
@@ -270,6 +388,20 @@ knowledge stores; larger deployments can replace the storage adapter in a later 
 
 ## Verification
 
+Install the Chromium test browser once after `npm install` (repeat after Playwright
+upgrades), then run all checks:
+
+```sh
+npm run test:install
+npm test
+npm run typecheck
+npm run build
+```
+
+On Linux CI, install browser OS dependencies with `npx playwright install --with-deps chromium`.
+`npm test` includes browser acceptance tests and does not silently skip them if
+Chromium is absent. `npm run test:e2e` runs just the Stage 3 browser suite.
+
 `tests/engine.test.ts` uses Node's built-in runner through
 `node --import tsx --test`. It exercises all Stage 1 operations, bilingual classification,
 geometry containment and overlap, provenance, validation gates, idempotency, persistence
@@ -282,3 +414,12 @@ static files, validation and conflict errors, and a real stdio child process wri
 to the shared store while multiple SSE clients observe consecutive atomic updates.
 It also checks reconnect snapshots, shutdown, busy-store responses, and recovery
 after an invalid external store. HTTP tests use ephemeral ports and isolated data.
+
+`tests/web_e2e.test.ts` drives real Chromium against the production static assets and
+an isolated server. It covers the complete two-stage record → auto-classify →
+consolidate → final distillation → successor-project reuse → handoff workflow,
+real stdio MCP writes reflected in the DOM, REST/MCP facade writes, clipboard copy,
+live handoff updates, reconnect recovery, JSON/TOML configuration, world coordinates,
+edges, pan, cursor-anchored zoom, fit, stage jumps, filtering, keyboard navigation,
+responsive viewports, safe text rendering, form errors, and canvas-target isolation.
+It uses fresh temporary stores and never changes the working demo data.

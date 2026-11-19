@@ -12,7 +12,9 @@
     "mcp": "tsx src/mcp/server.ts",
     "build": "tsc",
     "typecheck": "tsc --noEmit",
-    "test": "node --import tsx --test tests/*.test.ts"
+    "test": "node --import tsx --test tests/*.test.ts",
+    "test:e2e": "node --import tsx --test tests/web_e2e.test.ts",
+    "test:install": "playwright install chromium"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.32.2",
@@ -20,6 +22,7 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@playwright/test": "^1.65.1",
     "@types/express": "^5.0.6",
     "@types/node": "^24.19.2",
     "tsx": "^4.23.15",

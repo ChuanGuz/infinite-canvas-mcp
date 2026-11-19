@@ -125,6 +125,15 @@ export function createApp(options: AppOptions = {}) {
     }));
   });
   app.get('/api/mcp/tools', (_req, res) => res.json({ tools: listTools() }));
+  app.get('/api/mcp/config', (_req, res) => {
+    const projectRoot = fileURLToPath(new URL(import.meta.url.includes('/dist/src/') ? '../../../' : '../../', import.meta.url));
+    // Compiled entrypoint needs neither cwd nor a globally installed tsx loader.
+    const settings = { command: process.execPath, args: [resolve(projectRoot, 'dist/src/mcp/server.js')],
+      env: { DATA_DIR: engine.storage.dataDir } };
+    res.json({ json: { mcpServers: { 'infinite-canvas': settings } },
+      codexToml: `[mcp_servers.infinite-canvas]\ncommand = ${JSON.stringify(settings.command)}\nargs = ${JSON.stringify(settings.args)}\n\n[mcp_servers.infinite-canvas.env]\nDATA_DIR = ${JSON.stringify(settings.env.DATA_DIR)}\n`,
+    });
+  });
   app.post('/api/mcp/call', (req, res) => {
     const input = parseInput(z.object({ name: z.string().min(1), arguments: bodySchema.optional() }).strict(), req.body);
     res.json({ result: call(input.name, input.arguments ?? {}) });
