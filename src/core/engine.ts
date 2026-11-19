@@ -10,11 +10,17 @@ import { emptyStore, JsonStorage } from './storage.js';
 const now = () => new Date().toISOString();
 const id = (prefix: string) => `${prefix}_${randomUUID()}`;
 const normalize = (text: string) => text.trim().toLocaleLowerCase().replace(/\s+/gu, ' ');
-const GroupInputSchema = z.object({
+export const GroupInputSchema = z.object({
   name: z.string().trim().min(1), description: z.string().default(''),
   color: z.string().trim().min(1).default('#6366f1'), icon: z.string().trim().min(1).default('folder'),
 });
-const CanvasInputSchema = z.object({
+// Patch validation must not reapply create defaults to omitted fields (Zod 4).
+export const GroupPatchSchema = GroupInputSchema.extend({
+  description: GroupInputSchema.shape.description.removeDefault(),
+  color: GroupInputSchema.shape.color.removeDefault(),
+  icon: GroupInputSchema.shape.icon.removeDefault(),
+}).partial().strict();
+export const CanvasInputSchema = z.object({
   groupId: z.string().min(1), title: z.string().trim().min(1), projectKey: z.string().trim().min(1),
   description: z.string().default(''), stageTitle: z.string().trim().min(1).default('Project foundation'),
 });
@@ -234,7 +240,7 @@ export class CanvasEngine {
   }
   listGroups(): CanvasGroup[] { return this.storage.read().groups; }
   updateGroup(groupId: string, input: Partial<CreateGroupInput>): CanvasGroup {
-    const patch = GroupInputSchema.partial().strict().parse(input);
+    const patch = GroupPatchSchema.parse(input);
     return this.storage.transaction(store => {
       const group = store.groups.find(g => g.id === groupId);
       if (!group) throw new Error(`Group not found: ${groupId}`);

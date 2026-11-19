@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "tsx src/index.ts",
+    "mcp": "tsx src/mcp/server.ts",
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "test": "node --import tsx --test tests/*.test.ts"

@@ -1,9 +1,9 @@
-# Infinite Canvas MCP — Stage 1
+# Infinite Canvas MCP — Stage 2
 
 TypeScript domain engine for stage-based project learning, infinite-canvas placement,
 validated cross-project experience, and AI handoff. The implementation follows
-[ARCHITECTURE.md](ARCHITECTURE.md). MCP/HTTP/SSE adapters and the visual workbench
-belong to Stages 2 and 3.
+[ARCHITECTURE.md](ARCHITECTURE.md). Stage 2 provides the MCP stdio server and
+REST/SSE adapters. The visual workbench is planned for Stage 3.
 
 ## Run
 
@@ -17,14 +17,142 @@ npm run build
 npm start
 ```
 
-`npm start` initializes the local store, prints a short inventory, and exits.
+`npm start` starts the HTTP server at `http://127.0.0.1:3456`.
+Set `PORT` to change the port, `HOST` to change the bind address, and `DATA_DIR`
+to select a shared data directory (default: `data` under the working directory).
 On first boot it creates `data/store.json` and one
 `data/handoffs/HANDOFF-<canvasId>.md` per canvas. The illustrative demo contains two
 groups, an active project with stages 1 and 2 consolidated and stage 3 in progress,
 and a completed project with final practices and reusable experiences. Demo history
-illustrates the domain model; it is not a claim that Stage 2/3 services are implemented.
+illustrates the domain model; it is not a claim that the Stage 3 UI is implemented.
 An existing store, including an empty store, is never reseeded. Runtime data is ignored
 by Git; fixture generation lives in `createDemoStore()`.
+
+## MCP stdio and resources
+
+Run `npm run mcp` to launch the stdio server. When connecting an MCP host, use
+`node --import tsx <absolute-path>/src/mcp/server.ts` from this repository's working
+directory, or `npm run --silent mcp` so npm's banner does not enter the protocol stream.
+Server diagnostics go to stderr; stdout is reserved for MCP JSON-RPC frames.
+The implementation uses the installed v1 SDK's `Server` and `StdioServerTransport`;
+see the [official SDK transport documentation](https://ts.sdk.modelcontextprotocol.io/server).
+
+Example host configuration for this checkout:
+
+```json
+{
+  "mcpServers": {
+    "infinite-canvas": {
+      "command": "node",
+      "args": ["--import", "tsx", "E:/idm/无限画布/src/mcp/server.ts"],
+      "cwd": "E:/idm/无限画布",
+      "env": { "DATA_DIR": "E:/idm/无限画布/data" }
+    }
+  }
+}
+```
+
+Hosts that do not support `cwd` can use the compiled server after `npm run build`:
+`node E:/idm/无限画布/dist/src/mcp/server.js`, with the same absolute `DATA_DIR`.
+Set the HTTP process's `DATA_DIR` to that directory as well. Each operation reloads
+the shared store; changing the active canvas affects subsequent calls from every client.
+Pass an explicit `canvasId` when multiple agents work on different projects.
+
+All nine architecture tools are registered. `manage_canvas_group` takes
+`action: "create" | "list" | "update"`; creation requires `name`, and updates require
+`groupId`. `create_or_switch_canvas` takes `action: "create" | "switch"`; creation
+requires `groupId`, `title`, and `projectKey`, while switching requires `canvasId`.
+The other tools accept the corresponding core operation's fields plus optional
+`canvasId`. `advance_project_stage` accepts `title`; search accepts `query`, `category`,
+`tags`, `excludeCanvasId`, and `limit`. Discover complete schemas via MCP `tools/list`
+or `GET /api/mcp/tools`.
+
+The shared programmatic interface is transport independent:
+
+```ts
+import { invokeTool, listTools, readResource } from './src/mcp/tools.js';
+
+const handoff = invokeTool(engine, 'get_handoff_context', {});
+const catalog = listTools();
+const markdown = readResource(engine, 'canvas://active/handoff.md');
+```
+
+`invokeTool` validates input and returns the raw domain result, or throws a
+`ToolInvocationError` with `code` and HTTP `status`. MCP calls return that result
+as JSON text and as `structuredContent: { result }`. Tool validation and business
+failures return MCP `isError: true`; unknown tool/resource names are protocol errors.
+Read-only resources are generated from the current store on every request:
+
+| Resource URI | Content |
+| --- | --- |
+| `canvas://active/handoff.md` | Active project's complete Markdown handoff |
+| `canvas://active/handoff.json` | Structured handoff, including its Markdown |
+| `canvas://global/experiences` | Entire validated experience catalog, without pagination |
+
+Handoff resources report a missing canvas until one is created. The global catalog
+works with an empty store. Resources are read on demand; browser updates use SSE.
+
+## REST and live browser updates
+
+All request bodies are JSON. Responses contain the raw domain result, except the
+MCP endpoints shown below. Successful creation/recording/import endpoints return
+201; other successful endpoints return 200. Errors use
+`{ "error": { "code": "...", "message": "..." } }`: 400 for invalid input/JSON,
+404 for missing entities/tools, 409 for conflicting state, 413 for bodies over 1 MB,
+503 for a busy store lock, and 500 for internal or handoff mirror failures.
+
+| Method and path | Operation |
+| --- | --- |
+| `GET /api/state` | Full current store snapshot |
+| `GET /api/groups` | List groups |
+| `POST /api/groups` | Create group: `name`, optional `description`, `color`, `icon` |
+| `PATCH /api/groups/:groupId` | Update only supplied group fields |
+| `GET /api/canvases?groupId=...` | List canvases, optionally filtered |
+| `GET /api/canvases/:canvasId` | Read canvas; `active` selects the current canvas |
+| `POST /api/canvases` | Create and activate canvas |
+| `POST /api/canvases/:canvasId/switch` | Switch active canvas |
+| `POST /api/learnings` | Record learning, with automatic classification by default |
+| `POST /api/stages/consolidate` | Checkpoint; optional `advanceToNextStage`, `nextStageTitle` |
+| `POST /api/stages/advance` | Advance; optional `title` |
+| `POST /api/distill` | Finalize; optional `validatedNodeIds`, `summary` |
+| `GET /api/handoff?canvasId=...&format=json` | Handoff JSON; use `format=markdown` for Markdown |
+| `GET /api/handoff.md?canvasId=...` | Markdown handoff |
+| `GET /api/experiences` | Search using `query`, `category`, `tags`, `excludeCanvasId`, `limit` |
+| `POST /api/experiences/apply` | Import `experienceId` into optional `canvasId` |
+| `GET /api/mcp/tools` | `{ tools: [...] }`, including JSON input schemas |
+| `POST /api/mcp/call` | `{ name, arguments?: {...} }` → `{ result: ... }` |
+| `GET /api/events` | SSE stream of complete store snapshots |
+
+Learning, consolidation, advancement, distillation, import, and handoff routes also
+exist below `/api/canvases/:canvasId/` with the same suffix, for example
+`POST /api/canvases/:canvasId/stages/consolidate` and
+`GET /api/canvases/:canvasId/handoff.md`. Mutation bodies can instead include
+`canvasId` on the shorter routes. Search tags may be comma-separated or repeated
+(`?tags=storage&tags=atomic`).
+
+Each SSE connection immediately receives `event: canvas-update` with the full store
+as JSON `data`. HTTP writes publish immediately; an `fs.watch` on the data directory
+detects external `store.json` replacements, including writes from separate MCP
+processes, and coalesces them over 20 ms. Watching the directory keeps updates
+working across successive atomic renames. Identical snapshots are suppressed;
+invalid external snapshots are logged and never broadcast. Updates resume after
+the store is repaired. Heartbeats run every 15 seconds. Reconnection always sends
+the latest full snapshot; event IDs are local to the server run, not a replay log.
+SSE carries application state, not an MCP HTTP transport.
+
+```js
+const events = new EventSource('/api/events');
+events.addEventListener('canvas-update', event => {
+  const store = JSON.parse(event.data);
+  // Render store.groups, store.canvases, and store.activeCanvasId in Stage 3.
+});
+```
+
+Static assets are served from `src/web` (also when running compiled server code).
+Until Stage 3 adds those files, `/` returns 404; the API and SSE are fully available.
+For embedding/tests, `createApp({ engine, webDir? })` returns `{ app, engine, close }`;
+call `close()` to dispose its watcher and SSE clients. `startHttpServer({ port: 0 })`
+returns the HTTP `server` and an idempotent async `stop()` for complete shutdown.
 
 ## Core API
 
@@ -147,3 +275,10 @@ knowledge stores; larger deployments can replace the storage adapter in a later 
 geometry containment and overlap, provenance, validation gates, idempotency, persistence
 across engine instances, corrupt-store protection, and handoff recovery. Tests use isolated
 temporary directories and do not modify the working demo store.
+
+`tests/mcp_and_server.test.ts` exercises all nine tools through direct invocation and
+an SDK client/server protocol connection, resource discovery/reads, all REST routes,
+static files, validation and conflict errors, and a real stdio child process writing
+to the shared store while multiple SSE clients observe consecutive atomic updates.
+It also checks reconnect snapshots, shutdown, busy-store responses, and recovery
+after an invalid external store. HTTP tests use ephemeral ports and isolated data.
